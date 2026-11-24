@@ -9,7 +9,15 @@ import re
 import struct
 
 
-THRESHOLD = 85
+THRESHOLD = 90
+RUBRIC = {
+    "terrain": 20,
+    "materials": 20,
+    "assets": 20,
+    "dressing": 15,
+    "light_water": 15,
+    "readability": 10,
+}
 FRAME_SIZE = (1120, 630)
 REVIEW_PATH = Path("review/refinement/release_review.json")
 VIEWS = ("ground", "overhead")
@@ -103,6 +111,26 @@ def check_frame(path, expected_sha256, issues):
         issues.append(f"{path.name}: expected {FRAME_SIZE[0]} x {FRAME_SIZE[1]}.")
 
 
+def check_score(label, entry, issues):
+    score = entry.get("score")
+    if type(score) not in (int, float) or not 0 <= score <= 100:
+        issues.append(f"{label}: expected a score between 0 and 100.")
+        return
+    if score < THRESHOLD:
+        issues.append(f"{label}: {score:g} < {THRESHOLD}.")
+        return
+
+    grades = entry.get("grades")
+    if not isinstance(grades, dict) or grades.keys() != RUBRIC.keys() or any(
+        type(grade) is not int or not 0 <= grade <= 5 for grade in grades.values()
+    ):
+        issues.append(f"{label}: expected all six rubric grades as integers from 0 to 5.")
+        return
+    weighted_score = sum(grades[name] * (weight // 5) for name, weight in RUBRIC.items())
+    if weighted_score != score:
+        issues.append(f"{label}: rubric gives {weighted_score}, recorded score is {score:g}.")
+
+
 def check_review(project):
     review = json.loads((project / REVIEW_PATH).read_text(encoding="utf-8-sig"))
     capture_dir = (project / review["capture_dir"]).resolve()
@@ -124,11 +152,7 @@ def check_review(project):
             issues.append(f"{scene}: missing review version.")
         for view in VIEWS:
             entry = details.get(view, {})
-            score = entry.get("score")
-            if type(score) not in (int, float) or not 0 <= score <= 100:
-                issues.append(f"{scene} {view}: expected a score between 0 and 100.")
-            elif score < THRESHOLD:
-                issues.append(f"{scene} {view}: {score:g} < {THRESHOLD}.")
+            check_score(f"{scene} {view}", entry, issues)
             check_frame(capture_dir / f"{scene}_{view}.png", entry.get("sha256"), issues)
     return issues
 

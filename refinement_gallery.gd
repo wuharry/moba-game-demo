@@ -8,8 +8,8 @@ const LOCATIONS := [
 ]
 const PLAYER_MODEL := preload("res://station_runner.gd")
 const SPEED := 4.65
-const FINAL_BASIN_ROUND := 26
-const LAST_BASIN_TRIAL := 26
+const FINAL_BASIN_ROUND := 33
+const LAST_BASIN_TRIAL := 33
 
 var stage := Node3D.new()
 var camera := Camera3D.new()

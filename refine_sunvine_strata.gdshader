@@ -7,6 +7,7 @@ uniform vec4 ledge_moss : source_color = vec4(0.38, 0.48, 0.30, 1.0);
 
 varying vec3 world;
 varying vec3 normal_world;
+varying vec3 bedding;
 
 float hash(vec3 p) {
 	return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453);
@@ -26,20 +27,24 @@ float field(vec3 p) {
 void vertex() {
 	world = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	normal_world = normalize(MODEL_NORMAL_MATRIX * NORMAL);
+	bedding = COLOR.rgb;
 }
 
 void fragment() {
 	float above = normalize(normal_world).y;
-	float clouding = field(world * vec3(.58, .91, .58));
+	float washes = field(world * vec3(.38, .57, .31)) * .62 + field(world * vec3(1.18, 1.21, .65)) * .38;
 	float grain = field(world * vec3(7.8, 14.2, 8.5));
-	float layers = world.y * 2.91 - world.x * .36 - world.z * .20 + .51 * clouding;
-	float division = smoothstep(.70, .94, sin(layers) * .50 + .50);
-	float weather = field(world * .221) * .68 + clouding * .32;
-	vec3 bed = mix(recessed_bed.rgb, exposed_bed.rgb, smoothstep(.28, .73, weather));
-	bed *= 1.0 - division * (.20 + clouding * .14) * (1.0 - max(above, .0) * .54);
-	float growth = smoothstep(.37, .76, weather + .25 * smoothstep(.43, .93, above));
-	ALBEDO = mix(bed, ledge_moss.rgb, growth * smoothstep(.36, .92, above) * .88);
-	ALBEDO *= .91 + grain * .13;
+	float seams = world.y * 3.91 - world.x * .295 - world.z * .28 + field(world * vec3(.29, .58, .24)) * 1.25;
+	float division = smoothstep(.72, .97, sin(seams) * .50 + .50);
+	float leaching = smoothstep(.44, .76, field(world * vec3(.93, .22, .86)) * .76 + washes * .24);
+	float weather = washes * .72 + .28 * bedding.x;
+	vec3 bed = mix(recessed_bed.rgb, exposed_bed.rgb, smoothstep(.215, .74, weather));
+	bed = mix(bed, vec3(.43, .34, .23), leaching * .18 * (1.0 - max(above, .0)));
+	bed *= 1.0 - division * .24 * (1.0 - max(above, .0) * .60) * smoothstep(.22, .70, washes);
+	float growth = smoothstep(.47, .85, washes * .53 + .24 * bedding.y + .37 * max(above, .0));
+	float lichen = smoothstep(.6, .82, field(world * 1.53)) * bedding.z;
+	ALBEDO = mix(bed, ledge_moss.rgb, growth * .92);
+	ALBEDO = mix(ALBEDO, ledge_moss.rgb * .72, lichen * .31) * (.89 + grain * .17);
 	ROUGHNESS = .92;
 	SPECULAR = .16;
 }

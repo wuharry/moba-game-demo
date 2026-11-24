@@ -6,8 +6,10 @@
 
 | 分支 | 造型與光色 | 現有場景的功能關係 |
 | --- | --- | --- |
-| 手繪日照 | 明亮草地、暖淺石、柔冷影。樹枝方向和冠形各有辨識度，遠景以連續山稜與低反差色層表現深度。 | 日藤庭院的日輪門、引水和砂岩階地形成開闊庭院。硃萼雨庭的雨時計、取水階和半月形池岸形成較收束的林間雨園。 |
+| 手繪自然 | 參考《原神》與《薩爾達傳說 曠野之息》的戶外環境。以連續坡地、草地大色塊、低反差遠山和清楚的樹冠剪影組成。近處的暖石、葉影和局部對比提示路口、水岸與地標。 | 日藤庭院用受光草坡、暖砂岩和日輪門形成開闊感。硃萼雨庭以深淺林坡、琥珀葉冠、雨時計和半月形池岸形成有遮蔭的雨園。 |
 | 冷濕遺跡 | 冷色沉降岩面、陰影與深色濕區拉開遠近。銅鏽、水痕和青光集中在設備與路線節點。 | 北盆地壓力站的調節器、截水渠與連續岩谷相接。潮鎖棧岸的取水機構、分層潮棚與檢修甲板沿岸線分布。 |
+
+手繪自然的開闊感來自視野內先讀到草坡、樹群和地標，再讀到石縫與枝葉。控制中遠景的雜訊與色彩對比，讓自然區和細緻的人工構件各有焦點。兩個鏡位都把可走路面、岸緣和高差看清楚。參考畫面見 [任天堂戶外探索展示](https://www.nintendo.com/us/store/products/the-legend-of-zelda-breath-of-the-wild-switch/) 與 [HoYoverse 楓丹環境展示](https://blog.playstation.com/2023/08/04/genshin-impact-version-4-0-launches-august-16-first-details/)。
 
 ## 共通建置順序
 
@@ -46,13 +48,13 @@ if ($LASTEXITCODE -ne 0) { throw 'Gallery route check failed' }
 | 光影與水 | 15 | 曝光、層次、局部反射、流向和入水結構 |
 | 可讀性 | 10 | MOBA 路線、轉折、主要區域和地標辨識 |
 
-每個項目以 0–5 級人工評閱，乘以該項滿分再除以 5。0 級為缺失，1 級為灰模級，2 級為基本可辨但薄弱，3 級為風格和用途初步成立，4 級為大致完成且仍有可見差距，5 級為接近同用途參考的完成度。逐鏡保留分項與改動理由。85 是這份表的完成度門檻。每張圖的近景與俯視各自計分。
+每個項目以 0–5 級人工評閱，乘以該項滿分再除以 5。0 級為缺失，1 級為灰模級，2 級為基本可辨但薄弱，3 級為風格和用途初步成立，4 級為大致完成且仍有可見差距，5 級為接近同用途參考的完成度。逐鏡保留分項與改動理由。90 是這份表的完成度門檻。每張圖的近景與俯視各自計分。
 
-`release_review.json` 記錄選定版。`capture_dir` 指向證據目錄，`route_sha256` 為 `route_verification.txt` 的 SHA‑256，`scenes` 依場景 ID 收錄 `version`，以及 `ground`、`overhead` 各自的 `score` 和 PNG `sha256`。影像檔名沿用 `<scene>_ground.png` 和 `<scene>_overhead.png`。證據用 `Get-FileHash` 計算 `SHA256`。完成實機擷取與評閱後，以同一版來源計算 `source_sha256`。
+`release_review.json` 記錄選定版。`capture_dir` 指向證據目錄，`route_sha256` 為 `route_verification.txt` 的 SHA‑256，`scenes` 依場景 ID 收錄 `version`。每個 `ground`、`overhead` 附 `score`、PNG `sha256` 和 `grades` 的六項 0–5 級評閱。對應欄位依序為 `terrain`、`materials`、`assets`、`dressing`、`light_water`、`readability`。檢查器按照權重重算總分。影像檔名沿用 `<scene>_ground.png` 和 `<scene>_overhead.png`。證據用 `Get-FileHash` 計算 `SHA256`。完成實機擷取與評閱後，以同一版來源計算 `source_sha256`。
 
 ```powershell
 python tools/check_scene_release.py --print-source-sha256
 python tools/check_scene_release.py
 ```
 
-檢查器會核對目前 Godot 執行期來源和素材、完整的圖庫場景、雙鏡位分數、對應的 1120 × 630 影像及全數通過的路線。素材、地形、shader 或相機更改後須針對受影響場景重跑，確認相關證據並更新版本記錄。所有場景雙鏡達 85 分以上且檢查器通過後，才提交和推送。
+檢查器會核對目前 Godot 執行期來源和素材、完整的圖庫場景、雙鏡位分數、對應的 1120 × 630 影像及全數通過的路線。素材、地形、shader 或相機更改後須針對受影響場景重跑，確認相關證據並更新版本記錄。所有場景雙鏡達 90 分以上且檢查器通過後，才提交和推送。

@@ -7,6 +7,10 @@ uniform bool geographic_water = false;
 uniform bool retention_pool = false;
 uniform bool contact_riffles = false;
 uniform bool spring_inflow = false;
+uniform bool cut_flow = false;
+uniform bool soft_sky_return = false;
+uniform bool flood_bays = false;
+uniform bool spillway_depth = false;
 varying vec3 p;
 
 float h(vec2 key) {
@@ -41,6 +45,10 @@ void fragment() {
 	float wash = noise(vec2(q.x * 3.4 + current * 0.4, q.y * 2.5 - TIME * .3));
 	float wind = sin(q.y * 15.0 + q.x * 4.1 + current * 11.0 - TIME * 2.2);
 	float shore = (channel_width * 0.5 - abs(q.x - channel_mid)) + (current - .5) * .06;
+	if (flood_bays) {
+		float outer = -8.56 - .99 * exp(-pow((q.y + 7.78) / 2.9, 2.0)) - .65 * exp(-pow((q.y - 3.65) / 2.2, 2.0));
+		shore = min(q.x - outer, -5.49 - q.x) + (current - .5) * .08;
+	}
 	float edge = (1.0 - smoothstep(0.03, 0.35, shore)) * smoothstep(.46, .82, wash + wind * .10);
 	float reflected = pow(1.0 - max(0.0, dot(NORMAL, VIEW)), 3.3);
 	vec3 blue = mix(vec3(0.028, 0.081, 0.091), vec3(0.065, 0.138, 0.156), current);
@@ -96,10 +104,41 @@ void fragment() {
 		edge = max(edge, spread * smoothstep(.49, .87, expanding) * .74);
 		reflected *= .77;
 	}
+	if (cut_flow) {
+		// Turbulence is localized where falling water enters the cut.
+		vec2 impact = (q - vec2(-8.30,-7.65)) * vec2(.86,.64);
+		float ripple_radius = length(impact);
+		float pulse = noise(vec2(q.x * 6.4, q.y * 3.8 + TIME * .69));
+		float broken_arc = smoothstep(.75,.96,abs(sin(ripple_radius * 17.2 - TIME * 3.9 + pulse * 2.9)));
+		float turbulent = 1.0 - smoothstep(.12,1.65,ripple_radius);
+		float drop = max(0.0,-impact.y);
+		float thread_x = (impact.x - drop * .35) * 7.5;
+		float foam_trail = (1.0 - smoothstep(.16,.79,abs(thread_x))) * smoothstep(.17,.42,drop) * (1.0 - smoothstep(.85,2.52,drop));
+		edge = max(edge, broken_arc * turbulent * (.35 + pulse * .56));
+		edge = max(edge, foam_trail * smoothstep(.42,.69,wash) * .41);
+		float depth = smoothstep(.12,1.03,shore + (current - .53) * .30);
+		vec3 bank_colour = mix(vec3(.065,.136,.122),vec3(.035,.065,.085),depth);
+		blue = mix(blue, bank_colour * (.93 + pulse * .15), .55);
+		wind += sin(q.y * 22.0 - TIME * 1.9 + q.x * 6.0 + pulse * 3.5) * .29;
+	}
+	if (spillway_depth) {
+		float outfall_basin = 1.0 - smoothstep(.29, 2.58, length((q - vec2(-8.30,-7.82)) * vec2(1.0,.61)));
+		float sandbar = smoothstep(.36,.82,noise(q * vec2(1.12,.36) + vec2(4.2,.32)));
+		float shallows = (1.0 - smoothstep(.075,.68,shore + current * .18)) * (.33 + sandbar * .67);
+		vec3 glaucous = mix(vec3(.021,.052,.068), vec3(.073,.177,.166), shallows * .62 + sandbar * .17);
+		blue = mix(blue, glaucous, .68);
+		blue = mix(blue, vec3(.067,.166,.163), outfall_basin * .78);
+		edge *= .73 + outfall_basin * .43;
+	}
 	blue = mix(blue, vec3(0.136, 0.215, 0.247), reflected * .54);
 	ALBEDO = mix(blue, vec3(0.43, 0.52, 0.48), edge * 0.65);
-	ROUGHNESS = 0.23 + current * .16 + edge * 0.37 + (contact_riffles || retention_pool ? .11 : 0.0);
-	SPECULAR = spring_inflow ? .14 : (contact_riffles || retention_pool ? .29 : .43);
+	ROUGHNESS = cut_flow ? .23 + current * .17 + edge * .38 :
+		.23 + current * .16 + edge * .37 + (contact_riffles || retention_pool ? .11 : .0);
+	SPECULAR = cut_flow ? .42 : (spring_inflow ? .14 : (contact_riffles || retention_pool ? .29 : .43));
+	if (soft_sky_return) {
+		ROUGHNESS += .043 + wash * .036;
+		SPECULAR = .25;
+	}
 	float relief = (wind * .005 + current * .016) * (geographic_water ? .25 : 1.0);
 	vec3 displaced = VERTEX + NORMAL * relief;
 	vec3 water_normal = normalize(cross(dFdx(displaced), dFdy(displaced)));

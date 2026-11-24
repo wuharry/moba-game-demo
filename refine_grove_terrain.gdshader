@@ -27,19 +27,21 @@ void fragment() {
 	float detail = field(p*8.0);
 	float growth = field(p*vec2(.17,.21)+vec2(1.2,-.9));
 	float moss_mask = smoothstep(.27,.82,growth*.73+broad*.24+medium*.07);
-	vec3 grass = mix(vec3(.064,.112,.051), vec3(.200,.263,.129), moss_mask);
+	float meadow = smoothstep(.26,.71,field(p*vec2(.15,.10)+vec2(8.3,2.7)));
+	vec3 grass = mix(vec3(.062,.104,.056), vec3(.196,.229,.111), moss_mask);
+	grass = mix(grass,grass*vec3(1.25,1.14,.93),meadow*.47);
 	vec2 turf_uv = (1.0-abs(mod(p*.149 + vec2(broad*.38, medium*.12), 2.0)-1.0)) * .966+.017;
 	vec3 turf = texture(ground_sheet, vec2(.5 + turf_uv.x * .5, turf_uv.y * .5)).rgb;
-	grass = mix(grass,turf*vec3(.34,.49,.36),.23);
-	grass *= .83+detail*.17;
+	grass = mix(grass,turf*vec3(.36,.46,.35),.20);
+	grass *= .90+detail*.12;
 	vec2 warped = p * .152 + vec2(broad * .23, medium * .10);
 	warped = (1.0-abs(mod(warped, 2.0)-1.0)) * .976 + .012;
 	vec3 pigment = texture(atlas, vec2(warped.x*.5, warped.y)).rgb;
 	vec3 sand = texture(ground_sheet, vec2(.5 + warped.x*.5,.5 + warped.y*.5)).rgb;
 	vec3 moss = texture(ground_sheet, warped*.5).rgb;
 	float travel = smoothstep(.52,.88,COLOR.r);
-	vec3 shoulder = vec3(.179,.141,.091);
-	vec3 crushed = vec3(.259,.218,.151);
+	vec3 shoulder = vec3(.168,.137,.094);
+	vec3 crushed = vec3(.246,.213,.157);
 	vec3 soil = mix(mix(shoulder,crushed,travel*.61),sand*vec3(.60,.57,.51),.30)
 		* (.90+.09*medium+.041*detail);
 	float slope = smoothstep(.18, .50, 1.0-abs(normalize(world_n).y));

@@ -15,7 +15,7 @@ const OUTFIT := preload("res://refine_basin_dressing.gd")
 const BASIN_WATER := preload("res://refine_basin_water.gdshader")
 const BASIN_SKY := preload("res://refine_basin_sky.gdshader")
 
-@export var refinement_round := 26
+@export var refinement_round := 33
 
 var _rng := RandomNumberGenerator.new()
 var _step_stone: ShaderMaterial
@@ -139,6 +139,7 @@ func _lighting() -> void:
 	if refinement_round >= 9:
 		var cloud_deck := ShaderMaterial.new()
 		cloud_deck.shader = BASIN_SKY
+		cloud_deck.set_shader_parameter("clearing", refinement_round >= 30)
 		sky.sky_material = cloud_deck
 		sky.radiance_size = Sky.RADIANCE_SIZE_128
 		lighting.fog_light_color = Color("81919d")
@@ -164,6 +165,18 @@ func _lighting() -> void:
 		lighting.fog_depth_begin = 27.0
 		lighting.fog_depth_end = 90.0
 		lighting.fog_density = .65
+	if refinement_round >= 27:
+		lighting.ssr_enabled = true
+		lighting.ssr_max_steps = 42
+		lighting.ssr_fade_in = .18
+		lighting.ssr_fade_out = 2.25
+		lighting.ssr_depth_tolerance = .22
+		lighting.volumetric_fog_density = .004
+		lighting.fog_light_color = Color("#6d8798")
+		lighting.fog_depth_begin = 25.0
+		lighting.fog_depth_end = 99.0
+		lighting.fog_density = .58
+		lighting.ambient_light_energy = .60
 	var env := WorldEnvironment.new()
 	env.environment = lighting
 	add_child(env)
@@ -190,6 +203,16 @@ func _lighting() -> void:
 		light.light_color = Color("#f6dbc1")
 		light.light_energy = 1.18
 		light.light_angular_distance = 3.6
+	if refinement_round >= 27:
+		light.rotation_degrees = Vector3(-30.0, -152.0, 0.0)
+		light.light_color = Color("#ffe1b6")
+		light.light_energy = 1.58
+		light.light_angular_distance = 4.1
+	if refinement_round >= 28:
+		light.rotation_degrees = Vector3(-36.0, -119.0, 0.0)
+		light.light_color = Color("#f4e0c6")
+		light.light_energy = 1.28
+		light.light_angular_distance = 4.7
 	add_child(light)
 	if refinement_round >= 4:
 		var fill := DirectionalLight3D.new()
@@ -253,9 +276,17 @@ func _ground() -> void:
 		ground.set_shader_parameter("repair_weathering", 1.0 if refinement_round >= 17 else 0.0)
 		ground.set_shader_parameter("service_apron", refinement_round >= 23)
 		ground.set_shader_parameter("split_approach", refinement_round >= 26)
+		ground.set_shader_parameter("runoff_layers", refinement_round >= 27)
+		ground.set_shader_parameter("soft_sky_return", refinement_round >= 28)
+		ground.set_shader_parameter("saturated_concrete", refinement_round >= 29)
+		ground.set_shader_parameter("reserve_guide_glare", refinement_round >= 30)
+		ground.set_shader_parameter("drained_pavement", refinement_round >= 32)
+		ground.set_shader_parameter("worn_joints", refinement_round >= 33)
 		ground.set_shader_parameter("tint", Color("9da9a3"))
 		deck = ground
 	_box(Vector3(5.0, -0.48, 0.0), Vector3(21.0, 0.96, 31.0), deck, true)
+	if refinement_round >= 29:
+		_cast_apron_cap(deck as ShaderMaterial)
 	_box(Vector3(-14.0, -0.51, 0.0), Vector3(11.0, 0.92, 31.0), _bedrock)
 	_box(Vector3(0.0, -1.0, 0.0), Vector3(86.0, 0.35, 76.0), _bedrock)
 	if refinement_round == 0:
@@ -263,6 +294,39 @@ func _ground() -> void:
 	_box(Vector3(5.0, 0.45, -15.10), Vector3(20.8, 0.9, 0.6), _bedrock, true)
 	_box(Vector3(14.85, 0.42, 0.0), Vector3(0.55, 0.85, 30.9), _bedrock, true)
 	_box(Vector3(5.0, 0.265, 15.40), Vector3(20.8, 0.53, 0.44), _bedrock, true)
+
+
+func _cast_apron_cap(deck: ShaderMaterial) -> void:
+	var builder := SurfaceTool.new()
+	builder.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var rows: Array[PackedVector3Array] = []
+	var east := PackedFloat32Array([1.77, 2.25, 2.40, 2.07, 1.82, 2.04, 2.24, 2.11, 1.62])
+	var west := PackedFloat32Array([-2.55, -2.67, -2.72, -2.45, -2.53, -2.82, -2.67, -2.55, -2.14])
+	var offsets := [0.0, .16, .39, .59, .79, .94, 1.0]
+	for row in range(9):
+		var z := 6.4 - float(row) * 1.25
+		var rise := sin(float(row) / 8.0 * PI) * (.155 + .028 * sin(float(row) * .83))
+		var strip := PackedVector3Array()
+		for offset: float in offsets:
+			var x := lerpf(west[row], east[row], offset)
+			var crown := smoothstep(.0, .25, offset) * (1.0 - smoothstep(.72, 1.0, offset))
+			var crossfall := .72 + .28 * sin(offset * 2.98)
+			strip.append(Vector3(x, .014 + rise * crown * crossfall, z + x * .068))
+		rows.append(strip)
+	for row in range(rows.size() - 1):
+		for slot in range(offsets.size() - 1):
+			var a := rows[row][slot]
+			var b := rows[row][slot + 1]
+			var c := rows[row + 1][slot + 1]
+			var d := rows[row + 1][slot]
+			for vertex in [a, c, b, a, d, c]:
+				builder.add_vertex(vertex)
+	builder.index()
+	builder.generate_normals()
+	var face := deck.duplicate() as ShaderMaterial
+	face.set_shader_parameter("cast_cap", true)
+	var cap := _mesh(builder.commit(), face, Vector3.ZERO)
+	cap.create_trimesh_collision()
 
 
 func _legacy_paths() -> void:
@@ -280,8 +344,12 @@ func _canal() -> void:
 	if refinement_round == 18 or refinement_round == 19:
 		_jointed_banks()
 	else:
-		_box(Vector3(-5.45, 0.21, 0), Vector3(0.70, 0.42, 30.8), _ice_stone, true)
-		_box(Vector3(-8.62, 0.19, 0), Vector3(0.65, 0.56, 30.8), _ice_stone)
+		if refinement_round >= 31:
+			_canal_view_opening()
+		else:
+			_box(Vector3(-5.45, 0.21, 0), Vector3(0.70, 0.42, 30.8), _ice_stone, true)
+		if refinement_round < 29:
+			_box(Vector3(-8.62, 0.19, 0), Vector3(0.65, 0.56, 30.8), _ice_stone)
 	var water := ShaderMaterial.new()
 	var shader := Shader.new()
 	shader.code = """
@@ -306,9 +374,16 @@ func _canal() -> void:
 		water.set_shader_parameter("geographic_water", refinement_round >= 20)
 		water.set_shader_parameter("contact_riffles", refinement_round >= 24)
 		water.set_shader_parameter("spring_inflow", refinement_round >= 26)
-	var plane := PlaneMesh.new()
-	plane.size = Vector2(3.08, 31.2)
-	_mesh(plane, water, Vector3(-7.03, -0.47, 0.0))
+		water.set_shader_parameter("cut_flow", refinement_round >= 27)
+		water.set_shader_parameter("soft_sky_return", refinement_round >= 28)
+		water.set_shader_parameter("flood_bays", refinement_round >= 29)
+		water.set_shader_parameter("spillway_depth", refinement_round >= 31)
+	if refinement_round >= 29:
+		_cut_canal_water(water)
+	else:
+		var plane := PlaneMesh.new()
+		plane.size = Vector2(3.08, 31.2)
+		_mesh(plane, water, Vector3(-7.03, -0.47, 0.0))
 	if refinement_round >= 20:
 		_flow_obstacles()
 	for z in [-12.7, -8.2, -3.5, 1.4, 5.9, 10.8]:
@@ -319,6 +394,49 @@ func _canal() -> void:
 		_box(Vector3(-7.0, -0.30, z), Vector3(3.8, 0.27, 0.46), _iron)
 		for x in [-8.15, -7.35, -6.55]:
 			_box(Vector3(x, -0.10, z), Vector3(0.18, 0.44, 1.4), _iron)
+
+
+func _canal_view_opening() -> void:
+	_body(Vector3(-5.45, .21, 0), Vector3(.70, .42, 30.8))
+	_box(Vector3(-5.45, .21, 6.71), Vector3(.70, .42, 17.36), _ice_stone)
+	_box(Vector3(-5.45, .21, -11.04), Vector3(.70, .42, 8.70), _ice_stone)
+	_box(Vector3(-5.45, .085, -4.29), Vector3(.70, .17, 4.76), _ice_stone)
+	_box(Vector3(-5.40, .456, -4.30), Vector3(.095, .074, 4.74), _iron)
+	for z in [-6.53, -5.29, -4.06, -2.82, -2.08]:
+		_box(Vector3(-5.40, .294, z), Vector3(.14, .30, .142), _iron)
+
+
+func _canal_outer_x(z: float) -> float:
+	return -8.56 - .99 * exp(-pow((z + 7.78) / 2.9, 2.0)) - .65 * exp(-pow((z - 3.65) / 2.2, 2.0))
+
+
+func _cut_canal_water(water: ShaderMaterial) -> void:
+	var fill := SurfaceTool.new()
+	fill.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var floodwall := _stone(Color("617572"), 3.8, .55, .86)
+	var capstone := _stone(Color("a1ada0"), 2.4, .67, .94)
+	var step := 1.2
+	for i in range(26):
+		var z0 := -15.60 + i * step
+		var z1 := z0 + step
+		var outer0 := _canal_outer_x(z0)
+		var outer1 := _canal_outer_x(z1)
+		for point in [
+			Vector3(outer0 - .07, -.47, z0), Vector3(-5.49, -.47, z0), Vector3(-5.49, -.47, z1),
+			Vector3(outer0 - .07, -.47, z0), Vector3(-5.49, -.47, z1), Vector3(outer1 - .07, -.47, z1),
+		]:
+			fill.set_normal(Vector3.UP)
+			fill.add_vertex(point)
+		var yaw := atan2(outer1 - outer0, step)
+		var mid := Vector3((outer1 + outer0) * .5 - .24, -.15, (z1 + z0) * .5)
+		var below := exp(-pow((mid.z + 7.78) / 1.14, 2.0)) * .45
+		var rise := .79 - below
+		var span := Vector2(outer1 - outer0, step).length()
+		var wall := _box(mid + Vector3(0.0, (rise - .79) * .5, 0.0), Vector3(.51, rise, span + .03), floodwall)
+		wall.rotation.y = yaw
+		var coping := _box(mid + Vector3(0.0, .39 - below, 0.0), Vector3(.56, .105, span - .023), capstone)
+		coping.rotation.y = yaw
+	_mesh(fill.commit(), water, Vector3.ZERO)
 
 
 func _flow_obstacles() -> void:
@@ -352,7 +470,8 @@ func _flow_obstacles() -> void:
 
 
 func _spring_outfall() -> void:
-	var wetwork := _stone(Color("#636b62"), 2.95, .39, .82)
+	var spring_tint := Color("#939c8f") if refinement_round >= 32 else Color("#636b62")
+	var wetwork := _stone(spring_tint, 2.95, .44 if refinement_round >= 32 else .39, .82)
 	wetwork.set_shader_parameter("micro_relief", .0055)
 	var support := [
 		[Vector3(-9.83, .08, -8.10), Vector3(3.30, 1.11, 2.94), -.28],
@@ -368,7 +487,7 @@ func _spring_outfall() -> void:
 		ledge.rotation.y = slab[2]
 	var spill := ShaderMaterial.new()
 	spill.shader = preload("res://refine_basin_outfall.gdshader")
-	for ribbon in [
+	var streams := [
 		[
 			Vector3(-10.00, 1.67, -8.49), Vector3(-9.82, 1.41, -8.43), Vector3(-9.40, .92, -8.16),
 			Vector3(-8.94, .29, -8.01), Vector3(-8.70, -.18, -7.94), Vector3(-8.26, -.45, -7.77),
@@ -376,10 +495,41 @@ func _spring_outfall() -> void:
 			Vector3(-9.91, 1.60, -8.28), Vector3(-9.73, 1.31, -8.01), Vector3(-9.35, .84, -7.90),
 			Vector3(-9.02, .29, -7.77), Vector3(-8.77, -.21, -7.52), Vector3(-8.37, -.46, -7.38),
 		],
-	]:
+	]
+	if refinement_round >= 31:
+		spill.set_shader_parameter("aerated_fall", true)
+		streams = [
+			[
+				Vector3(-10.06, 2.52, -8.46), Vector3(-9.93, 2.41, -8.33), Vector3(-9.67, 1.65, -8.06),
+				Vector3(-9.30, .83, -7.97), Vector3(-8.82, .048, -7.84), Vector3(-8.53, -.45, -7.74),
+			],
+			[
+				Vector3(-9.92, 2.42, -8.17), Vector3(-9.78, 2.28, -8.10), Vector3(-9.57, 1.47, -7.90),
+				Vector3(-9.15, .64, -7.73), Vector3(-8.78, -.16, -7.63), Vector3(-8.43, -.46, -7.51),
+			],
+			[
+				Vector3(-9.82, 2.18, -7.91), Vector3(-9.70, 2.08, -7.83), Vector3(-9.40, 1.42, -7.75),
+				Vector3(-9.09, .62, -7.64), Vector3(-8.70, -.12, -7.46), Vector3(-8.36, -.46, -7.39),
+			],
+		]
+	if refinement_round >= 32:
+		spill.set_shader_parameter("shelf_film", true)
+		streams = [
+			[
+				Vector3(-10.13, 2.50, -8.52), Vector3(-9.97, 2.37, -8.52), Vector3(-9.67, 1.67, -8.35),
+				Vector3(-9.25, .87, -8.12), Vector3(-8.73, .032, -7.94), Vector3(-8.43, -.450, -7.65),
+			],
+			[
+				Vector3(-9.82, 2.21, -7.88), Vector3(-9.66, 1.92, -7.78), Vector3(-9.44, 1.38, -7.56),
+				Vector3(-9.16, .78, -7.42), Vector3(-8.69, .012, -7.31), Vector3(-8.28, -.455, -7.07),
+			],
+		]
+	for ribbon in streams:
 		var curtain := SurfaceTool.new()
 		curtain.begin(Mesh.PRIMITIVE_TRIANGLES)
 		var strip_widths := [.18, .25, .31, .36, .43, .60]
+		if refinement_round >= 32:
+			strip_widths = [.31, .48, .38, .64, .77, .97]
 		for row in range(ribbon.size() - 1):
 			var a: Vector3 = ribbon[row]
 			var d: Vector3 = ribbon[row + 1]
@@ -395,6 +545,33 @@ func _spring_outfall() -> void:
 		curtain.generate_normals()
 		var stream := _mesh(curtain.commit(), spill, Vector3.ZERO)
 		stream.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	if refinement_round >= 31:
+		var vapour := FogMaterial.new()
+		vapour.density = .092
+		vapour.albedo = Color("#a7bab9")
+		vapour.edge_fade = 1.0
+		var mist := FogVolume.new()
+		mist.shape = RenderingServer.FOG_VOLUME_SHAPE_ELLIPSOID
+		mist.position = Vector3(-8.5, -.03, -7.61)
+		mist.size = Vector3(2.6, 1.1, 3.0)
+		mist.material = vapour
+		add_child(mist)
+	if refinement_round >= 32:
+		var ravine_fill := SpotLight3D.new()
+		ravine_fill.position = Vector3(-5.80, 5.66, -3.60)
+		ravine_fill.light_color = Color("#d7e7d2")
+		ravine_fill.light_energy = .90
+		ravine_fill.spot_angle = 24.0
+		ravine_fill.spot_range = 11.4
+		ravine_fill.spot_attenuation = 2.1
+		ravine_fill.light_specular = .02
+		if refinement_round >= 33:
+			ravine_fill.light_color = Color("#eadcc4")
+			ravine_fill.light_energy = 1.41
+			ravine_fill.spot_attenuation = 1.64
+			ravine_fill.light_volumetric_fog_energy = .075
+		add_child(ravine_fill)
+		ravine_fill.look_at(Vector3(-9.72, 1.00, -7.86), Vector3.UP)
 
 
 func _jointed_banks() -> void:

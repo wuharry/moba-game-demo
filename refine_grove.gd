@@ -62,7 +62,7 @@ func _ready() -> void:
 	nectar.emission_enabled = true
 	nectar.emission = Color("c5edba")
 	nectar.emission_energy_multiplier = 0.37
-	for hex in ["a4713d", "9e5634", "a95c33", "b77038", "758247", "58804e", "517751", "669156"]:
+	for hex in ["946b43", "956342", "8e7547", "ad7e48", "7c8953", "547653", "486b5b", "608762"]:
 		var foliage := ShaderMaterial.new()
 		foliage.shader = CANOPY
 		foliage.set_shader_parameter("tint", Color(hex))
@@ -71,12 +71,14 @@ func _ready() -> void:
 	leaf_layer = ShaderMaterial.new()
 	leaf_layer.shader = CANOPY
 	leaf_layer.set_shader_parameter("using_vertex", 1.0)
-	for cell in [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1)]:
+	var cover_palettes := [Color("a9b58a"), Color("b3ab84"), Color("91a892")]
+	var cells := [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1)]
+	for i in cells.size():
 		var plant := ShaderMaterial.new()
 		plant.shader = FOLIAGE
 		plant.set_shader_parameter("plant_atlas", FOLIAGE_MAP)
-		plant.set_shader_parameter("quadrant", cell)
-		plant.set_shader_parameter("foliage_tint", Color("c0c797"))
+		plant.set_shader_parameter("quadrant", cells[i])
+		plant.set_shader_parameter("foliage_tint", cover_palettes[i])
 		ferns.append(plant)
 	_build_light()
 	_build_terrain()
@@ -95,6 +97,7 @@ func _ready() -> void:
 	_build_escarpments()
 	_build_sedge_cove()
 	_build_slope_gardens()
+	_build_garden_retaining_banks()
 	rng.state = scenery_seed
 
 
@@ -107,32 +110,32 @@ func _build_light() -> void:
 	env.sky = sky
 	env.background_mode = Environment.BG_SKY
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
-	env.tonemap_exposure = .93
+	env.tonemap_exposure = .94
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	env.ambient_light_color = Color("c1d8d6")
-	env.ambient_light_energy = .66
+	env.ambient_light_color = Color("b9cdd8")
+	env.ambient_light_energy = .71
 	env.adjustment_enabled = true
-	env.adjustment_contrast = 1.09
-	env.adjustment_saturation = 1.06
+	env.adjustment_contrast = 1.10
+	env.adjustment_saturation = 1.00
 	env.ssao_enabled = true
 	env.ssao_radius = 1.6
 	env.ssao_intensity = 1.42
 	env.ssr_enabled = true
 	env.fog_enabled = true
 	env.fog_mode = Environment.FOG_MODE_DEPTH
-	env.fog_depth_begin = 29.0
-	env.fog_depth_end = 101.0
-	env.fog_density = 0.71
-	env.fog_light_color = Color("a9c8c5")
+	env.fog_depth_begin = 28.0
+	env.fog_depth_end = 96.0
+	env.fog_density = 0.74
+	env.fog_light_color = Color("9fbabf")
 	env.fog_sky_affect = 0.18
 	var world := WorldEnvironment.new()
 	world.environment = env
 	add_child(world)
 	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-44, -46, 0)
-	sun.light_color = Color("ffeecf")
-	sun.light_energy = 1.52
-	sun.light_angular_distance = .82
+	sun.rotation_degrees = Vector3(-37, -57, 0)
+	sun.light_color = Color("ffe3b9")
+	sun.light_energy = 1.50
+	sun.light_angular_distance = 1.36
 	sun.shadow_enabled = true
 	sun.directional_shadow_max_distance = 57.0
 	add_child(sun)
@@ -473,6 +476,120 @@ func _build_trail_aprons() -> void:
 				slab.rotation.y = -atan2(bearing.y,bearing.x) + rng.randf_range(-.11,.11)
 
 
+func _build_garden_retaining_banks() -> void:
+	# Sediment has collected behind two deliberately different structures:
+	# a dry verge following the turn, and the bedded shoulders of the spillway.
+	var verge := [
+		Vector2(-7.34,6.22), Vector2(-7.45,5.61), Vector2(-7.54,4.92),
+		Vector2(-7.4,4.26), Vector2(-7.05,3.62), Vector2(-6.86,2.85),
+		Vector2(-7.04,2.23), Vector2(-7.42,1.62),
+	]
+	var apron := [
+		Vector2(11.92,-1.74), Vector2(11.23,-1.57), Vector2(10.61,-1.63),
+		Vector2(9.92,-1.87), Vector2(9.21,-2.18), Vector2(8.72,-2.46),
+	]
+	var wet_face := _strata_material(Color("929981"),Color("565d4d"),Color("657c56"),.24,.88)
+	var dry_cap := _strata_material(Color("bcbc9b"),Color("787d65"),Color("74866c"),.26,.64)
+	var canopy := SurfaceTool.new()
+	canopy.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var stems := RandomNumberGenerator.new()
+	stems.seed = 765697
+	for course: int in range(2):
+		var axis: Array = verge if course == 0 else apron
+		for i in range(axis.size()-1):
+			var a: Vector2 = axis[i]
+			var b: Vector2 = axis[i+1]
+			var at := a.lerp(b,.50)
+			var tangent := (b-a).normalized()
+			var wall_y := (_height(a.x,a.y) + _height(b.x,b.y))*.5
+			var h := .26 + .20*sin(float(i)*.61+.38)
+			var footing := _place(_cut_stone(Vector3(a.distance_to(b)*.55,h,.28),.12),wet_face,
+				Vector3(at.x,wall_y+h*.28-.05,at.y))
+			footing.rotation.y = -atan2(tangent.y,tangent.x)
+			var crown_offset := Vector2(-.04,.03) * sin(float(i)*1.8+.62)
+			var crown := _place(_cut_stone(Vector3(a.distance_to(b)*.47,.084,.32),.09),dry_cap,
+				Vector3(at.x+crown_offset.x,wall_y+h*1.25,at.y+crown_offset.y))
+			crown.rotation.y = footing.rotation.y + .12*sin(float(i)*1.48)
+			if course == 0 and i in [0, 1, 3, 4]:
+				# Creepers follow the projecting cap and drop across the
+				# shaded face between sections of exposed masonry.
+				var inward := Vector2(-tangent.y,tangent.x)
+				var root := crown.position + Vector3.UP*.087
+				for strand in range(6 if i < 2 else 3):
+					var finger := Vector3(tangent.x,0,tangent.y)*stems.randf_range(-.24,.23)
+					var length := stems.randf_range(.34,.66)
+					for leaf in range(9):
+						var t := float(leaf)/8.0
+						var curve := inward * (.07+.29*sin(t*PI*.52))
+						var vine := root + finger + Vector3(curve.x,.065*sin(PI*t)-t*t*length,curve.y)
+						var side := (-1.0 if leaf%2 else 1.0)*stems.randf_range(.038,.088)
+						var along := Vector3(tangent.x,-.24,tangent.y)*side
+						var tip := vine+along*1.67 - Vector3.UP*.038
+						var mid := vine+along*.72
+						canopy.set_color(Color("718b52" if leaf%3 else "849957").srgb_to_linear())
+						_triangle(canopy,vine,mid+Vector3.UP*.043,tip)
+						canopy.set_color(Color("42634e").srgb_to_linear())
+						_triangle(canopy,vine,tip,mid-Vector3.UP*.043)
+			if i == 1 or i == axis.size()-3:
+				var toe := at + Vector2(.31,-.19) * (1.0 if course == 0 else -1.0)
+				var chipped := _place(_cut_stone(Vector3(.25,.085,.23),.22),warm_stone,
+					Vector3(toe.x,_height(toe.x,toe.y)-.029,toe.y))
+				chipped.rotation.y = footing.rotation.y - .30
+
+	# Broad understory leaves emerge on the sheltered side of the wall;
+	# their larger forms taper back to the fine ferns already on the bank.
+	var centers := [
+		[Vector2(-7.79,6.12),1.21],[Vector2(-7.98,5.27),1.34],
+		[Vector2(-7.68,4.26),.91],[Vector2(-7.51,3.02),.67],
+		[Vector2(-7.98,2.19),.72],[Vector2(-8.9,5.2),.69],
+		[Vector2(-6.95,6.44),.81],[Vector2(-6.72,5.30),.53],
+		[Vector2(-6.93,5.74),.70],[Vector2(-6.31,7.73),.67],
+		[Vector2(11.82,-.86),.96],[Vector2(11.18,-.24),1.16],
+		[Vector2(12.32,-.59),.80],[Vector2(10.72,-2.18),.73],
+		[Vector2(10.13,-2.56),.57],
+	]
+	for item: Array in centers:
+		var center: Vector2 = item[0]
+		var size: float = item[1]
+		var origin := Vector3(center.x,_height(center.x,center.y),center.y)
+		for blade in range(15):
+			var angle := float(blade)*2.399963 + stems.randf_range(-.15,.15)
+			var axis := Vector3(cos(angle),0,sin(angle))
+			var tangent := Vector3(-axis.z,.20*sin(angle*2.41),axis.x)
+			var low := origin + axis*size*stems.randf_range(.028,.084)
+			var height := stems.randf_range(.22,.61)*size
+			var reach := stems.randf_range(.19,.58)*size
+			var width := stems.randf_range(.048,.099) * size
+			var fold := low + axis*reach*.56 + Vector3.UP*height
+			var tip := low + axis*reach + Vector3.UP*height*.82
+			var left := fold-tangent*width-Vector3.UP*width*.20
+			var right := fold+tangent*width-Vector3.UP*width*.35
+			canopy.set_color(Color("547353" if blade%3 else "819759").srgb_to_linear())
+			_triangle(canopy,low,fold,left)
+			_triangle(canopy,left,fold,tip)
+			canopy.set_color(Color("3a5c4d" if blade%3 else "667848").srgb_to_linear())
+			_triangle(canopy,low,right,fold)
+			_triangle(canopy,right,tip,fold)
+		if center.x < -8.0 or center.x >= -6.71:
+			continue
+		for cluster in range(4):
+			var heading := float(cluster)*2.399963 + .54
+			var arm := Vector3(cos(heading),0,sin(heading))
+			var foot := origin + arm * (.18 + .19*stems.randf())
+			var top := foot + Vector3.UP * stems.randf_range(.26,.47) + arm * .07
+			_beam(foot,top,.008,.005,wood,5)
+			for petal in range(6):
+				var sweep := float(petal)*TAU/6.0 + heading
+				var face := Vector3(cos(sweep),0,sin(sweep))
+				var edge := face.cross(Vector3.UP)
+				var rim := top + face*.058 + Vector3.UP*.027
+				canopy.set_color(Color("aa8fa8" if petal%3 else "c3a6b5").srgb_to_linear())
+				_triangle(canopy,top,rim+edge*.022,rim+face*.020)
+				_triangle(canopy,top,rim+face*.020,rim-edge*.023)
+	canopy.generate_normals()
+	_place(canopy.commit(),leaf_layer,Vector3.ZERO)
+
+
 func _build_escarpments() -> void:
 	# Asymmetric bedrock rises above both sides of the path and is sheltered by the established tree line.
 	var west := [
@@ -751,26 +868,30 @@ func _build_stonework() -> void:
 
 
 func _build_ridges() -> void:
-	var pale := _strata_material(Color("a6ad96"),Color("7b8576"),Color("718966"),3.41,.79)
-	var muted := _strata_material(Color("969e90"),Color("78887f"),Color("72906f"),2.56,.77)
-	var distance_stone := _stone(Color("aabeb9"), 19.7, 1.0)
-	distance_stone.set_shader_parameter("micro_relief", .0019)
+	var pale := _strata_material(Color("a8a791"),Color("65746a"),Color("68805e"),1.15,.83)
+	var muted := _strata_material(Color("8d9c95"),Color("536e6e"),Color("617b66"),.87,.84)
+	pale.set_shader_parameter("ridge_weathering", .93)
+	muted.set_shader_parameter("ridge_weathering", .89)
+	var distance_stone := _strata_material(Color("98aca8"),Color("7a9497"),Color("758f83"),2.17,.69)
+	distance_stone.set_shader_parameter("ridge_weathering", .46)
+	# A rounded shoulder descends behind the left trail; the east wall
+	# breaks diagonally toward the feeder channel and its stepped sill.
 	var hilltops := [
-		[Vector3(-33.6, 2.4,-26.7),Vector3(13.4,13.8,6.3),-.39,pale],
-		[Vector3(-24.4, 2.2,-28.2),Vector3(11.7,10.8,6.9),-.42,pale],
-		[Vector3(-20.8, 1.6,-23.6),Vector3(8.5,7.7,4.3),-.34,muted],
-		[Vector3(-13.4, 2.6,-28.0),Vector3(8.8,8.2,4.7),-.46,muted],
-		[Vector3(-6.7, 1.7,-27.2),Vector3(8.4,6.2,4.7),-.61,muted],
-		[Vector3(1.9, 2.7,-34.3),Vector3(9.5,6.6,4.5),.35,pale],
-		[Vector3(12.2, 2.2,-30.1),Vector3(10.9,7.9,5.6),.51,muted],
-		[Vector3(20.3, 2.1,-29.0),Vector3(10.9,10.1,5.0),.47,pale],
-		[Vector3(27.8, 3.4,-22.7),Vector3(11.1,11.5,6.4),.53,pale],
-		[Vector3(33.7, 1.1,-20.8),Vector3(10.4,10.7,6.8),.36,muted],
-		[Vector3(43.6, .25,-17.7),Vector3(11.4,11.7,10.6),-.23,pale],
+		[Vector3(-33.8, 1.4,-28.9),Vector3(15.4,14.2,8.6),-.49,pale],
+		[Vector3(-24.2, 1.2,-28.2),Vector3(13.7,10.8,8.1),-.39,muted],
+		[Vector3(-20.1, 1.1,-23.1),Vector3(9.1,8.4,5.9),-.32,pale],
+		[Vector3(-13.4, 1.8,-26.5),Vector3(9.6,7.2,6.9),-.51,muted],
+		[Vector3(-5.7, 1.9,-28.8),Vector3(9.4,5.3,7.7),-.45,muted],
+		[Vector3(2.1, 2.4,-34.8),Vector3(9.8,7.2,6.2),.39,muted],
+		[Vector3(12.4, 1.8,-28.8),Vector3(11.3,9.1,7.9),.55,pale],
+		[Vector3(21.2, 1.6,-25.9),Vector3(12.1,10.5,6.8),.58,pale],
+		[Vector3(28.3, 2.5,-22.9),Vector3(12.9,12.9,7.4),.47,muted],
+		[Vector3(36.1, 1.1,-20.8),Vector3(11.5,10.2,7.7),.36,muted],
+		[Vector3(45.4, .25,-17.7),Vector3(13.6,12.4,10.6),-.23,pale],
 	]
 	for i in hilltops.size():
 		var spec: Array = hilltops[i]
-		var massif := _place(_rock_mass(spec[1],float(i)*1.20),spec[3],spec[0])
+		var massif := _place(_rock_mass(spec[1],float(i)*1.49, false),spec[3],spec[0])
 		massif.rotation.y = spec[2]
 	var shelves := [
 		[Vector2(-17.75,-17.63),Vector3(3.89,1.34,1.46),.33,muted],
@@ -794,15 +915,15 @@ func _build_ridges() -> void:
 		var rock := _place(_strata_mesh(extent,float(i)*1.47,true),spec[3],Vector3(at.x,above,at.y))
 		rock.rotation.y = spec[2]
 	var horizon := [
-		[Vector3(-41.0, 4.4, -56.5), Vector3(25.3, 23.5, 10.3), -.17],
-		[Vector3(-18.2, 5.2, -66.7), Vector3(27.4, 26.3, 13.1), .51],
-		[Vector3(5.4, 5.0, -67.8), Vector3(21.7, 16.4, 14.9), -.49],
-		[Vector3(25.5, 4.7, -57.2), Vector3(19.6, 21.3, 11.0), .37],
-		[Vector3(49.3, 3.2, -48.4), Vector3(22.3, 23.7, 12.9), -.19],
+		[Vector3(-45.0, 4.4, -58.5), Vector3(26.3, 21.5, 15.3), -.41],
+		[Vector3(-21.3, 5.2, -66.7), Vector3(30.4, 24.3, 16.1), .64],
+		[Vector3(2.4, 5.0, -73.8), Vector3(23.9, 19.4, 17.9), -.62],
+		[Vector3(24.5, 4.7, -59.2), Vector3(22.1, 20.1, 14.0), .51],
+		[Vector3(49.3, 3.2, -49.4), Vector3(26.6, 23.7, 12.9), -.29],
 	]
 	for i in horizon.size():
 		var spec: Array = horizon[i]
-		var rock := _place(_rock_mass(spec[1], float(i)*1.92),distance_stone,spec[0])
+		var rock := _place(_rock_mass(spec[1], float(i)*1.92 + 3.78, true),distance_stone,spec[0])
 		rock.rotation.y = spec[2]
 
 
@@ -851,8 +972,8 @@ func _build_left_terrace() -> void:
 func _build_grove() -> void:
 	var trees := [
 		[Vector2(-11.3, 6.3), 5.8, 1, 0, 1.1], [Vector2(-10.1, -6.8), 5.6, 0, 1, -0.63],
-		[Vector2(9.9, 3.7), 6.0, 2, 2, -2.25], [Vector2(10.2, -5.4), 4.9, 3, 1, 0.73],
-		[Vector2(8.3, -12.0), 5.1, 1, 0, 1.21], [Vector2(-7.8, -15.9), 5.8, 5, 2, -0.21],
+		[Vector2(9.9, 3.7), 6.0, 3, 2, -2.25], [Vector2(10.2, -5.4), 4.9, 4, 1, 0.73],
+		[Vector2(8.3, -12.0), 5.1, 5, 0, 1.21], [Vector2(-7.8, -15.9), 5.8, 5, 2, -0.21],
 		[Vector2(2.0, -15.7), 5.1, 5, 0, 1.8], [Vector2(13.5, -15.7), 7.6, 6, 1, -2.16],
 		[Vector2(-15.8, -12.7), 6.1, 7, 2, -1.13], [Vector2(14.4, 7.1), 4.6, 5, 1, 1.72],
 	]
@@ -870,13 +991,21 @@ func _build_grove() -> void:
 		Vector2(9.9, -9.0), Vector2(0.3, -15.7), Vector2(-8.5, -11.7), Vector2(10.4, -12.2),
 	]
 	for i in clusters.size():
+		var center: Vector2 = clusters[i]
+		var bank_edge := Vector2(1.0,.47).rotated(float(i%3)*.71)
+		var growth := ferns[i % ferns.size()]
 		for j in range(19):
-			var center: Vector2 = clusters[i]
-			var point := center + Vector2(rng.randf_range(-1.53, 1.51), rng.randf_range(-1.02, 1.02))
+			# The banks alternate exposed ground and a few damp perennial clumps.
+			var pocket := center + bank_edge * (float(j%3) - 1.0)
+			var point := pocket + Vector2(rng.randf_range(-.64,.64), rng.randf_range(-.73,.73))
 			var y := _height(point.x, point.y)
 			if y < -0.63 or _route_distance(point) < 1.58:
 				continue
-			_fern(Vector3(point.x, y, point.y), rng.randf_range(.42, 1.40), ferns[(i + j / 7) % ferns.size()])
+			# Give the new wood margin and reflected cove a few gaps
+			# between their distinctive vegetation patches.
+			if (i == 0 and point.x < -5.70) or (i == 2 and j % 3 != 0) or (i == 6 and j % 2 == 0):
+				continue
+			_fern(Vector3(point.x, y, point.y), rng.randf_range(.52, 1.16), growth)
 
 
 func _tree(origin: Vector3, height: float, palette: int, habit: int, bearing: float) -> void:
@@ -920,8 +1049,9 @@ func _tree(origin: Vector3, height: float, palette: int, habit: int, bearing: fl
 				+ Vector3.UP * (.035 + (i + lateral + 2) % 3 * .039)) * height
 			_bough(wood_mesh, [shoot_start, shoot_start.lerp(shoot_tip, .51) + Vector3.UP*.12, shoot_tip],
 				[height*.011, height*.006, .007], 6)
+			var pigment := canopy_palette[palette] * (.92 + .037 * float(i + lateral))
 			_leaf_spray(leaves, shoot_start.lerp(shoot_tip, .67), sway, height*(.245 if lateral == 0 else .183),
-				height*(.043 + (i % 3) * .018), canopy_palette[palette], 126)
+				height*(.048 + (i % 3) * .018), pigment, 102)
 	_leave_crown_top(leaves, crown, along, height, canopy_palette[palette])
 	wood_mesh.index()
 	wood_mesh.generate_normals()
@@ -931,8 +1061,8 @@ func _tree(origin: Vector3, height: float, palette: int, habit: int, bearing: fl
 
 
 func _leave_crown_top(builder: SurfaceTool, crown: Vector3, axis: Vector3, height: float, pigment: Color) -> void:
-	_leaf_spray(builder, crown, axis, height*.25, height*.10, pigment, 172)
-	_leaf_spray(builder, crown + (axis * .16 - Vector3.UP * .11) * height, axis, height*.20, height*.068, pigment, 120)
+	_leaf_spray(builder, crown, axis, height*.25, height*.10, pigment*1.10, 148)
+	_leaf_spray(builder, crown + (axis * .16 - Vector3.UP * .11) * height, axis, height*.20, height*.068, pigment, 94)
 
 
 func _bough(builder: SurfaceTool, spine: Array, girths: Array, sides: int) -> void:
@@ -967,22 +1097,22 @@ func _leaf_spray(builder: SurfaceTool, at: Vector3, along: Vector3, radius: floa
 		var setting := rng.randf()
 		leaf.y += (sqrt(1.0 - spread * spread) * .81 + (setting - .5) * 1.31 + x*.23) * depth
 		var vector := along.rotated(Vector3.UP, angle * .41 + rng.randf_range(-1.2, 1.2))
-		vector.y = rng.randf_range(-.68, .50) + x*.21
+		vector.y = rng.randf_range(-.33, .34) + x*.16
 		vector = vector.normalized()
 		var width := vector.cross(Vector3.UP).normalized()
-		width.y = rng.randf_range(-.55, .57)
-		var extent := rng.randf_range(.095, .234) * radius
-		var side := extent * rng.randf_range(.33, .62)
+		width.y = rng.randf_range(-.31, .36)
+		var extent := rng.randf_range(.131, .258) * radius
+		var side := extent * rng.randf_range(.43, .65)
 		var left_edge := leaf + width * side - vector * extent * .12
 		var right_edge := leaf - width * side
 		var front := leaf + vector * extent
 		var rear := leaf - vector * extent * .66
 		var ridge := leaf + Vector3.UP * extent*.16
-		var shade := (.72 + .49 * setting) * rng.randf_range(.76, 1.34)
+		var shade := (.87 + .13 * x + .15 * setting) * rng.randf_range(.92, 1.11)
 		builder.set_color(pigment * shade)
 		_triangle(builder, rear, left_edge, ridge)
 		_triangle(builder, ridge, left_edge, front)
-		builder.set_color(pigment * shade * .84)
+		builder.set_color(pigment * shade * .91)
 		_triangle(builder, rear, ridge, right_edge)
 		_triangle(builder, ridge, front, right_edge)
 
@@ -1071,37 +1201,66 @@ func _fern(at: Vector3, size_value: float, material: Material) -> void:
 		plant.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
-func _rock_mass(extent: Vector3, salt: float) -> ArrayMesh:
+func _rock_mass(extent: Vector3, salt: float, distant: bool) -> ArrayMesh:
 	var surface := SurfaceTool.new()
 	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var segments := 44
 	var rings: Array[PackedVector3Array] = []
 	var profiles := [
-		Vector2(-.18, .98), Vector2(.10, 1.0), Vector2(.28, .89), Vector2(.36, .89),
-		Vector2(.53, .76), Vector2(.68, .74), Vector2(.85, .62), Vector2(.96, .40), Vector2(1.02, .14),
+		Vector2(-.36, 1.04), Vector2(-.04, 1.03), Vector2(.14, .96), Vector2(.25, .88),
+		Vector2(.31, .81), Vector2(.35, .86), Vector2(.40, .78), Vector2(.49, .69),
+		Vector2(.55, .67), Vector2(.59, .69), Vector2(.65, .62), Vector2(.73, .58),
+		Vector2(.77, .49), Vector2(.83, .43), Vector2(.90, .36), Vector2(.95, .25),
+		Vector2(1.0, .10), Vector2(1.025, .026),
 	]
+	var lean := Vector3(.26 + .13 * sin(salt), 0.0, -.17 + .11 * cos(salt*1.66))
 	for profile: Vector2 in profiles:
 		var ring := PackedVector3Array()
-		for index in range(21):
-			var angle := TAU * float(index) / 21.0
+		for i in range(segments):
+			var angle := TAU * float(i) / float(segments)
 			var vector := Vector3(cos(angle), 0.0, sin(angle))
-			var erosion := .13 * sin(angle*4.0 + salt*.63) + .14 * sin(angle*7.0 - salt)
-			erosion += .09 * noise.get_noise_3dv(vector * 16.0 + Vector3(salt,profile.x * 12.0,0))
-			var incline := (Vector3(.15, 0.0, -.11) + .11 * Vector3(sin(salt), 0.0, cos(salt))) * profile.x * profile.x
-			var at := (vector * (profile.y + erosion * profile.y) + incline) * extent
-			at.y = extent.y * (profile.x + .09 * sin(angle*2.0 + salt) * maxf(profile.y, .45))
+			# Long folded faces shed into narrow gullies. At the toe they
+			# spread back into the adjoining grass and buried rubble.
+			var folds := .105*sin(angle*3.0 + salt*.79) + .070*sin(angle*6.0-salt*.62)
+			var gully := .068 * pow(.5+.5*cos(angle*8.0 + salt*.49 + profile.x*.94), 3.1)
+			var wear := noise.get_noise_3dv(vector*14.0 + Vector3(salt, profile.x*11.0, salt*.13))*.085
+			var landing := .28 + .72*smoothstep(-.1,.55,profile.x)
+			var crest := 1.0 + .15*sin(angle*2.0+salt) + .063*sin(angle*5.0-salt*.68)
+			var erosion := (folds - gully + wear) * landing * (.68 if distant else 1.0)
+			var at := (vector * profile.y*(crest + erosion) + lean * maxf(0.0,profile.x)**1.65) * extent
+			at.y = extent.y * (profile.x + (.084*sin(angle + salt) + .071*sin(angle*2.0-salt*.71))*profile.y)
 			ring.append(at)
 		rings.append(ring)
+	var ridge_normals: Array[PackedVector3Array] = []
+	var peak := (lean*1.07 + Vector3.UP*1.035)*extent
+	for row in rings.size():
+		var band := PackedVector3Array()
+		for i in range(segments):
+			var top := peak if row == rings.size()-1 else rings[row+1][i]
+			var toe := rings[maxi(0,row-1)][i]
+			var tangent := rings[row][(i+1)%segments]-rings[row][posmod(i-1,segments)]
+			band.append((top-toe).cross(tangent).normalized())
+		ridge_normals.append(band)
 	for row in range(rings.size() - 1):
-		surface.set_color(Color(.70 + .026*row, .74 + .027*row, .69 + .031*row))
-		for i in range(21):
-			var j := (i + 1) % 21
-			_triangle(surface, rings[row][i], rings[row][j], rings[row+1][j])
-			_triangle(surface, rings[row][i], rings[row+1][j], rings[row+1][i])
-	var peak := Vector3(0.0, extent.y*1.026, 0.0)
-	for i in range(21):
-		_triangle(surface, rings[-1][i], rings[-1][(i+1)%21], peak)
+		for i in range(segments):
+			var j := (i + 1) % segments
+			for key: Vector2i in [Vector2i(row,i),Vector2i(row,j),Vector2i(row+1,j),
+					Vector2i(row,i),Vector2i(row+1,j),Vector2i(row+1,i)]:
+				var vertex := rings[key.x][key.y]
+				var strength := smoothstep(-.17,.69,vertex.y/extent.y)
+				surface.set_normal(ridge_normals[key.x][key.y])
+				surface.set_color(Color(.71+.29*strength,.78+.22*strength,.72+.28*strength))
+				surface.add_vertex(vertex)
+	for i in range(segments):
+		var j := (i+1)%segments
+		surface.set_color(Color.WHITE)
+		surface.set_normal(ridge_normals[-1][i])
+		surface.add_vertex(rings[-1][i])
+		surface.set_normal(ridge_normals[-1][j])
+		surface.add_vertex(rings[-1][j])
+		surface.set_normal(Vector3.UP)
+		surface.add_vertex(peak)
 	surface.index()
-	surface.generate_normals()
 	return surface.commit()
 
 

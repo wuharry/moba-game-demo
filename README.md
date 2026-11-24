@@ -1,6 +1,6 @@
 # 四景環境美術驗收
 
-解壓後用 Godot 4.7.2 匯入 `project.godot`，等待 GLB 與貼圖匯入完成，按 F5 進入四景比較。實機驗證使用 Forward+、Vulkan、RTX 4080 Laptop GPU 和 1120 × 630。建置專案已附模型及貼圖。
+用 Godot 4.7.2 匯入專案根目錄的 `project.godot`，等待 GLB 與貼圖匯入完成，按 F5 進入四景比較。實機驗證使用 Forward+、Vulkan、RTX 4080 Laptop GPU 和 1120 × 630。建置專案已附模型及貼圖。
 
 | 操作 | 功能 |
 | --- | --- |
@@ -17,7 +17,9 @@
 
 - [跨場景共同關鍵點](review/refinement/COMMON_FINDINGS.md)
 - [實際使用的主 Prompt](review/refinement/MASTER_PROMPT.md)
-- [後續場景建置與 85 分驗收](review/refinement/SCENE_STYLE_STANDARD.md)
+- [後續場景建置與 90 分驗收](review/refinement/SCENE_STYLE_STANDARD.md)
+- [專案製作與驗收 Harness](AGENTS.md)
+- [四景實機雙鏡位總覽](review/refinement/Godot_Four_Scenes_Final.jpg)
 - [北盆地逐輪紀錄](review/refinement/basin_iterations.md) · [岩地子測試](review/refinement/basin_geology_iterations.md)
 - [潮鎖棧岸逐輪紀錄](review/refinement/tide_iterations.md)
 - [日藤庭院逐輪紀錄](review/refinement/sunvine_iterations.md)

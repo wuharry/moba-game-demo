@@ -5,6 +5,7 @@ uniform vec4 horizon : source_color = vec4(0.60, 0.70, 0.72, 1.0);
 uniform vec4 overcast : source_color = vec4(0.31, 0.40, 0.50, 1.0);
 uniform vec4 opening : source_color = vec4(0.82, 0.79, 0.66, 1.0);
 uniform vec3 key_direction = vec3(-0.68, 0.35, -0.64);
+uniform bool clearing = false;
 
 float lump(vec2 p) {
 	return fract(sin(dot(p, vec2(121.7, 71.28))) * 15345.52314);
@@ -33,4 +34,14 @@ void sky() {
 	float diffuse_opening = pow(clamp(dot(EYEDIR, normalize(key_direction)), 0.0, 1.0), 14.0);
 	vec3 body = mix(overcast.rgb, horizon.rgb, smoothstep(.43, .65, field) * 0.41);
 	COLOR = mix(basic, body, bank * .87) + opening.rgb * diffuse_opening * 0.29;
+	if (clearing) {
+		vec3 ray = normalize(EYEDIR);
+		vec2 atlas = ray.xz / max(.19, height + .23);
+		float wind_shelf = cloud_field(atlas * vec2(1.41, 2.23) + vec2(2.43, 6.81));
+		float high_shelf = smoothstep(.38,.73, wind_shelf) * smoothstep(.08,.27, height);
+		float broad_light = pow(max(0.0,dot(ray, normalize(vec3(-.44, .30, -.81)))), 16.0);
+		float skyline = smoothstep(.01,.20,height) * (1.0 - smoothstep(.23,.52,height));
+		COLOR = mix(COLOR, vec3(.21, .31, .42), high_shelf * .46);
+		COLOR += vec3(.32, .25, .15) * skyline * broad_light * smoothstep(.47,.81,1.0 - wind_shelf);
+	}
 }

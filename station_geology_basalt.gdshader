@@ -12,6 +12,7 @@ uniform float detail_amount = 0.48;
 uniform bool layered_ridge = false;
 uniform bool eroded_bluff = false;
 uniform bool jointed_talus = false;
+uniform float fractured_cut : hint_range(0.0, 1.0) = 0.0;
 
 varying vec3 world_position;
 varying vec3 world_normal;
@@ -157,6 +158,26 @@ void fragment() {
 			ALBEDO = bearing_face * (0.86 + upper_lip * plate_body * 0.12 - inner_joint * upper_decay * 0.16);
 			ROUGHNESS = clamp(0.91 - foothill * 0.29 - cold_run * 0.11, 0.44, 0.95);
 			SPECULAR = mix(0.22, 0.28, foothill * cold_run);
+		}
+		if (fractured_cut > 0.0) {
+			// Long shelf masks and separate vertical bleed follow the two
+			// dominant directions of the cut, at distinct scales.
+			float cut_map = field(f * vec3(.32, .25, .44) + vec3(16.3, 4.8, .5));
+			float slope_seep = field(f * vec3(1.04, .14, .90) + cut_map * .12);
+			float streak = smoothstep(.55, .83, slope_seep) * (1.0 - facing_up * .54);
+			float seam_base = (f.y * .80 + f.z * .145 + f.x * .104 + cut_map * .54) / belt_size;
+			float cleave = abs(fract(seam_base + .27) - .5);
+			float crack = (1.0 - smoothstep(.016, .054 + fwidth(seam_base), cleave)) * smoothstep(.29, .66, cut_map);
+			float lip = smoothstep(.041, .089 + fwidth(seam_base), cleave) *
+				(1.0 - smoothstep(.16, .21, cleave)) * joint_run;
+			float moss = smoothstep(.42, .66, slope_seep * .38 + cut_map * .58 + chips * .19);
+			moss *= smoothstep(.29, .62, facing_up) * (1.0 - COLOR.g * .53);
+			vec3 strata_wear = ALBEDO * mix(vec3(.72, .91, 1.02), vec3(1.18, 1.05, .87), cut_map);
+			strata_wear *= 1.0 - (.36 * streak + .48 * crack);
+			strata_wear = mix(strata_wear, exposed_stone.rgb * .59, lip * .34 + upper_lip * .23);
+			strata_wear = mix(strata_wear, lichen_stone.rgb * .64, moss * .44);
+			ALBEDO = mix(ALBEDO, strata_wear, fractured_cut);
+			ROUGHNESS = mix(ROUGHNESS, .52, streak * fractured_cut * .43);
 		}
 	}
 }

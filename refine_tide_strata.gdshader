@@ -5,6 +5,7 @@ uniform vec4 dry_basalt : source_color = vec4(.50, .57, .55, 1.0);
 uniform vec4 soaked_basalt : source_color = vec4(.25, .36, .37, 1.0);
 uniform vec4 ocher : source_color = vec4(.61, .57, .42, 1.0);
 uniform vec4 algae : source_color = vec4(.37, .48, .36, 1.0);
+uniform bool landward_beds = false;
 varying vec3 world_point;
 varying vec3 world_normal;
 
@@ -56,6 +57,23 @@ void fragment() {
 	vec3 surface = mix(dry_basalt.rgb, ocher.rgb, warm_face * .45);
 	surface = mix(surface, soaked_basalt.rgb, max(low * .83, seep * .75));
 	surface = mix(surface, algae.rgb, max(salt * .46, root * .47));
+	if (landward_beds) {
+		float dip = p.y + p.z * .093 + p.x * .057;
+		float slab = sin(dip * 3.2 + sin(p.z * .68) * .52 + (broken - .5) * .72);
+		float layer = smoothstep(.46, .97, slab) * (.42 + rind * .58);
+		float dark_joints = smoothstep(.51, .93, -slab) * (1.0 - abs(w.y) * .44);
+		float hush = noise21(vec2(p.z * .19 + p.y * .75, p.x * .18));
+		float long_fault = noise21(vec2(p.z * 1.34 - dip * .81, p.y * .51));
+		float seam = smoothstep(.58, .87, long_fault) * (1.0 - abs(w.y) * .77);
+		float sea_rind = max(low * .88, seep * .63 + smoothstep(.54, .78, hush) * .27);
+		vec3 light_shale = mix(dry_basalt.rgb * 1.13, ocher.rgb * .83, hush * .46);
+		float shelf_growth = smoothstep(.53,.80,w.y + broken * .14) * smoothstep(.41,.76,hush);
+		surface = mix(surface, light_shale, layer * .31 * (1.0 - low));
+		surface = mix(surface, algae.rgb * .92, shelf_growth * .61);
+		surface = mix(surface, soaked_basalt.rgb, sea_rind * .82);
+		surface *= 1.0 - dark_joints * .11 - seam * .19;
+		cracks *= .58;
+	}
 	ALBEDO = surface * (.24 + weathered * 1.33 + scoured * .19 - cracks * .35)
 		* (.71 + rind * .31 - seep * .14) * COLOR.rgb;
 	ROUGHNESS = clamp(.93 - low * .42 + weathered * .11 - seep * .38, .42, .97);

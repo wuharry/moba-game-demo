@@ -94,6 +94,11 @@ func _build_eroded_basin() -> void:
 		_regrade_stone(west_stone, "263740", "637c80", "74664d", "556757")
 		_regrade_stone(middle_stone, "2e4250", "697d87", "655943", "586655")
 		_regrade_stone(back_stone, "435a6b", "738b99", "5c625c", "626c60")
+	if art_revision >= 27:
+		east_stone.set_shader_parameter("fractured_cut", .82)
+		west_stone.set_shader_parameter("fractured_cut", 1.0)
+		middle_stone.set_shader_parameter("fractured_cut", .45)
+		back_stone.set_shader_parameter("fractured_cut", .22)
 
 	# The west bank is undercut near the canal. On the east, flat talus
 	# connects two shoulders and leaves the service lane clear.
@@ -105,6 +110,24 @@ func _build_eroded_basin() -> void:
 		Vector3(-15.4, 10.65, -17.0), Vector3(-18.4, 10.05, -20.7), Vector3(-21.2, 8.65, -26.4),
 		Vector3(-26.4, 7.70, -32.2),
 	])
+	if art_revision >= 31:
+		# Distinguish this foreground bluff's silhouette from the larger
+		# watershed. A notch gathers rain above the canal outfall.
+		west[3] = Vector3(-10.74, 5.96, 7.5)
+		west[4] = Vector3(-9.95, 8.98, 4.4)
+		west[5] = Vector3(-11.35, 10.12, 1.6)
+		west[6] = Vector3(-10.42, 7.24, -.15)
+		west[7] = Vector3(-12.72, 5.40, -3.7)
+		west[8] = Vector3(-11.84, 6.42, -6.25)
+		west[9] = Vector3(-11.52, 7.61, -8.10)
+		west[10] = Vector3(-12.41, 5.26, -10.7)
+	if art_revision >= 33:
+		west[6] = Vector3(-10.74, 7.86, -.15)
+		west[7] = Vector3(-13.44, 5.04, -3.7)
+		west[8] = Vector3(-12.92, 5.23, -6.25)
+		west[9] = Vector3(-12.62, 7.71, -8.10)
+		west[10] = Vector3(-12.39, 7.89, -10.7)
+		west[11] = Vector3(-14.02, 7.31, -13.45)
 	var east := PackedVector3Array([
 		Vector3(15.0, 5.7, 23.6), Vector3(12.1, 6.8, 19.8), Vector3(10.4, 6.1, 15.6),
 		Vector3(9.2, 4.15, 11.4), Vector3(10.3, 4.75, 8.0), Vector3(9.75, 5.30, 5.65),
@@ -113,6 +136,13 @@ func _build_eroded_basin() -> void:
 		Vector3(13.8, 6.85, -13.35), Vector3(13.1, 7.6, -16.2), Vector3(16.2, 8.6, -20.4),
 		Vector3(20.3, 7.6, -24.5), Vector3(25.1, 6.5, -28.0),
 	])
+	if art_revision >= 30:
+		east[4] = Vector3(11.33, 5.53, 8.0)
+		east[5] = Vector3(10.96, 5.86, 5.65)
+		east[6] = Vector3(9.65, 8.30, 2.90)
+		east[7] = Vector3(9.48, 8.48, -0.35)
+		east[8] = Vector3(10.90, 7.9, -3.3)
+		east[9] = Vector3(12.76, 5.05, -6.0)
 	_build_stratified_bluff("Canal Bluff", west, Vector3.LEFT, -0.86, 6.05, 1417, west_stone)
 	_build_stratified_bluff("Service Lane Talus", east, Vector3.RIGHT, -0.73, 5.30, 1913, east_stone, true)
 
@@ -141,6 +171,8 @@ func _build_eroded_basin() -> void:
 	_build_stratified_bluff("Outer Watershed", high, Vector3.FORWARD, -6.4, 20.9, 3511, back_stone)
 	if art_revision >= 24:
 		_build_basin_talus()
+	if art_revision >= 28:
+		_build_quarried_shoulders(east_stone, west_stone)
 
 	_build_wall([
 		[Vector3(9.44, -0.46, 3.8), Vector3(2.35, 1.62, 3.55), 0.14, 1],
@@ -171,10 +203,76 @@ func _regrade_stone(stone: ShaderMaterial, shade: String, face: String, ochre: S
 	stone.set_shader_parameter("lichen_stone", Color(growth))
 
 
+func _build_quarried_shoulders(east_stone: ShaderMaterial, west_stone: ShaderMaterial) -> void:
+	# Low benches emerge from the exposed geological lip. Their broken
+	# edges outline two slumped toes above the narrow west channel.
+	var cut_shelf := PackedVector3Array([
+		Vector3(-9.07, -0.62, 15.1), Vector3(-9.29, .04, 13.6),
+		Vector3(-9.38, .63, 11.8), Vector3(-10.03, 1.25, 9.3),
+		Vector3(-9.75, 1.13, 7.4), Vector3(-9.02, .63, 5.9),
+		Vector3(-9.31, .29, 4.1), Vector3(-10.40, -.20, 2.3),
+		Vector3(-10.58, .36, .5), Vector3(-9.66, .84, -1.48),
+		Vector3(-9.29, 1.03, -3.52), Vector3(-9.31, .91, -5.44),
+		Vector3(-10.22, 1.25, -6.89), Vector3(-10.68, 1.62, -10.75),
+		Vector3(-12.08, .67, -13.04), Vector3(-13.41, -.20, -15.09),
+	])
+	_build_stratified_bluff("Quarried Canal Shoulder", cut_shelf, Vector3.LEFT, -.84, 2.12, 8621, west_stone)
+	var ledges := [
+		[Vector3(-11.38, 1.36, 3.85), Vector3(3.2, .43, 4.6), -.27, 1],
+		[Vector3(-11.94, 2.43, 2.10), Vector3(2.72, .54, 4.13), -.48, 2],
+		[Vector3(-11.27, .87, -4.84), Vector3(2.14, .38, 3.55), .20, 0],
+		[Vector3(-10.62, .29, -5.97), Vector3(1.47, .41, 2.7), .25, 2],
+		[Vector3(-9.36, -.32, 8.25), Vector3(1.44, .42, 1.84), -.13, 1],
+		[Vector3(-9.43, -.35, 2.73), Vector3(1.4, .40, 1.21), .26, 2],
+	]
+	for ledge in ledges:
+		_add_boulder(ledge[0], ledge[1], ledge[2], ledge[3], west_stone)
+	for ledge in [
+		[Vector3(9.66, .82, 8.8), Vector3(2.55, .45, 3.35), .12, 0],
+		[Vector3(10.24, 1.34, 7.57), Vector3(2.76, .43, 3.82), .41, 2],
+		[Vector3(9.31, .41, -.41), Vector3(2.96, .34, 2.94), -.33, 1],
+		[Vector3(8.36, .02, 7.44), Vector3(1.34, .43, 1.63), -.30, 1],
+	]:
+		_add_boulder(ledge[0], ledge[1], ledge[2], ledge[3], east_stone)
+	if art_revision >= 30:
+		var eastern_cut := PackedVector3Array([
+			Vector3(10.62, .42, 11.20), Vector3(10.11, 1.39, 9.80),
+			Vector3(9.35, 2.23, 8.21), Vector3(9.00, 2.44, 6.52),
+			Vector3(8.86, 2.46, 4.85), Vector3(9.22, 3.12, 3.65),
+			Vector3(9.78, 4.05, 2.60), Vector3(10.24, 3.54, 1.10),
+			Vector3(10.68, 2.05, -.64), Vector3(10.80, 1.28, -2.64),
+			Vector3(11.52, .63, -3.91),
+		])
+		_build_stratified_bluff("East Abutment Exposed Shelf", eastern_cut, Vector3.RIGHT, -.46, 3.67, 4325, east_stone, true)
+	if art_revision >= 31:
+		var lip := [
+			[Vector3(-10.81, 1.96, -7.83), Vector3(2.72, .71, 2.72), .28, 2],
+			[Vector3(-10.37, 1.60, -7.97), Vector3(1.89, .44, 2.41), .18, 0],
+			[Vector3(-10.23, .47, -6.49), Vector3(1.72, .54, 2.18), -.43, 1],
+			[Vector3(-10.87, .58, -9.85), Vector3(2.62, .71, 2.78), -.21, 1],
+		]
+		for block in lip:
+			_add_boulder(block[0], block[1], block[2], block[3], west_stone)
+	if art_revision >= 33:
+		# The newly cut shelf bridges the valley-side deposits to the
+		# parent gorge. Its long, split bed is interrupted at the runnel.
+		var upper_shelf := PackedVector3Array([
+			Vector3(-14.27, 1.98, 1.92), Vector3(-12.63, 3.06, -.24),
+			Vector3(-12.31, 3.33, -2.27), Vector3(-11.80, 2.49, -4.40),
+			Vector3(-12.30, 1.63, -5.96), Vector3(-13.16, 1.28, -7.06),
+		])
+		var warmed_lip := west_stone.duplicate() as ShaderMaterial
+		warmed_lip.set_shader_parameter("rock_sediment", .64)
+		warmed_lip.set_shader_parameter("exposed_stone", Color("788880"))
+		_build_stratified_bluff("Split Upper Canal Shelf", upper_shelf, Vector3.LEFT, -.42, 2.93, 1403, warmed_lip)
+
+
 func _build_basin_talus() -> void:
 	var talus_stone := _create_material(Color("28373c"), Color("647673"), 0.49, 3.4, 0.83, 0.85)
 	talus_stone.set_shader_parameter("eroded_bluff", true)
 	_regrade_stone(talus_stone, "2a363a", "677670", "797059", "677459")
+	if art_revision >= 27:
+		talus_stone.set_shader_parameter("fractured_cut", .91)
 	var toe := PackedVector3Array([
 		Vector3(11.3, 0.32, 16.75), Vector3(9.5, 1.05, 13.65), Vector3(8.66, 1.82, 11.45),
 		Vector3(8.38, 2.24, 9.5), Vector3(8.43, 1.35, 7.32), Vector3(9.0, 1.12, 5.6),
@@ -216,6 +314,8 @@ func _build_stratified_bluff(label: String, controls: PackedVector3Array, inward
 	var flank := Vector3(inward.z, 0.0, -inward.x)
 	var samples := PackedVector3Array()
 	var interval := 0.47 if retreat < 8.0 else 0.94
+	if art_revision >= 27:
+		interval *= .68
 	for i in range(controls.size() - 1):
 		var current := controls[i]
 		var next := controls[i + 1]
@@ -229,6 +329,7 @@ func _build_stratified_bluff(label: String, controls: PackedVector3Array, inward
 	var surfaces: Array[PackedVector3Array] = []
 	var surface_colors: Array[PackedColorArray] = []
 	var fixed_winding := art_revision >= 24
+	var quarry_face := art_revision >= 30 and inward.x > .5 and retreat > 3.0
 	const COURSES := 48
 	for row in range(COURSES + 1):
 		var height := float(row) / 38.0
@@ -255,6 +356,25 @@ func _build_stratified_bluff(label: String, controls: PackedVector3Array, inward
 				var basin_shape := _eroded_cross_section(height, fold, flank_split, gully, local_noise)
 				profile = basin_shape.x
 				y_shape = basin_shape.y
+			if quarry_face:
+				var drape := .075 * sin(meter * .79 + flank_split)
+				var foothill_lean := smoothstep(.07, .27 + fold * .15, h) * (.22 + gully * .19)
+				var broad_cut := smoothstep(.34 + drape, .44 + drape, h) * (.23 + flank_split * .25)
+				var upper_shoulder := smoothstep(.63 + drape, .80 + drape, h) * (.24 + fold * .13)
+				profile = .47 * h + foothill_lean + broad_cut + upper_shoulder + maxf(height - 1.0, 0.0) * 3.93
+				y_shape += sin(h * PI) * (.11 * fold + .065 * flank_split + .14 * drape)
+			if art_revision >= 27:
+				var dip := noise.get_noise_2d(meter * .51 + 8.36, 67.0) * .12
+				# Split the large folds into fractured shelves. Their bedding
+				# drifts with the gorge, preserving the foot and crown extent.
+				var strata := h * 7.85 + dip * 4.7 + flank_split * .49
+				var phase := fposmod(strata, 1.0)
+				var lip := smoothstep(.16, .38, phase) * (1.0 - smoothstep(.46, .84, phase))
+				var leaf := smoothstep(.09, .42, h) * (1.0 - smoothstep(.90, 1.0, h))
+				var shear := smoothstep(-.42, -.10, local_noise) * (1.0 - smoothstep(-.04, .26, local_noise))
+				profile += lip * (.032 + gully * .061) * leaf
+				profile += shear * .035 * leaf
+				y_shape += (lip * .022 + dip) * leaf
 			var base := Vector3(toe.x, lerpf(foot_y, toe.y, y_shape), toe.z)
 			base += inward * maxf(-0.20, profile * retreat)
 			if fixed_winding and row > 0:

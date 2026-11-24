@@ -2,12 +2,18 @@ shader_type spatial;
 render_mode depth_draw_never;
 
 varying vec3 world_p;
-float h(vec2 p) { return fract(sin(dot(p,vec2(107.7,259.3))) * 17358.5453); }
+// Hash the integer lattice so adjacent cells agree on their shared ends.
+float h(ivec2 p) {
+	uint key = uint(p.x) * 0x8da6b343u ^ uint(p.y) * 0xd8163841u;
+	key = (key ^ (key >> 13u)) * 0xcb1ab31fu;
+	key ^= key >> 16u;
+	return float(key & 0x00ffffffu) / 16777215.0;
+}
 float n(vec2 p) {
-	vec2 i=floor(p);
+	ivec2 i=ivec2(floor(p));
 	vec2 f=fract(p);
 	vec2 q=f*f*(3.0-2.0*f);
-	return mix(mix(h(i),h(i+vec2(1.0,0.0)),q.x),mix(h(i+vec2(0.0,1.0)),h(i+vec2(1.0,1.0)),q.x),q.y);
+	return mix(mix(h(i),h(i+ivec2(1,0)),q.x),mix(h(i+ivec2(0,1)),h(i+ivec2(1,1)),q.x),q.y);
 }
 float crown(vec2 ray, vec2 root, vec2 span) {
 	float d = length((ray - root) / span) + .36 * n(ray*2.23);

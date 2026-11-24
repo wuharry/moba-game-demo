@@ -11,6 +11,7 @@ const GROUND_TEXTURE := preload("res://textures/refinement_ground.png")
 const PAVING := preload("res://refine_tide_paving.gdshader")
 const STRATA := preload("res://refine_tide_strata.gdshader")
 const ALLOY := preload("res://refine_tide_alloy.gdshader")
+const POCKET_WATER := preload("res://refine_tide_pocket.gdshader")
 const GATE := Vector3(-3.35, 0, -8.5)
 
 var rng := RandomNumberGenerator.new()
@@ -50,11 +51,13 @@ func _ready() -> void:
 	_build_service_walk()
 	_build_tide_gate()
 	_build_foreshore_works()
+	_build_carved_service_stop()
 	_place_details()
 	_build_intertidal_shelves()
 	_build_cliffside_catchbasin()
 	_build_pump_bay()
 	_build_cove_reef()
+	_build_windward_shelf()
 	_build_apron_joints()
 	_build_tide_monitor()
 	_build_surge_mole()
@@ -83,11 +86,11 @@ func _set_lighting() -> void:
 	environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	environment.tonemap_exposure = 1.0
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.ambient_light_color = Color("c1d2df")
-	environment.ambient_light_energy = .70
+	environment.ambient_light_color = Color("becfdf")
+	environment.ambient_light_energy = .64
 	environment.fog_enabled = true
 	environment.fog_mode = Environment.FOG_MODE_DEPTH
-	environment.fog_light_color = Color("91a8b4")
+	environment.fog_light_color = Color("8da5b1")
 	environment.fog_depth_begin = 29.0
 	environment.fog_depth_end = 126.0
 	environment.fog_depth_curve = 1.58
@@ -106,9 +109,9 @@ func _set_lighting() -> void:
 	world.environment = environment
 	add_child(world)
 	var sun := DirectionalLight3D.new()
-	sun.light_color = Color("ffe1b7")
-	sun.light_energy = 1.77
-	sun.light_angular_distance = 2.4
+	sun.light_color = Color("ffddb0")
+	sun.light_energy = 1.83
+	sun.light_angular_distance = 2.0
 	sun.shadow_enabled = true
 	sun.directional_shadow_max_distance = 55.0
 	sun.rotation_degrees = Vector3(-28, -57, 0)
@@ -167,12 +170,6 @@ func _build_coast() -> void:
 		var point: Vector3 = item[0]
 		var size: Vector3 = item[1]
 		_cliff(point, size, rock)
-	for buttress in [
-		[Vector3(17.68, -2.11, -12.8), Vector3(17.31, 11.26, 22.32), .23],
-		[Vector3(14.83, -1.95, -24.6), Vector3(18.21, 8.4, 13.68), -.17],
-		[Vector3(8.31, -1.81, -27.96), Vector3(14.73, 5.55, 8.60), -.12],
-	]:
-		_bedded_cliff(buttress[0], buttress[1], buttress[2], strata)
 	for index in range(18):
 		var far_x := rng.randf_range(-11.2, -2.75)
 		var z := rng.randf_range(-17.4, 16.0)
@@ -239,100 +236,139 @@ func _reef_crest(centerline: PackedVector3Array, width: float) -> void:
 	_mesh(mesh.commit(), strata, Vector3.ZERO)
 
 
-func _build_escarpment() -> void:
-	# Run of contiguous wave-cut rock. Each key controls beach toe, crest setback,
-	# crest height and distance along the headland. Setbacks align across joints.
-	var keys := [
-		Vector4(12.7, 2.0, 2.25, 21.0), Vector4(11.8, 4.2, 4.1, 16.0),
-		Vector4(10.9, 4.5, 5.35, 12.9), Vector4(11.3, 4.2, 5.0, 10.3),
-		Vector4(10.7, 3.9, 5.85, 7.0), Vector4(10.5, 3.2, 6.45, 4.3),
-		Vector4(11.1, 4.1, 7.6, 1.25), Vector4(10.6, 3.73, 6.05, -.6),
-		Vector4(11.0, 3.45, 6.77, -3.15), Vector4(10.05, 3.1, 7.40, -6.15),
-		Vector4(10.2, 3.16, 8.25, -8.9), Vector4(9.65, 3.82, 9.55, -12.4),
-		Vector4(9.15, 4.90, 8.3, -15.5), Vector4(6.86, 6.28, 6.8, -19.1),
-		Vector4(3.8, 8.1, 5.25, -23.2), Vector4(4.1, 7.7, 2.3, -26.8),
-	]
-	var shore := PackedVector2Array([
-		Vector2(-.6, -1.55), Vector2(-.11, -.53), Vector2(.05, .10),
-		Vector2(.29, .52), Vector2(.39, 1.05), Vector2(.35, 1.39),
-		Vector2(.65, 1.64), Vector2(.89, 2.11), Vector2(.80, 2.36),
-		Vector2(1.40, 2.81), Vector2(1.53, 3.21), Vector2(1.38, 3.51),
-		Vector2(1.79, 3.71), Vector2(2.43, 4.55),
+func _build_windward_shelf() -> void:
+	# A low exposed rib divides the windward froth from the sheltered pool.
+	# The centerline also places the local breaker in the sea shader.
+	var rib := PackedVector3Array([
+		Vector3(-13.26, -.67, -4.16), Vector3(-12.11, -.47, -3.50),
+		Vector3(-11.76, -.35, -2.42), Vector3(-10.87, -.27, -1.62),
+		Vector3(-10.54, -.49, -.81), Vector3(-10.06, -.64, .23),
 	])
+	_reef_crest(rib, 1.28)
+	_bedded_cliff(Vector3(-11.9, -.94, -2.73), Vector3(2.04, .45, 1.25), .37, strata)
+	_bedded_cliff(Vector3(-10.91, -.88, -1.64), Vector3(1.65, .48, 1.49), .74, strata)
+	_bedded_cliff(Vector3(-12.87, -.92, -3.68), Vector3(1.54, .37, 1.81), .28, strata)
+	_bedded_cliff(Vector3(-10.48, -.94, -.69), Vector3(.70, .4, 1.15), .53, strata)
+
+
+func _build_escarpment() -> void:
+	# Exposed beds dip through the whole headland. The crest stands behind the
+	# retreating face, with two low saddles separating the exposed rock masses.
+	var coast := PackedVector4Array([
+		Vector4(12.61, 5.12, 2.96, 21.5), Vector4(11.47, 6.52, 5.26, 17.8),
+		Vector4(10.73, 7.1, 6.18, 13.82), Vector4(10.88, 6.29, 5.82, 10.70),
+		Vector4(10.64, 5.73, 4.22, 7.45), Vector4(10.07, 6.25, 6.83, 3.88),
+		Vector4(10.35, 6.45, 8.16, 1.08), Vector4(11.15, 7.62, 7.29, -2.55),
+		Vector4(10.63, 7.43, 6.35, -5.65), Vector4(10.37, 7.32, 8.05, -8.30),
+		Vector4(9.92, 6.35, 8.73, -11.16), Vector4(9.31, 6.03, 7.36, -15.12),
+		Vector4(8.65, 6.00, 5.34, -19.25), Vector4(7.31, 7.37, 6.31, -22.48),
+		Vector4(5.95, 6.42, 4.33, -26.7), Vector4(6.79, 4.04, 1.62, -29.99),
+		Vector4(7.81, 1.02, .05, -33.8),
+	])
+	# Cross sections run from submerged scree to discontinuous ledges, then
+	# sweep across the crest and down the quieter landward side.
+	var outline := PackedVector2Array([
+		Vector2(-.37,-.32), Vector2(-.12,-.16), Vector2(.0,-.04), Vector2(.06,.09),
+		Vector2(.11,.23), Vector2(.16,.31), Vector2(.33,.36), Vector2(.47,.37),
+		Vector2(.50,.48), Vector2(.49,.57), Vector2(.56,.64), Vector2(.73,.67),
+		Vector2(.77,.75), Vector2(.84,.86), Vector2(.99,.97), Vector2(1.14,1.00),
+		Vector2(1.26,.94), Vector2(1.48,.83), Vector2(1.71,.66), Vector2(1.93,.44),
+		Vector2(2.19,.07), Vector2(2.29,-.24),
+	])
+	var upland := strata.duplicate() as ShaderMaterial
+	upland.set_shader_parameter("landward_beds", true)
+	upland.set_shader_parameter("dry_basalt", Color("566068"))
+	upland.set_shader_parameter("soaked_basalt", Color("263c41"))
+	upland.set_shader_parameter("ocher", Color("736c58"))
+	upland.set_shader_parameter("algae", Color("566151"))
+	var variation := FastNoiseLite.new()
+	variation.seed = 63217
+	variation.frequency = .76
 	var profiles: Array[PackedVector3Array] = []
-	for col in keys.size():
-		var key: Vector4 = keys[col]
-		var column := PackedVector3Array()
-		var riser := key.z * .64 / 4.55
-		var setback := minf(1.0, key.y * .69 / 2.43)
-		for i in shore.size():
-			var profile := shore[i]
-			var upward := smoothstep(.31, 4.55, profile.y)
-			var wobble := sin(float(col) * 2.16 + float(i) * .62) * lerpf(.18, .11, upward)
-			var wave_height := profile.y * lerpf(1.0, riser, upward) + wobble
-			column.append(Vector3(key.x + profile.x * lerpf(1.0, setback, upward) + wobble,
-				wave_height, key.w + wobble * .81))
-		column.append(Vector3(key.x + key.y * .82, key.z * .76, key.w - .22))
-		column.append(Vector3(key.x + key.y, key.z, key.w - .44))
-		column.append(Vector3(key.x + key.y + 4.90, key.z * .84, key.w - .72))
-		column.append(Vector3(key.x + key.y + 8.05, -1.62, key.w - .92))
-		profiles.append(column)
-	var columns: Array[PackedVector3Array] = []
-	for col in range(profiles.size() - 1):
-		var start := profiles[col]
-		var finish := profiles[col + 1]
-		columns.append(start)
-		var joint := PackedVector3Array()
-		var long_fault := sin(float(col) * 2.21) * .22
-		for row in start.size():
-			var fraction := .49 + .12 * sin(float(row) * .47 + col * .37)
-			var surface := start[row].lerp(finish[row], fraction)
-			var rubble := sin(float(col) * 1.9 + float(row) * 1.51) * .26
-			joint.append(surface + Vector3(long_fault + rubble, rubble * .73, 0.0))
-		columns.append(joint)
-	columns.append(profiles[-1])
+	var resolution := 5
+	var last := (coast.size() - 1) * resolution
+	for column in range(last + 1):
+		var sample := float(column) / resolution
+		var index := mini(int(sample), coast.size() - 2)
+		var t := sample - float(index)
+		var a := coast[maxi(0, index - 1)]
+		var b := coast[index]
+		var c := coast[index + 1]
+		var d := coast[mini(index + 2, coast.size() - 1)]
+		var key := b.lerp(c, t)
+		var toe := b.x + (c.x - b.x) * t
+		var setback := cubic_interpolate(b.y, c.y, a.y, d.y, t)
+		var crest := cubic_interpolate(b.z, c.z, a.z, d.z, t)
+		var last_headland := 1.0 - smoothstep(-33.8, -30.7, key.w)
+		var mid_bench := exp(-pow((key.w - 4.95) / 5.2, 2.0))
+		var shoulder := exp(-pow((key.w + 11.04) / 4.6, 2.0))
+		var section := PackedVector3Array()
+		for row in outline.size():
+			var profile := outline[row]
+			var windward := clampf(profile.x, 0.0, 1.0)
+			var bedrock := variation.get_noise_2d(key.w * .55 + windward * .39, profile.y * 4.35)
+			var edge := variation.get_noise_2d(key.w * 1.32, profile.y * 9.1 + 2.5)
+			var fault := pow(0.5 + sin(key.w * 2.41 + profile.y * 2.73) * .5, 7.0)
+			var fractured := .23 + sin(key.w * .88 + .6) * .18
+			var carve := (bedrock * .52 + edge * .062 + fault * fractured * .88) * (1.0 - smoothstep(.79, 1.21, profile.x))
+			var washed := smoothstep(.0, .4, profile.y)
+			var old_lip := exp(-pow((profile.y - .345) / .132, 2.0)) * mid_bench
+			var fault_shelf := exp(-pow((profile.y - .635) / .164, 2.0)) * shoulder
+			var face_x := toe + (profile.x - old_lip * .12 - fault_shelf * .094) * setback + carve * washed
+			var face_y := maxf(-1.82, profile.y * crest + (bedrock * .20 - edge * .066)
+				* washed + sin(key.w * .21 + profile.x) * .196 * washed)
+			face_y = lerpf(face_y, -1.57, last_headland)
+			var face_z := key.w + (windward * .97 - .73) * sin(key.w * .17) + edge * .07
+			section.append(Vector3(face_x, face_y, face_z))
+		profiles.append(section)
 	var mesh := SurfaceTool.new()
 	mesh.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for col in range(columns.size() - 1):
-		var first := columns[col]
-		var second := columns[col + 1]
-		for row in range(first.size() - 1):
-			var tone := Color(.85, .89, .89)
-			if row in [3, 6, 9, 11, 12]:
-				tone = Color(.72, .78, .80)
-			elif row in [2, 5, 8, 10, 13]:
-				tone = Color(.96, .97, .90)
+	for column in profiles.size() - 1:
+		var first := profiles[column]
+		var second := profiles[column + 1]
+		for row in first.size() - 1:
+			var tone := Color(.9, .93, .92)
+			if row in [0, 2, 4, 8, 12]:
+				var strip := smoothstep(-.85, .67, sin(first[row].z * .22 + row * .68))
+				tone = tone.lerp(Color(.68,.77,.81), strip * .52)
 			_quad(mesh, first[row], second[row], second[row + 1], first[row + 1], tone)
-	for end in [0, columns.size() - 1]:
-		var cap := columns[end]
-		var center := (cap[3] + cap[-2]) * .5 + Vector3(2.1, 0, 0)
-		for row in cap.size():
-			var next := (row + 1) % cap.size()
-			if end == 0:
-				_triangle(mesh, center, cap[next], cap[row], Color(.78, .83, .83))
-			else:
-				_triangle(mesh, center, cap[row], cap[next], Color(.78, .83, .83))
 	mesh.generate_normals()
-	_mesh(mesh.commit(), strata, Vector3.ZERO)
-	for index in range(1, keys.size() - 1):
-		var key: Vector4 = keys[index]
-		var slant := -.2 + sin(float(index) * 1.12) * .32
-		var height := 1.04 + sin(float(index) * 2.91) * .37
-		_bedded_cliff(Vector3(key.x -.22, -.59, key.w), Vector3(1.38, height, 2.04), slant, strata)
-		if index % 3 != 0:
-			_lichen_mat(Vector3(key.x -.32, .0, key.w + .34), .6 + index % 4 * .21)
-	for index in [3, 5, 6, 10, 14, 17, 21, 24, 25, 27]:
-		var ridge := columns[index]
-		var ledge := ridge[14].lerp(ridge[15], .26)
-		var shifted := ledge + Vector3(.05, -.21, -.21)
-		var slope := sin(float(index) * 1.7) * .27
-		var thickness := .8 + sin(float(index) * 2.1) * .23
-		_bedded_cliff(shifted, Vector3(1.33, thickness, 1.73), slope, strata)
-		var crack := ridge[11].lerp(ridge[12], .52) + Vector3(.035, 0, .10)
-		if index % 2 == 0:
-			_tuft(crack, .32, shrubs[0])
-			_tuft(crack + Vector3(.06, .032, -.09), .24, shrubs[1])
-
+	mesh.index()
+	_mesh(mesh.commit(), upland, Vector3.ZERO)
+	for index in range(1, coast.size() - 2):
+		var toe := profiles[index * resolution][3]
+		var skirt_grain := sin(float(index) * 1.67)
+		if index % 3 != 1:
+			_bedded_cliff(Vector3(toe.x -.28, -.72, toe.z),
+				Vector3(1.52 + skirt_grain * .36, 1.31 + skirt_grain * .16, 2.14 + skirt_grain * .73), -.31, upland)
+			_lichen_mat(Vector3(toe.x -.35, .0, toe.z + .34), .58 + index % 3 * .27)
+		if index in [1, 4, 6, 7, 11]:
+			var ledge := profiles[index * resolution][7]
+			var hollow := ledge + Vector3(-.015, .011, .19)
+			_tuft(hollow, .32, shrubs[0])
+			_tuft(hollow + Vector3(.045, .035, -.09), .24, shrubs[1])
+	# Chipped terrace lips and talus are distinct from the main profile.
+	for point in [
+		[Vector3(12.11, .097, 3.92), Vector3(2.45, .95, 2.84), .29],
+		[Vector3(11.75, -.23, 5.17), Vector3(2.45, .76, 1.43), .32],
+		[Vector3(11.56, -.43, 7.47), Vector3(1.49, .56, 1.58), -.13],
+		[Vector3(11.07, -.36, -12.88), Vector3(2.97, 1.0, 2.93), -.42],
+		[Vector3(8.83, -.78, -17.78), Vector3(3.78, 1.31, 2.48), .32],
+	]:
+		_bedded_cliff(point[0], point[1], point[2], upland)
+	var toe_ledge := PackedVector3Array([
+		Vector3(8.34, -.62, -20.4), Vector3(7.48, -.43, -22.67),
+		Vector3(6.31, -.26, -24.48), Vector3(5.63, -.43, -26.28),
+		Vector3(5.98, -.82, -28.47), Vector3(7.04, -1.21, -30.71),
+	])
+	_reef_crest(toe_ledge, 1.83)
+	for point in [
+		[Vector3(7.46, -.92, -22.11), Vector3(3.12, .98, 2.96), -.29],
+		[Vector3(5.83, -.86, -24.90), Vector3(2.53, 1.26, 2.24), .53],
+		[Vector3(5.42, -.92, -26.82), Vector3(1.48, .67, 2.1), .14],
+		[Vector3(6.48, -1.01, -28.29), Vector3(1.59, .56, 2.1), .33],
+	]:
+		_bedded_cliff(point[0], point[1], point[2], upland)
 
 func _lichen_mat(anchor: Vector3, span: float) -> void:
 	# Each planting occupies the landward cracks between apron and stone.
@@ -547,8 +583,8 @@ func _build_foreshore_works() -> void:
 		Vector2(-7.18, -.24), Vector2(-5.93, -2.49), Vector2(-3.04, -3.50),
 		Vector2(-2.31, -1.22), Vector2(-1.72, 2.63)
 	])
-	_prism(landing, -.39, -1.53, rock)
-	_prism(landing, -.373, -.388, _paving("8b9c9b", 0.0))
+	_build_settling_well(landing)
+	_build_well_spillway()
 	# The lower intake apron is fed by the gate. Supports are placed below
 	# joints and the worn, broken end is visible at the wet edge.
 	var bank: Array[Vector3] = [
@@ -609,6 +645,150 @@ func _build_foreshore_works() -> void:
 	_cube(landing_base, Vector3(1.58, 2.03, 2.13), concrete, .12)
 	_cube(landing_base + Vector3(0, 1.11, 0), Vector3(1.75, .22, 2.32), painted, .057)
 	_bar(landing_base + Vector3(.28, 1.06, -.89), landing_base + Vector3(1.22, 1.25, -1.57), Vector2(.69, .27), seams)
+
+
+func _build_settling_well(landing: PackedVector2Array) -> void:
+	# The lower working apron wraps around a settling chamber. The chamber
+	# is open to the sky for inspection, below the dry walking surface.
+	var well := PackedVector2Array([
+		Vector2(-3.58, 4.22), Vector2(-4.65, 4.06), Vector2(-6.08, 2.83),
+		Vector2(-5.97, 1.11), Vector2(-5.44, .19), Vector2(-4.34, -.13),
+		Vector2(-3.67, .84), Vector2(-3.49, 2.54),
+	])
+	var lining := SurfaceTool.new()
+	lining.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var rim := SurfaceTool.new()
+	rim.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var cap := SurfaceTool.new()
+	cap.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var well_center := Vector2(-4.78, 2.22)
+	for index in landing.size():
+		var next := (index + 1) % landing.size()
+		var toe := Vector3(landing[index].x, -.376, landing[index].y)
+		var toe_next := Vector3(landing[next].x, -.376, landing[next].y)
+		var inner := Vector3(well[index].x, -.376, well[index].y)
+		var inner_next := Vector3(well[next].x, -.376, well[next].y)
+		_quad(rim, toe, toe_next, inner_next, inner, Color.WHITE)
+		_quad(lining, toe_next, toe, toe - Vector3.UP * 1.16, toe_next - Vector3.UP * 1.16, Color(.62,.69,.70))
+		_quad(lining, inner, inner_next, inner_next - Vector3.UP * .72, inner - Vector3.UP * .72, Color(.63,.76,.73))
+		var projection := (well[index] - well_center).normalized() * .19
+		var next_projection := (well[next] - well_center).normalized() * .19
+		var coping_y := .10 + .045 * sin(float(index) * 2.1)
+		var next_y := .10 + .045 * sin(float(next) * 2.1)
+		var cap_inner := inner + Vector3.UP * coping_y
+		var cap_next := inner_next + Vector3.UP * next_y
+		var cap_outer := cap_inner + Vector3(projection.x, -.026, projection.y)
+		var cap_outer_next := cap_next + Vector3(next_projection.x, -.026, next_projection.y)
+		_quad(cap, cap_outer, cap_outer_next, cap_next, cap_inner, Color(.88,.91,.89))
+		_quad(lining, cap_inner, cap_next, inner_next, inner, Color(.66,.71,.69))
+		_quad(lining, cap_outer_next, cap_outer, cap_outer - Vector3.UP * coping_y,
+			cap_outer_next - Vector3.UP * next_y, Color(.76,.80,.78))
+		var knuckle := (inner + inner_next) * .53 + (inner - inner_next) * .03
+		var angle := atan2(inner_next.x - inner.x, inner_next.z - inner.z)
+		if index in [1, 3, 5, 6]:
+			var cleat := _cube(knuckle + Vector3(.086,.087,0), Vector3(.19,.18,.34), rim_metal,.018)
+			cleat.rotation.y = angle
+	rim.generate_normals()
+	lining.generate_normals()
+	cap.generate_normals()
+	_mesh(rim.commit(), _paving("8f9a93", 0.0), Vector3.ZERO)
+	_mesh(lining.commit(), damp, Vector3.ZERO)
+	_mesh(cap.commit(), concrete, Vector3.ZERO)
+	_prism(well, -1.13, -1.51, rock)
+	var pool := ShaderMaterial.new()
+	pool.shader = POCKET_WATER
+	_prism(well, -.525, -.546, pool)
+	for i in range(3):
+		var z := .22 + float(i) * .221
+		var step := _cube(Vector3(-4.52, -.433 - .079 * i, z),
+			Vector3(.76 + .053 * i, .094, .33), painted, .017)
+		step.rotation.y = -.45
+	var discharge := Vector3(-5.79, -.356, .89)
+	_pipe(discharge + Vector3(-.43, .19, -.33), discharge + Vector3(-.03, .04, .02), .115, painted)
+	_pipe(discharge - Vector3(.16, -.092, .117), discharge, .141, rim_metal)
+
+
+func _build_well_spillway() -> void:
+	# The older return-sill receives runoff from the lower intake apron.
+	# Its feathered overflow lands below the well's maintenance step.
+	var stations := PackedVector3Array([
+		Vector3(-4.33, .096, -2.89), Vector3(-4.56, .081, -2.24),
+		Vector3(-4.62, -.097, -1.80), Vector3(-4.72, -.119, -1.15),
+		Vector3(-4.81, -.276, -.70), Vector3(-4.89, -.28, -.24),
+		Vector3(-4.92, -.49, .20), Vector3(-4.95, -.515, .47),
+	])
+	var lining := SurfaceTool.new()
+	lining.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var run := SurfaceTool.new()
+	run.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for i in range(stations.size() - 1):
+		var a := stations[i]
+		var b := stations[i + 1]
+		var across := Vector3((b - a).z, .0, -(b - a).x).normalized()
+		var left := across * (.42 + .016 * i)
+		var right := across * (.36 + .027 * i)
+		_quad(lining, a - left, a + right, b + right, b - left, Color(.69,.74,.73))
+		for side: float in [-1.0, 1.0]:
+			var edge := across * side * .44
+			var from := a + edge + Vector3.UP * .083
+			var to := b + edge + Vector3.UP * .083
+			if i < stations.size() - 2:
+				_bar(from, to, Vector2(.17, .22), concrete if i in [1,3,5] else damp)
+		var shallow := .24 + .014 * i
+		var deep := .25 + .024 * i
+		var v0 := float(i) / (stations.size() - 1)
+		var v1 := float(i + 1) / (stations.size() - 1)
+		var near := Vector3.UP * .018
+		var strip := [a - across * shallow + near, a + across * deep + near,
+			b + across * deep + near, b - across * shallow + near]
+		var pattern := PackedVector2Array([Vector2(0,v0),Vector2(1,v0),Vector2(1,v1),Vector2(0,v1)])
+		for point in [0,1,2,0,2,3]:
+			run.set_uv(pattern[point])
+			run.add_vertex(strip[point])
+		if i in [0,3,5]:
+			_cube((a + b) * .5 - Vector3.UP * .219, Vector3(1.13,.23,.36), damp,.04)
+	lining.generate_normals()
+	run.generate_normals()
+	_mesh(lining.commit(), damp, Vector3.ZERO)
+	var stream := ShaderMaterial.new()
+	stream.shader = POCKET_WATER
+	stream.set_shader_parameter("spillway", true)
+	_mesh(run.commit(), stream, Vector3.ZERO)
+	var grate := stations[0] - Vector3(0,.014,.31)
+	_cube(grate, Vector3(.87,.21,.44), concrete,.048)
+	for i in range(5):
+		var bar := grate + Vector3((i - 2) * .128,.117,-.04)
+		_cube(bar, Vector3(.058,.033,.27), painted,.011)
+	var riser := grate + Vector3(-.57,.22,-.11)
+	_pipe(riser + Vector3(-.44,.26,-.24), riser, .109, painted)
+	_pipe(riser, riser + Vector3(.25,-.21,.07), .106, rim_metal)
+
+
+func _build_carved_service_stop() -> void:
+	# A low, diagonally braced service alcove is cut into the base of the
+	# cliff where the elevated catwalk delivers to the landward stairs.
+	var seat := Vector3(9.23, 2.21, -10.19)
+	var lowered := seat + Vector3(.34, -.28, -.31)
+	_cube(lowered, Vector3(2.45, .51, 1.91), damp,.092)
+	_cube(seat + Vector3(.34, .09, -.26), Vector3(2.33,.17,1.75), painted,.044)
+	_cube(seat + Vector3(.43,.92,-.86), Vector3(2.23,1.77,.43), damp,.099)
+	for x: float in [-.67, 1.1]:
+		var sill := seat + Vector3(x,.13,-.58)
+		var crown := sill + Vector3(.10,1.59,-.022)
+		_bar(sill, crown, Vector2(.21,.34), painted)
+		_cube(sill + Vector3(.01,.03,0),Vector3(.38,.23,.44),concrete,.057)
+		_bar(crown, crown + Vector3(.11,-.45,.40), Vector2(.12,.13), seams)
+	var roof := _cube(seat + Vector3(.30,1.78,-.47), Vector3(2.51,.22,1.37), painted,.061)
+	roof.rotation.z = -.089
+	_cube(seat + Vector3(.25,1.80,.22),Vector3(2.45,.11,.07),rim_metal,.017).rotation.z = -.089
+	var shutter := seat + Vector3(.21,.81,-.579)
+	_cube(shutter, Vector3(1.34,1.09,.075), seams,.041)
+	for i in range(9):
+		_cube(shutter + Vector3(0,(i - 4) * .105,.058),Vector3(1.19,.045,.037),painted,.009)
+	_cube(shutter + Vector3(.53,.26,.099),Vector3(.109,.39,.065),rim_metal,.012)
+	_bar(seat + Vector3(1.25,.35,-.53), seat + Vector3(1.54,-.28,-.60),Vector2(.25,.28),damp)
+	_pipe(seat + Vector3(1.35,.34,.16),seat + Vector3(1.39,.79,-.28),.083,painted)
+	_pipe(seat + Vector3(1.39,.79,-.28),seat + Vector3(1.53,1.42,-.45),.083,rim_metal)
 
 
 func _place_details() -> void:
@@ -826,7 +1006,7 @@ func _build_pump_bay() -> void:
 
 
 func _build_tide_monitor() -> void:
-	var anchor := Vector3(-5.78, -.382, 2.35)
+	var anchor := Vector3(-6.58, -.382, 2.48)
 	var foundation := _cube(anchor + Vector3(0, .12, 0), Vector3(1.56, .43, 1.23), damp, .075)
 	foundation.rotation.y = -.20
 	var upright := anchor + Vector3(-.19, .25, .11)

@@ -14,11 +14,15 @@ void sky() {
 	float high_ridge = (height - .40 + .09 * sin(lateral * 4.4)) * 4.8;
 	float passage = sin(lateral * 19.9 + height * 28.9 + .7 * sin(lateral * 23.4 - height * 13.0));
 	float feather = .65 + .24 * passage + .11 * sin(lateral * 36.2 - height * 60.7);
-	float cloud = exp(-ridge * ridge) * feather * .59 + exp(-high_ridge * high_ridge) * (1.0 - feather) * .63;
+	float veil = .15 * sin(lateral * 13.3 + height * 27.0) + .077 * sin(lateral * 21.4 + height * 39.0);
+	float fringe = exp(-pow((height - .21 + .031 * sin(lateral * 12.8)) * 12.4, 2.0));
+	float cloud = exp(-ridge * ridge) * (feather + veil) * .49 + fringe * .13
+		+ exp(-high_ridge * high_ridge) * (1.0 - feather) * .57;
 	float daylight = pow(max(dot(d, normalize(vec3(-.77, .13, -.62))), 0.0), 15.0);
 	float glow_line = exp(-height * height * 33.2);
 	vec3 base = mix(low_mist.rgb, blue_zenith.rgb, smoothstep(-.07, .53, height));
-	vec3 airborne = mix(overcast.rgb, silver.rgb, .13 + daylight * .60);
+	float above = exp(-pow((height - center) * 11.5, 2.0));
+	vec3 airborne = mix(overcast.rgb, silver.rgb, .09 + daylight * .60 + above * fringe * .15);
 	vec3 horizon = silver.rgb * daylight * glow_line * .23;
 	COLOR = mix(base + horizon, airborne + horizon, clamp(cloud, 0.0, .77));
 }

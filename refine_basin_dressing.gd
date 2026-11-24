@@ -26,7 +26,10 @@ func _ready() -> void:
 	_service_footing()
 	_water_edge()
 	_pump_annex(Vector3(-4.1, 0.0, -10.5), false)
-	_pump_annex(Vector3(8.4, 0.0, 0.4), true)
+	if style_round >= 30:
+		_lock_controller()
+	else:
+		_pump_annex(Vector3(8.4, 0.0, 0.4), true)
 	_fault_lines()
 	if style_round >= 5:
 		_set_dressing()
@@ -60,6 +63,8 @@ func _ready() -> void:
 		_shoulder_drainage()
 	if style_round >= 26:
 		_bypass_marker()
+	if style_round >= 28:
+		_inspection_gallery()
 
 
 func _service_footing() -> void:
@@ -79,11 +84,13 @@ func _service_footing() -> void:
 		_bolt(Vector3(x, 0.17, -5.65), 0.025, brass)
 	var plate := _block(Vector3(0.0, 0.022, -2.93), Vector3(1.82, 0.031, 0.91), steel, 0.027)
 	plate.rotation.y = -0.033
+	var grate_height := .085 if style_round >= 30 else 0.0
+	plate.position.y += grate_height
 	for index in range(7):
-		_block(Vector3((index - 3) * 0.23, 0.045, -2.93), Vector3(0.044, 0.010, 0.72), paint)
+		_block(Vector3((index - 3) * 0.23, 0.045 + grate_height, -2.93), Vector3(0.044, 0.010, 0.72), paint)
 	for x in [-0.76, 0.76]:
 		for z in [-2.60, -3.27]:
-			_bolt(Vector3(x, 0.042, z), 0.024, brass)
+			_bolt(Vector3(x, 0.042 + grate_height, z), 0.024, brass)
 
 
 func _water_edge() -> void:
@@ -851,6 +858,90 @@ func _bypass_marker() -> void:
 	var collision := CollisionShape3D.new()
 	collision.shape = shape
 	collision.position.y = .38
+	body.add_child(collision)
+
+
+func _lock_controller() -> void:
+	var controller := preload("res://models/basin_lock_controller.glb").instantiate() as Node3D
+	var at := Vector3(7.14, .14, -3.24) if style_round >= 31 else Vector3(7.50, .14, -.24)
+	controller.position = at
+	controller.rotation.y = -.46
+	add_child(controller)
+	var footing := _finish(Color("#50594f"), .86, .04)
+	var pedestal := _block(at - Vector3(0.0, .076, .0), Vector3(1.81, .16, 1.10), footing, .105)
+	pedestal.rotation.y = controller.rotation.y
+	var feed := PackedVector3Array([
+		at + Vector3(.63, .31, .11), at + Vector3(.91, .29, .01), at + Vector3(1.17, .13, -.23),
+		at + Vector3(1.25, .06, -.74), at + Vector3(1.13, .06, -1.44), at + Vector3(.79, .11, -2.09),
+		at + Vector3(.94, .12, -3.24), at + Vector3(1.33, .22, -4.29), at + Vector3(1.33, .37, -5.37),
+	])
+	if style_round >= 31:
+		feed = PackedVector3Array([
+			at + Vector3(.63, .31, .11), at + Vector3(.97, .29, .04), at + Vector3(1.22, .16, -.39),
+			at + Vector3(1.33, .06, -.86), at + Vector3(1.35, .06, -2.17),
+			at + Vector3(1.55, .26, -2.86), at + Vector3(1.55, .54, -3.42),
+		])
+	_conduit(feed, .051, oxide)
+	for at_z in ([-4.33, -5.40, -6.16] if style_round >= 31 else [-2.8, -4.2, -5.10]):
+		_block(Vector3(8.54, .058, at_z), Vector3(.35, .12, .38), footing, .045)
+	var body := StaticBody3D.new()
+	body.position = at + Vector3(0.0, .82, -.01)
+	body.rotation.y = controller.rotation.y
+	add_child(body)
+	var hit := BoxShape3D.new()
+	hit.size = Vector3(1.32, 1.65, .80)
+	var collider := CollisionShape3D.new()
+	collider.shape = hit
+	body.add_child(collider)
+
+
+func _inspection_gallery() -> void:
+	var slab := _finish(Color("#72746a"), .85, .04)
+	var wet_wall := _finish(Color("#535950"), .81, .10)
+	var grate := _finish(Color("#4e6060"), .67, .59)
+	var seating := _finish(Color("#40504d"), .78, .21)
+	var access := Vector3(-3.73, .0, -.56)
+	_block(access + Vector3(0, .085, .04), Vector3(1.64, .22, 3.37), wet_wall, .115)
+	_block(access + Vector3(.11, .207, -.07), Vector3(1.47, .074, 3.03), slab, .021)
+	var ramp := _block(access + Vector3(.11, .072, 1.83), Vector3(1.47, .077, .77), slab, .037)
+	ramp.rotation.x = .238
+	_block(access + Vector3(-.59, .26, -.09), Vector3(.095, .058, 2.92), steel, .025)
+	for offset in [-.91, .24, .86]:
+		_block(access + Vector3(.13, .251, offset), Vector3(1.41, .019, .028), wet_wall, .005)
+	_block(access + Vector3(.29, .254, .79), Vector3(.80, .046, 1.07), seating, .054)
+	for rib in range(8):
+		var offset := -.35 + float(rib) * .104
+		_block(access + Vector3(.29 + offset, .28, .79), Vector3(.039, .022, .86), grate, .008)
+	for anchor in [Vector3(-.03, .28, .34), Vector3(.60, .28, .34), Vector3(-.03, .28, 1.27), Vector3(.60, .28, 1.27)]:
+		_bolt(access + anchor, .032, oxide)
+	var tread := _block(access + Vector3(.74, .161, -.16), Vector3(.15, .17, 2.27), slab, .034)
+	tread.rotation.y = -.027
+	for z in [-1.39, -.33, .73]:
+		_block(access + Vector3(-.74, .43, z), Vector3(.11, .41, .13), steel, .018)
+	_conduit(PackedVector3Array([
+		access + Vector3(-.74, .594, -1.48), access + Vector3(-.74, .643, -1.36),
+		access + Vector3(-.74, .643, .80), access + Vector3(-.74, .565, .94),
+	]), .031, steel)
+
+	# An isolated sample port can be unbolted from the maintenance walk.
+	# Its return hose slopes under the original side curb into the canal.
+	_block(access + Vector3(-.31, .26, -.70), Vector3(.85, .065, .81), steel, .055)
+	_conduit(PackedVector3Array([
+		access + Vector3(-.27, .28, -.76), access + Vector3(-.27, .60, -.76),
+		access + Vector3(-.38, .73, -.75), access + Vector3(-.59, .73, -.75),
+		access + Vector3(-.88, .66, -.78), access + Vector3(-1.41, .44, -.82),
+		access + Vector3(-1.85, .11, -.83), access + Vector3(-2.05, -.21, -.85),
+	]), .073, paint)
+	for x in [-.34, .34]:
+		for z in [-.33, .33]:
+			_bolt(access + Vector3(x - .28, .294, z - .70), .039, brass)
+	var body := StaticBody3D.new()
+	add_child(body)
+	body.position = access + Vector3(.032, .095, .04)
+	var shape := BoxShape3D.new()
+	shape.size = Vector3(1.58, .24, 3.37)
+	var collision := CollisionShape3D.new()
+	collision.shape = shape
 	body.add_child(collision)
 
 

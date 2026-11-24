@@ -3,6 +3,7 @@ render_mode diffuse_burley, specular_disabled;
 
 uniform vec4 pine_shadow : source_color = vec4(.27, .42, .33, 1.0);
 uniform vec4 sun_rock : source_color = vec4(.53, .63, .51, 1.0);
+uniform vec4 valley_floor : source_color = vec4(.43, .60, .51, 1.0);
 uniform float detail_strength = .7;
 varying vec3 p;
 varying vec3 ground_normal;
@@ -28,15 +29,22 @@ float field(vec3 pos) {
 
 void fragment() {
 	vec3 n = normalize(ground_normal);
-	float exposure = max(0.0, dot(n, normalize(vec3(.41, .72, .45))));
-	float broad = field(p * vec3(.10, .14, .12)) * .67 + field(p * .37) * .33;
-	float ridge = smoothstep(.38, .66, field(vec3(p.x * .12, p.y * .21 + p.x * .072, p.z * .096)));
-	float steep = 1.0 - smoothstep(.24, .68, n.y);
-	vec3 whiskers = vec3((p.x - p.y * .31) * .182, p.y * .082, p.z * .26);
-	float clefts = smoothstep(.26, .66, field(whiskers) * .70 + field(whiskers * 2.42) * .30);
-	float rocky = smoothstep(.27, .74, broad * .37 + exposure * .41 + steep * .31 + detail_strength * ridge * .16);
-	vec3 material = mix(pine_shadow.rgb, sun_rock.rgb, rocky);
-	ALBEDO = material * (0.79 + broad * .27 + (detail_strength + .12) * .17 * ridge);
-	ALBEDO *= 1.0 - clefts * steep * (.11 + detail_strength * .11);
-	ROUGHNESS = .95;
+	float exposure = max(0.0, dot(n, normalize(vec3(.43, .53, .65))));
+	float broad = field(p * vec3(.096, .11, .096)) * .73 + field(p * .291) * .27;
+	float slope = 1.0 - smoothstep(.29, .87, n.y);
+	float fall_line = field(vec3((p.x + p.z * .66 + p.y * .21) * .36, p.y * .038, p.z * .032));
+	float cut = smoothstep(.50, .82, fall_line) * smoothstep(.10, .85, slope + (broad - .5) * .33);
+	float chalk = smoothstep(.35, .78, slope * .42 + exposure * .28 + broad * .30);
+	float band_pigment = field(vec3(.081 * p.x, .33 * (p.y + p.x * .060) + broad * .61, .093 * p.z));
+	float shelf = smoothstep(.42, .68, band_pigment) * .72 + broad * .28;
+	vec3 stone = sun_rock.rgb * (.90 + shelf * .20);
+	vec3 brush = pine_shadow.rgb * (.81 + broad * .34);
+	vec3 material = mix(brush, stone, chalk * (.89 + cut * .11));
+	vec3 face_color = mix(pine_shadow.rgb, material, .62 + detail_strength * .34);
+	face_color *= (1.0 - cut * (.10 + detail_strength * .19)) * (.92 + .14 * exposure);
+	float bank = smoothstep(-2.29, 1.73 + (broad - .5) * 1.04, p.y);
+	ALBEDO = mix(valley_floor.rgb, face_color, bank);
+	vec3 bottom_normal = normalize((VIEW_MATRIX * vec4(0.0, 1.0, 0.0, 0.0)).xyz);
+	NORMAL = normalize(mix(bottom_normal, NORMAL, bank));
+	ROUGHNESS = mix(.97, .95, bank);
 }

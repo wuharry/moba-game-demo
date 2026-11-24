@@ -43,8 +43,10 @@ float shoal_distance(vec2 p) {
 		toward(p, vec2(-14.38, -11.5), vec2(-17.9, -17.9)));
 	float extension = min(toward(p, vec2(-32.08, -22.2), vec2(-42.0, -22.84)),
 		toward(p, vec2(-42.0, -22.84), vec2(-48.08, -25.05)));
+	float windward = min(toward(p, vec2(-13.26, -4.16), vec2(-11.76, -2.42)),
+		toward(p, vec2(-11.76, -2.42), vec2(-10.06, .23)));
 	return min(min(min(cliff, quay), min(min(reach, breakwater), min(shelf_fore, shelf_mid))),
-		min(min(reef, spit), extension));
+		min(min(reef, spit), min(extension, windward)));
 }
 
 void vertex() {
@@ -82,11 +84,28 @@ void fragment() {
 	float breaker = smoothstep(.82, .995, wave_face) * exp(-shore * .72) * ripple_foam;
 	float wash = contact * smoothstep(0.05, 0.79, 0.46 + 0.39 * broken + 0.19 * swell);
 	float foam = clamp(wash * ripple_foam * .74 + breaker * .74, 0.0, 1.0);
+	vec2 windward = p - vec2(-11.63, -2.27);
+	float windward_break = 1.0 - smoothstep(.55, 4.15, length(windward * vec2(1.0, .64)));
+	vec2 windward_cross = vec2(.83, .55);
+	float seaward = -dot(windward, windward_cross);
+	float leeward = smoothstep(.06, 1.48, -seaward) * windward_break;
+	float reflected_swell = seaward * 4.25 + warp_b * 3.1 + moment * 1.82;
+	float foam_limbs = smoothstep(.43, .69, patch(flow * vec2(1.21, .79) + short_ripple * .14));
+	float white_water = smoothstep(.06, 1.0, seaward) * windward_break
+		* smoothstep(.38, .92, cos(reflected_swell)) * foam_limbs;
+	float dispersing = smoothstep(.44, .89, cos(reflected_swell * 1.9 - swell))
+		* windward_break * foam_fray * smoothstep(.24, 1.48, seaward);
+	foam = max(foam, clamp(white_water * .66 + dispersing * .29, 0.0, .83));
 	float angle = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), 3.1);
 	vec3 body = mix(deep_color.rgb, shelf_color.rgb, shelf * (0.59 + depth_shifting * 0.35));
 	body *= 0.79 + warp_b * 0.22 + depth_shifting * 0.19 + shoal_wind * 0.08 + far_ripple * 0.025
 		+ wind_arc * .035 + wave_face * shelf * .067;
-	body = mix(body, vec3(0.087, 0.146, 0.167), angle * 0.35);
+	vec3 reflected = normalize(mat3(INV_VIEW_MATRIX) * reflect(-VIEW, NORMAL));
+	float sky_break = pow(max(0.0, dot(reflected, normalize(vec3(-.71, .18, -.68)))), 11.0);
+	float sky_lacing = exp(-pow((reflected.y - .13 + warp_b * .024) * 3.4, 2.0));
+	vec3 cool_sky = mix(vec3(.082, .142, .157), vec3(.235, .268, .247), sky_break * sky_lacing * .67);
+	body = mix(body, cool_sky, angle * (.38 + .25 * sky_break));
+	body = mix(body, vec3(.079,.167,.145), leeward * .44);
 	ALBEDO = mix(body, foam_color.rgb, foam * 0.67);
 	ROUGHNESS = 0.34 + short_ripple * 0.10 + foam * 0.19;
 	SPECULAR = 0.40;

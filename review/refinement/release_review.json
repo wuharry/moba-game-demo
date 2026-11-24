@@ -1,49 +1,113 @@
 {
-  "source_sha256": "d24d403534c6ded096699c4425f021ac13225e9d7746d6f6efbb31435f8b3b64",
+  "source_sha256": "0b7ece370ce171d8c862267240f229b9476ec73de940f8a0756c5370662691be",
   "capture_dir": "review/refinement/final",
   "scenes": {
     "basin": {
-      "version": "B26",
+      "version": "B33",
       "ground": {
-        "score": 85,
-        "sha256": "7cd607e21e4ca5e8107ec0a03e319a814ce95144f03545be8d5c9bb58d309550"
+        "score": 92,
+        "grades": {
+          "terrain": 4,
+          "materials": 4,
+          "assets": 5,
+          "dressing": 5,
+          "light_water": 5,
+          "readability": 5
+        },
+        "sha256": "78e554f9ff770e9d69f8131e8d774afd2a91d8024a051f8de91b4d6b6e1d3155"
       },
       "overhead": {
-        "score": 85,
-        "sha256": "2cdeced6610700f2f507f882d9cd3def0758bd32da58bc6488e41fa843facf2e"
+        "score": 93,
+        "grades": {
+          "terrain": 5,
+          "materials": 4,
+          "assets": 5,
+          "dressing": 5,
+          "light_water": 4,
+          "readability": 5
+        },
+        "sha256": "9c9f04077ac6e96e173435636213b0504354bcb2ddf056c7a4100efbf293b236"
       }
     },
     "tide": {
-      "version": "R16",
+      "version": "R21",
       "ground": {
-        "score": 85,
-        "sha256": "2f962f37a7f170872a8d542ae1dfe0866308bb0bc86b23b064eb0eca4151a3be"
+        "score": 92,
+        "grades": {
+          "terrain": 4,
+          "materials": 4,
+          "assets": 5,
+          "dressing": 5,
+          "light_water": 5,
+          "readability": 5
+        },
+        "sha256": "ed0cd817f6b9eebe9519cee5554415b613733caa6ec741b6bb6037588c91bcd7"
       },
       "overhead": {
-        "score": 88,
-        "sha256": "ac3fcb261671a0f7e80cf6960b7ce7590930900f925e9bd09a53747e95f949a0"
+        "score": 92,
+        "grades": {
+          "terrain": 4,
+          "materials": 4,
+          "assets": 5,
+          "dressing": 5,
+          "light_water": 5,
+          "readability": 5
+        },
+        "sha256": "d94f5af1bef06542c17d43dfc83834ab987096128e97613dd1018d9cc2e32ea1"
       }
     },
     "sunvine": {
-      "version": "SV12",
+      "version": "SV15",
       "ground": {
-        "score": 88,
-        "sha256": "196f86111d92fcb5e154a797b14cb536fbdc8742802d9cbdcbfc8e9fd8dc471f"
+        "score": 92,
+        "grades": {
+          "terrain": 5,
+          "materials": 4,
+          "assets": 4,
+          "dressing": 5,
+          "light_water": 5,
+          "readability": 5
+        },
+        "sha256": "956410a8cd68d01c926625f8eea252044c9156a181f71d8a402a366990a4160a"
       },
       "overhead": {
-        "score": 88,
-        "sha256": "40b4e93d256b5b21e4d1d1fdecf260cb6bd3fec4a2ad88452cff6ad5abf48581"
+        "score": 92,
+        "grades": {
+          "terrain": 5,
+          "materials": 4,
+          "assets": 4,
+          "dressing": 5,
+          "light_water": 5,
+          "readability": 5
+        },
+        "sha256": "e8b6ce12abba6451c79c88085b4c329eab36875d654777accedac2a42734bc33"
       }
     },
     "grove": {
-      "version": "R16",
+      "version": "R19",
       "ground": {
-        "score": 85,
-        "sha256": "4dc750e5d0894f1115373119e9bf6a9cb4b5076bca4fdb13e0ba64c176b2b0f1"
+        "score": 92,
+        "grades": {
+          "terrain": 5,
+          "materials": 4,
+          "assets": 4,
+          "dressing": 5,
+          "light_water": 5,
+          "readability": 5
+        },
+        "sha256": "e96e8e71666a8ad62bd78b1493117ddcb05b58efadb9237928bf87a5fa1fab05"
       },
       "overhead": {
-        "score": 86,
-        "sha256": "3d8d14f625178cfd8a08f4a25d6655b069495b464ac9fbeeee885a62f27ad783"
+        "score": 90,
+        "grades": {
+          "terrain": 5,
+          "materials": 4,
+          "assets": 4,
+          "dressing": 5,
+          "light_water": 5,
+          "readability": 4
+        },
+        "sha256": "0b743cc48f55ee125cc1d1b8938fb4a29ae7107113b2eb69537c54c43e029263"
       }
     }
   },

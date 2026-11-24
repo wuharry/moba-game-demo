@@ -201,3 +201,35 @@ Prompt delta (EN) “Keep the water clock first in the composition. Let the visi
 - 先讓樹根、坡腳、留白和地標支撐動線。近景靠枝影與地面材質引路，俯視要看得見路形、岸形與支撐結構。R11 增加岩塊時分數持平，R12 把低岬接入實體池床才改變俯視的整體關係。
 - 從同一個高度來源決定地形、碰撞、水深、濕土和放置植物的位置。岬角由實際池床長出，薄石、濕地、砂底與水的相對高度在兩個鏡位都讀得通。
 - 把高反差聚在用途明確的位置。R13 整齊亮崖和 R15 成排亮波都從雨時計搶走視線。R16 保留背山、側光與水床在大面的作用，只在落水階附近留下衰減短紋。
+
+## R17 依沉積形狀修地景與水面
+
+Prompt 改寫（中）「讓背山以斜坡和緩折階接到池畔地面。西側以低緩土肩引到原步道，東側裸岩斷面沿溢流階斜向退開。岩面可讀出方向、薄層裂痕和局部苔色。為岸邊踏階與左前景轉彎處加兩種不同的石牆支撐及闊葉。保留原有時計落影與薄水，把非地形造成的直線色塊消掉。」
+
+Prompt delta (EN) “Connect the lowered west shoulder to the trail. Step the exposed east beds diagonally toward the spillway. Give the sediment faces varied slopes, chips, and green footings. Anchor the curve and the spillway with distinct retaining courses and broad leaves. Preserve shallow transparency and the clock’s shadow while removing the hard water color seams.”
+
+- 中、遠岩體使用 18 道輪廓和 44 段周向採樣，讓主面起伏沿坡延續，局部階地可截斷。依鄰近輪廓求法線，並用斜向泥層、潮濕坡腳與較冷的遠山石色提供層次。
+- 水面分別測試取消接收陰影、固定透明度及改用純色。前兩項仍見俯視直邊，純色則消失，將問題縮小到舊著色混色。採用整數格點雜湊後，相鄰採樣格共用一致端點，保留時計落影、淺邊透明和短波。[近景](grove/r17_ground.png) · [俯視](grove/r17_overview.png)
+- 獨立複評近景 **89**，地形 20、材質 16、資產 16、擺景 12、光影與水 15、可讀性 10。俯視 **90**，分項 20／16／16／15／15／8。遠中地景已連成大面。近景植栽需要疏密變化以交代新的石牆接點。
+- [通行](grove/route_verification_r17.txt) 5/5 區段，29.74 公尺。
+
+## R18 依林下陰影布置近景，90 分基準
+
+Prompt 改寫（中）「在左前景石牆頂緣留幾處開放石面。沿石牆突出處讓藤葉垂下，讓闊葉、較低的淡紫花和疏草分別落在背陰面、牆腳、轉彎外側。池邊仍按水深分組，讓溢流階與雨時計都可見。」
+
+Prompt delta (EN) “Leave stretches of bare stone along the near retaining wall. Let creepers drop off projecting caps, bunch larger leaves behind the bank, and lower the violet flowering plants to the shade at the foot and outside of the curve. Keep openings between shoreline vegetation so the spillway and rain clock remain visible.”
+
+- 闊葉打開不同的朝向和高低。手工藤段沿牆面轉折，淡紫花集中在受蔭入口，疏去三處密度相似的蕨叢。保留 R17 的地景與水面修正，固定雙鏡位、碰撞及走路路線。[近景](grove/r18_ground.png) · [俯視](grove/r18_overview.png)
+- 獨立複評近景 **92**，俯視 **90**，符合新版門檻。分項近景 20／16／16／15／15／10，俯視 20／16／16／15／15／8。俯視仍可加強岔路方向提示，石材細部及時計零件也保有細化空間。
+- Godot 4.7.2 Forward+ 和 RTX 4080 Laptop GPU 以 1120 × 630 渲染。[通行](grove/route_verification_r18.txt) 5/5 區段，29.74 公尺。
+
+## R19 以斜陽和樹群色塊拉開前後景，採用
+
+Prompt 改寫（中）「用暖斜陽照出岸坡，將陰面留在冷綠。中景樹群以鼠尾草綠、松綠和橄欖色連成較大的面，琥珀色留給左右框景。整理葉面的方向和明度，讓小葉有共同的冠幅。靠岩和水的低矮草叢分成幾處色塊，保留地表、雨時計和岸邊的輪廓。」
+
+Prompt delta (EN) “Set a warm raking key against cool woodland shade. Group middle-distance canopies into sage, pine, and olive masses and keep subdued amber at the frame edges. Give crown leaves related orientations and value ranges. Group low damp-bank plants around the surviving stonework so the rain clock and shoreline keep their silhouettes.”
+
+- 降低太陽高度並擴大光源角半徑，林下陰影延伸。冷空氣層與遠山留白使主景色塊有距離。天空雜訊沿用 R17 證實可消除格線的整數格點取樣。
+- 扁葉加寬並縮小朝向、亮度變動。中景以冷綠為主，前岸仍有少量琥珀色。底層葉卡沿潮濕帶分組。保留石牆、爬藤和受蔭紫花，靠光照與植被分區加強原有大形。
+- [近景](grove/r19_ground.png) 和 [俯視](grove/r19_overview.png) 以原雙鏡位在 Godot 4.7.2 Forward+ 實拍。獨立複評 **92／90**，近景 20／16／16／15／15／10，俯視 20／16／16／15／15／8。俯視入口路線上陰影較長，路緣依然可辨。石階和步道大面仍可細化。[通行](grove/route_verification_r19.txt) 5/5 區段，29.74 公尺。
+- 視覺參考為公開原作環境所呈現的寬廣景深、自然色塊和建築與地形的關係。[任天堂《薩爾達傳說 曠野之息》探索指南](https://zelda.nintendo.com/breath-of-the-wild/assets/pdfs/ExplorersGuide.pdf) · [HoYoverse《原神》提瓦特地區介紹](https://genshin.hoyoverse.com/en/map)

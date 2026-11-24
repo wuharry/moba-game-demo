@@ -14,9 +14,9 @@ void vertex() { at_world=(MODEL_MATRIX * vec4(VERTEX,1.0)).xyz; }
 void fragment() {
 	vec2 p=at_world.xz + at_world.y * vec2(.62,-.43);
 	vec3 pigment=mix(tint.rgb,COLOR.rgb,using_vertex);
-	float chunks=n(p*4.4);
-	float grains=n(p*15.1);
-	ALBEDO=pigment*(.75+chunks*.33+grains*.10);
+	float chunks=n(p*.84);
+	float grains=n(p*6.2);
+	ALBEDO=pigment*(.86+chunks*.23+grains*.044);
 	ROUGHNESS=.91;
-	BACKLIGHT=pigment*.14;
+	BACKLIGHT=pigment*vec3(.17,.19,.17);
 }

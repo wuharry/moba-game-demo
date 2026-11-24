@@ -6,6 +6,7 @@ uniform vec4 seam : source_color = vec4(.36, .35, .29, 1.0);
 uniform vec4 lichen : source_color = vec4(.40, .47, .32, 1.0);
 uniform float weathering = .48;
 uniform float bedding = .51;
+uniform float ridge_weathering = 0.0;
 varying vec3 world_p;
 varying vec3 world_n;
 varying vec3 local_p;
@@ -46,6 +47,21 @@ void fragment() {
 	float moss_mask = canopy_spots * (.29 + .71*smoothstep(.03,.88,direction.y));
 	vec3 bedrock = mix(stone.rgb,seam.rgb,seam_mask);
 	vec3 surface = mix(bedrock,lichen.rgb,moss_mask);
+	if (ridge_weathering > .0) {
+		float runnel = field(vec2(local_p.x*.94 - local_p.y*.58, local_p.z*.78+local_p.y*.13));
+		float broad = field(vec2(local_p.x*.25+local_p.z*.33, local_p.y*.23));
+		float strata_level = (local_p.y + local_p.x*.32 - local_p.z*.14 + broad*.41) / bedding;
+		float bedding_color = smoothstep(.22,.86,field(vec2(floor(strata_level),local_p.z*.07)));
+		float oxide = smoothstep(.34,.81,broad*.53 + stains*.26 + runnel*.21);
+		vec3 face = mix(stone.rgb*vec3(.73,.86,.86),stone.rgb*vec3(1.08,.97,.83),oxide);
+		face = mix(face, seam.rgb, (1.0-smoothstep(.027,.095,abs(fract(strata_level+.5)-.5)))
+			*.40*(1.0-smoothstep(.55,.95,direction.y))*(.50+.5*runnel));
+		float leaf_bank = smoothstep(.38,.77,broad*.57 + stains*.20 + runnel*.32);
+		leaf_bank *= (.31+.69*smoothstep(.17,.83,direction.y)) * (.95-.31*smoothstep(1.9,8.8,local_p.y));
+		face = mix(face, lichen.rgb, leaf_bank*.86);
+		face *= mix(.89,1.14,bedding_color)*(.81+.28*runnel);
+		surface = mix(surface,face,ridge_weathering);
+	}
 	ALBEDO = surface * mix(vec3(.73),paint, .61) * (.85 + .32*chips) * COLOR.rgb;
 	ROUGHNESS = .85 + chips*.11 - moss_mask*.08;
 	SPECULAR = .17;

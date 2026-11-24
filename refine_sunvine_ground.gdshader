@@ -9,6 +9,7 @@ uniform vec4 sand : source_color = vec4(0.84, 0.74, 0.56, 1.0);
 uniform vec4 mortar : source_color = vec4(0.51, 0.39, 0.25, 1.0);
 varying vec3 p_world;
 varying vec3 masks;
+varying vec3 n_world;
 
 float rand2(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -30,6 +31,7 @@ vec3 texture_cell(vec2 p, vec2 quadrant) {
 void vertex() {
 	p_world = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	masks = COLOR.rgb;
+	n_world = normalize(MODEL_NORMAL_MATRIX * NORMAL);
 }
 
 void fragment() {
@@ -42,6 +44,21 @@ void fragment() {
 	vec3 meadow_paint = mix(texture_cell(p * 0.27, vec2(1, 0)), texture_cell(p.yx * 0.33 + vec2(1.42, 0), vec2(1, 0)), field(p * 0.47));
 	grass = mix(grass, meadow_paint * vec3(1.08, 1.20, .90), 0.52);
 	grass = mix(grass, sand.rgb * 0.65, smoothstep(0.46, 0.82, masks.b) * 0.7);
+	float up = normalize(n_world).y;
+	float outer_bank = max(smoothstep(12.7, 22.2, abs(p.x)), 1.0 - smoothstep(-22.5, -14.6, p.y));
+	float drift_line = field(vec2(p.x * .445 + p.y * .197, p.y * .163)) * .65 + patches * .35;
+	vec2 wind_plane = vec2(dot(p, vec2(.85, -.53)), dot(p, vec2(.53, .85)));
+	float meadow_zone = max(
+		(1.0 - smoothstep(.44, 1.0, length((p - vec2(-4.8, 11.8)) / vec2(9.7, 8.0)))),
+		(1.0 - smoothstep(.39, 1.0, length((p - vec2(8.6, -17.4)) / vec2(23.5, 9.0)))));
+	float windward = field(wind_plane * vec2(.128, .251) + vec2(-.3, 2.1)) * .72 + patches * .28;
+	float hem = smoothstep(.30, .76, windward - (1.0 - up) * .33);
+	vec3 grass_plate = mix(vec3(.084, .144, .068), vec3(.184, .228, .095), hem) * (.92 + grass_noise * .18);
+	grass = mix(grass, grass_plate + meadow_paint.rgb * .18, meadow_zone * smoothstep(.58, .92, up) * .66);
+	float dry_runout = outer_bank * (1.0 - smoothstep(.17, .63, masks.r)) *
+		smoothstep(.43, .75, (1.0 - up) * .78 + drift_line * .68 + smoothstep(.8, 3.8, p_world.y) * .17);
+	vec3 chalk = texture_cell(vec2(p.x + p.y * .236, p.y) * .21, vec2(1, 1)) * vec3(.79, .76, .57);
+	grass = mix(grass, chalk, dry_runout * .65);
 
 	vec2 laid = vec2(p.x * 1.48 + 0.29 * sin(p.y * 0.41), p.y * 1.65);
 	laid.x += fract(floor(laid.y) * 0.51);

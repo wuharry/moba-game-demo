@@ -4,6 +4,7 @@ const LAND := preload("res://refine_sunvine_ground.gdshader")
 const WATER := preload("res://refine_sunvine_water.gdshader")
 const SKY_PAINT := preload("res://refine_sunvine_sky.gdshader")
 const CANOPY := preload("res://refine_sunvine_canopy.gdshader")
+const MEADOW_GRASS := preload("res://refine_sunvine_meadow.gdshader")
 const RIDGE := preload("res://refine_sunvine_ridge.gdshader")
 const STRATA := preload("res://refine_sunvine_strata.gdshader")
 const STONE := preload("res://painted_stone.gdshader")
@@ -17,14 +18,14 @@ const POND := Vector2(8.7, -1.0)
 const POND_RADIUS := Vector2(6.0, 8.5)
 const ORRERY_POSITION := Vector3(-7.85, 0.12, -11.4)
 const RIDGE_LANDMARKS := [
-    [[-47., -40., 23., 9., 9.4, .31], [-30., -38., 14., 8., 11.9, -.17], [-11., -43., 24., 8., 6.4, -.38],
-        [8., -36., 24., 12., 10.6, .15], [29., -37., 19., 9., 13.8, -.36], [52., -43., 25., 8., 8.5, .32]],
-    [[-76., -65., 22., 11., 23., -.36], [-57., -58., 28., 12., 22., .26], [-33., -63., 24., 11., 27.6, -.47],
-        [-15., -67., 14., 13., 12.6, .21], [2., -69., 26., 14., 18.3, -.18], [25., -61., 23., 15., 25.4, -.36],
-        [58., -59., 29., 10., 20.7, .38], [81., -67., 26., 13., 19.7, .28]],
-    [[-102., -100., 33., 16., 31., .24], [-74., -102., 27., 18., 42.7, -.41], [-41., -97., 25., 16., 33.1, .45],
-        [-15., -101., 22., 14., 23.5, -.20], [14., -102., 28., 13., 30.4, .29], [43., -103., 32., 13., 40.2, -.33],
-        [72., -100., 26., 17., 29.7, .19], [102., -104., 33., 14., 33., -.31]],
+    [[-52., -42., 34., 13., 10.6, .31], [-27., -39., 17., 13., 13.1, -.38], [-5., -46., 26., 11., 7.8, -.38],
+        [17., -41., 35., 17., 10.8, .15], [33., -42., 23., 15., 15.2, -.50], [58., -46., 29., 10., 10.1, .48]],
+    [[-81., -68., 38., 18., 22., -.36], [-47., -66., 42., 16., 25.2, .51], [-24., -67., 14., 13., 17.2, -.48],
+        [-7., -71., 36., 15., 13.4, .19], [24., -67., 26., 15., 15.4, -.25],
+        [48., -63., 38., 16., 26.2, -.46], [82., -67., 33., 15., 17.7, .36]],
+    [[-103., -101., 40., 17., 27.0, .24], [-71., -103., 42., 22., 36.0, .70], [-35., -99., 34., 19., 23.1, -.64],
+        [-9., -101., 42., 19., 20.1, -.30], [31., -105., 36., 19., 24.9, .51],
+        [62., -108., 35., 16., 32.8, -.51], [98., -102., 42., 21., 28.2, .45]],
 ]
 const MAIN := [
     Vector2(-0.4, 13.2), Vector2(.4, 7), Vector2(-1.15, 2.0),
@@ -152,9 +153,9 @@ func _terrain() -> void:
     valley.size = Vector2(262.0, 223.0)
     _mesh(valley, escarpment, Vector3(0, -2.4, -37.0))
     var tiers := [
-        [Vector2(-82., -57.), Vector2(79., -29.), Vector2i(124, 42), Color("3d6859"), Color("779779")],
-        [Vector2(-108., -86.), Vector2(112., -44.), Vector2i(119, 39), Color("4b7181"), Color("739894")],
-        [Vector2(-135., -124.), Vector2(141., -74.), Vector2i(102, 33), Color("587f93"), Color("93afb3")],
+        [Vector2(-92., -65.), Vector2(92., -27.), Vector2i(148, 47), Color("3d695a"), Color("959e79")],
+        [Vector2(-122., -92.), Vector2(122., -45.), Vector2i(173, 47), Color("517987"), Color("879d99")],
+        [Vector2(-149., -132.), Vector2(151., -75.), Vector2i(162, 49), Color("6a8da0"), Color("a0b7b9")],
     ]
     for layer in range(tiers.size()):
         var tier: Array = tiers[layer]
@@ -162,7 +163,8 @@ func _terrain() -> void:
         material.shader = RIDGE
         material.set_shader_parameter("pine_shadow", tier[3])
         material.set_shader_parameter("sun_rock", tier[4])
-        material.set_shader_parameter("detail_strength", [0.70, 0.38, 0.19][layer])
+        material.set_shader_parameter("detail_strength", [0.82, 0.48, 0.22][layer])
+        material.set_shader_parameter("valley_floor", escarpment.albedo_color)
         var ridge := _mesh(_terrain_patch(tier[0], tier[1], tier[2].x, tier[2].y, false, layer), material, Vector3.ZERO)
         ridge.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
@@ -211,6 +213,13 @@ func _height(p: Vector2) -> float:
     var western_fold := 1.0 - smoothstep(.12, 1.0, ((p - Vector2(-25., -9.)) / Vector2(17., 21.)).length())
     var orchard_back := 1.0 - smoothstep(.08, 1.0, ((p - Vector2(-15., -22.5)) / Vector2(27., 8.0)).length())
     y += western_fold * 3.15 + orchard_back * 2.24
+    # The outer grass follows the foot of the same sandstone formation;
+    # dry fingers fade into the untouched playable court.
+    var eastern_toe := 1.0 - smoothstep(.10, 1.0, ((p - Vector2(24.0, -15.6)) / Vector2(12.4, 11.4)).length())
+    var rear_toe := 1.0 - smoothstep(.08, 1.0, ((p - Vector2(3.45, -25.8)) / Vector2(22.8, 7.2)).length())
+    var leeward_toe := 1.0 - smoothstep(.15, 1.0, ((p - Vector2(-23.8, -2.4)) / Vector2(10.4, 17.5)).length())
+    var soil_ribs := .67 + .33 * sin(p.x * .56 + p.y * .32 + hills.get_noise_2dv(p * 1.53))
+    y += (eastern_toe * 1.69 + rear_toe * .92 + leeward_toe * 1.08) * soil_ribs
     if p.x < -10.5:
         var terrace := _terrace_line(p.y)
         var gardens := smoothstep(-5.6, -3.3, p.y) * (1.0 - smoothstep(11.3, 14.2, p.y))
@@ -231,31 +240,35 @@ func _terrace_line(z: float) -> float:
     return -13.42 + 1.43 * cos((z - 4.08) * .238) - maxf(0.0, z - 9.0) * .21
 
 
-func _mountain(p: Vector2) -> float:
-    var falloff := 1.0 - exp(-maxf(0.0, -p.y - 29.5) * 0.14)
-    var folds := maxf(0.0, 0.38 + hills.get_noise_2dv(p * Vector2(.85, .63)))
-    var row := sin(p.x * .18 + .85 * sin(p.y * .137)) * .43 + .57
-    var ridgeline := exp(-pow((p.y + 50.0 + 7.5 * sin(p.x * .105)) / 13.0, 2.0))
-    return (folds * 13.0 + row * ridgeline * 10.2 - 1.0) * falloff + 1.34
-
-
 func _ridge_height(p: Vector2, layer: int) -> float:
     var relief := 0.0
-    var scarp := hills.get_noise_2dv(p * Vector2(.89, 1.23))
-    for spec: Array in RIDGE_LANDMARKS[layer]:
+    var altered := p + Vector2(hills.get_noise_2dv(p * .67 + Vector2(13.0, -5.0)), hills.get_noise_2dv(p * .81)) * 3.1
+    var scarp := hills.get_noise_2dv(p * Vector2(1.3, 1.72))
+    var profiles: Array = RIDGE_LANDMARKS[layer]
+    for i in profiles.size():
+        var spec: Array = profiles[i]
         var lateral := (p.x - float(spec[0])) / float(spec[2])
         var depth := (p.y - float(spec[1])) / float(spec[3])
-        var pinch := sin(lateral * 3.75 + depth * 2.6 + float(spec[5]) * 4.0)
-        var contour := Vector2(lateral + depth * float(spec[5]) + .099 * pinch,
-            depth + sin(lateral * 2.03) * .22 - .069 * pinch)
-        var ledge := maxf(0.0, 1.0 - contour.length())
-        var cleft := smoothstep(.28, .78, .5 + .5 * sin(p.x * .37 + p.y * .18 + scarp * 1.55))
-        var height := pow(ledge, .80) * (1.0 + scarp * .31 - cleft * .08) * float(spec[4])
-        relief = maxf(relief, height)
-    var front: float = [-29., -44., -74.][layer]
-    var shoulder: float = [6.1, 7.4, 9.2][layer]
+        if absf(lateral) > 1.39 or absf(depth) > 1.38:
+            continue
+        var shoulder_shape := sin(lateral * 4.7 + depth * 2.23 + float(spec[5]) * 3.0)
+        var contour := Vector2(lateral + depth * float(spec[5]) + .075 * shoulder_shape,
+            depth + sin(lateral * 2.61) * .24 - .061 * shoulder_shape)
+        var radius := contour.length()
+        var summit := [.94, 1.24, 1.62, 1.18][(i + layer) % 4] as float
+        var ledge := maxf(0.0, 1.0 - pow(radius, summit))
+        var spill := altered.x * (.33 + .035 * (i % 3)) + altered.y * (.32 + lateral * .081)
+        var cleft := smoothstep(.51, .88, .5 + .5 * sin(spill)) * smoothstep(.06, .68, maxf(0.0, depth + .12))
+        var bench := smoothstep(.36, .66, ledge) * (1.0 - smoothstep(.68, .89, ledge))
+        var height := pow(ledge, 1.21) * (1.0 + scarp * .20 - cleft * .135 + bench * .08) * float(spec[4])
+        # Round the valleys where adjacent mountains meet without erasing the ridge saddle.
+        var overlap := minf(relief, height)
+        var merge := maxf(0.0, [1.86, 2.96, 3.90][layer] - absf(relief - height)) as float
+        relief = maxf(relief, height) + merge * .22 * smoothstep(.05, 2.5, overlap)
+    var front: float = [-27., -45., -75.][layer]
+    var shoulder: float = [8.8, 10.0, 12.8][layer]
     relief *= smoothstep(0.0, shoulder, front - p.y)
-    return -1.8 + relief + (scarp * .47 + sin(p.x * .15) * .15) * smoothstep(0.0, 5.2, relief)
+    return -2.46 + relief + (scarp * .63 + sin(p.x * .15) * .23) * smoothstep(0.0, 5.2, relief)
 
 
 func _path_distance(p: Vector2, points: Array) -> float:
@@ -390,30 +403,45 @@ func _upper_gardens() -> void:
     local.seed = 280142
     # Staggered horizontal beds build a recognizable ridge silhouette behind the water garden.
     var outcrops := [
-        [Vector2(-19.40, -10.2), Vector3(5.9, 3.5, 4.6), -.17],
-        [Vector2(-20.20, -13.5), Vector3(6.5, 4.6, 5.5), -.27],
-        [Vector2(-17.40, -16.4), Vector3(6.3, 3.8, 5.1), -.24],
-        [Vector2(-19.50, -4.3), Vector3(6.0, 2.5, 4.8), .08],
-        [Vector2(-21.25, 1.9), Vector3(6.8, 2.8, 5.3), -.26],
-        [Vector2(-18.20, 6.2), Vector3(4.5, 1.7, 3.3), .07],
-        [Vector2(15.90, -22.15), Vector3(9.7, 4.5, 4.2), .08],
-        [Vector2(19.3, -19.3), Vector3(7.1, 4.0, 4.7), -.13],
-        [Vector2(23.7, -17.2), Vector3(8.2, 4.0, 5.0), -.43],
-        [Vector2(7.30, -23.8), Vector3(9.0, 3.3, 3.8), -.06],
-        [Vector2(-1.0, -23.3), Vector3(6.9, 2.7, 3.7), .08],
-        [Vector2(-8.4, -22.7), Vector3(8.4, 2.5, 4.1), -.10],
+        [Vector2(-19.85, -10.1), Vector3(6.9, 3.12, 6.3), -.32],
+        [Vector2(-20.60, -13.8), Vector3(7.8, 4.6, 6.2), -.46],
+        [Vector2(-16.99, -17.4), Vector3(7.7, 3.22, 6.35), -.27],
+        [Vector2(-20.05, -4.2), Vector3(6.6, 2.28, 7.5), .24],
+        [Vector2(-21.75, 1.3), Vector3(8.65, 2.7, 5.9), -.35],
+        [Vector2(-18.65, 6.0), Vector3(5.2, 1.42, 4.6), .36],
+        [Vector2(15.36, -22.36), Vector3(9.9, 3.97, 5.16), .20],
+        [Vector2(19.5, -19.7), Vector3(9.2, 3.2, 5.4), -.30],
+        [Vector2(23.7, -17.2), Vector3(9.7, 3.6, 5.7), -.53],
+        [Vector2(6.65, -24.9), Vector3(8.9, 2.85, 5.8), -.09],
+        [Vector2(-.3, -24.05), Vector3(8.2, 2.3, 5.2), .02],
+        [Vector2(-8.1, -24.27), Vector3(10.3, 2.4, 6.3), -.19],
     ]
     for index in range(outcrops.size()):
         var record: Array = outcrops[index]
         var p: Vector2 = record[0]
         var dimensions: Vector3 = record[1]
         var facing: float = record[2]
-        var rock := _mesh(_strata_mesh(dimensions, local), cuts, Vector3(p.x, _height(p) - .4, p.y))
+        var rock := _mesh(_strata_mesh(dimensions, local), cuts, Vector3(p.x, _height(p) - .61, p.y))
         rock.rotation.y = facing
         _collision(rock.position + Vector3(0, dimensions.y * .26, 0), dimensions * Vector3(.70, .71, .58))
         if index in [1, 2, 4, 6, 8, 9, 11]:
-            var root := rock.position + Vector3(-.12, dimensions.y * .92, -.22)
+            var root := rock.position + Vector3(.22, dimensions.y * .925, -.34)
             _tree(root, 2.4 + .6 * float(index % 3), 0 if index != 6 else 2)
+
+    # The material continues into a long outwash spur under the shelves.
+    # Its angled face reveals a shared rock bed across the former islands.
+    _bedded_spur(PackedVector2Array([
+        Vector2(-15.5, -20.9), Vector2(-16.4, -18.2), Vector2(-17.63, -15.6), Vector2(-16.52, -13.1),
+        Vector2(-17.04, -10.6), Vector2(-18.58, -7.98), Vector2(-18.26, -5.9), Vector2(-17.44, -4.1),
+        Vector2(-18.82, -2.18), Vector2(-17.92, .12), Vector2(-17.13, 1.86), Vector2(-17.65, 3.11),
+        Vector2(-17.79, 4.8), Vector2(-17.29, 6.2), Vector2(-19.32, 7.1),
+    ]), PackedFloat32Array([.14, .83, 1.86, 2.47, 1.8, 1.25, .78, 1.19, .92, 1.27, 2.10, 1.69, 1.35, .66, .04]), 4.35, cuts)
+    _bedded_spur(PackedVector2Array([
+        Vector2(24.7, -19.6), Vector2(22.7, -19.1), Vector2(20.45, -20.36), Vector2(17.62, -20.31),
+        Vector2(14.96, -20.78), Vector2(13.32, -22.0), Vector2(11.4, -22.12), Vector2(8.8, -21.88),
+        Vector2(5.96, -22.48), Vector2(3.1, -22.13), Vector2(.57, -22.75), Vector2(-2.81, -22.46),
+        Vector2(-5.11, -21.8), Vector2(-8.3, -21.98), Vector2(-10.6, -22.64), Vector2(-13.1, -24.0),
+    ]), PackedFloat32Array([.10, .65, 1.2, 1.89, 1.76, .95, .73, .95, 1.42, 1.18, .73, 1.06, 1.28, 1.38, .92, .09]), 3.24, cuts)
 
     var trim := _stone(Color("beae89"), 4.4, .009)
     var old_tiles := _solid(Color("4e796c"), .67)
@@ -429,6 +457,46 @@ func _upper_gardens() -> void:
     _collision(end + Vector3(.72, .80, 0), Vector3(2.82, 2.70, 1.96))
 
     _plant_terrace_pockets(local)
+
+
+func _bedded_spur(edge: PackedVector2Array, crown_height: PackedFloat32Array, reach: float, cut: Material) -> void:
+    var sections: Array[PackedVector3Array] = []
+    for i in edge.size():
+        var corner := edge[i]
+        var tangent := edge[mini(i + 1, edge.size() - 1)] - edge[maxi(i - 1, 0)]
+        var rise := Vector2(-tangent.y, tangent.x).normalized()
+        var crest := crown_height[i]
+        var width := reach * (.81 + .19 * sin(.96 * i + .6))
+        var heights := PackedFloat32Array([-.13, .06, .41, .36, .81, .86, 1., .51, -.15])
+        var offsets := PackedFloat32Array([-.91, -.53, -.10, .02, .25, .66, 1.18, width * .68, width])
+        var section := PackedVector3Array()
+        for band in heights.size():
+            var p := corner + rise * offsets[band] * (.70 + clampf(crest, .0, 1.) * .3)
+            var bed := _height(p)
+            var shape := heights[band] * crest + sin(i * 1.3 + band * .73) * .09 * clampf(crest, .0, 1.)
+            section.append(Vector3(p.x, bed + shape, p.y))
+        sections.append(section)
+    var surface := SurfaceTool.new()
+    surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+    for band in range(sections[0].size() - 1):
+        surface.set_smooth_group(band)
+        for i in range(sections.size() - 1):
+            var a := sections[i][band]
+            var b := sections[i][band + 1]
+            var c := sections[i + 1][band + 1]
+            var d := sections[i + 1][band]
+            var tone := .48 + sin(i * 1.43 + band * 2.87) * .14
+            if band in [1, 3]:
+                tone += .17
+            elif band in [2, 4]:
+                tone -= .18
+            var moss := .77 if band >= 5 else .37
+            for vertex in [a, c, b, a, d, c]:
+                surface.set_color(Color(tone, moss, .53))
+                surface.add_vertex(vertex)
+    surface.generate_normals()
+    var ledges := _mesh(surface.commit(), cut, Vector3.ZERO)
+    ledges.create_trimesh_collision()
 
 
 func _lower_orchard() -> void:
@@ -527,33 +595,50 @@ func _orchard_stones(local: RandomNumberGenerator, cap: Material) -> void:
 
 
 func _strata_mesh(size: Vector3, local: RandomNumberGenerator) -> ArrayMesh:
-    var profile := PackedVector2Array([Vector2(-.50, -.19), Vector2(-.36,-.47), Vector2(.04,-.50),
-        Vector2(.37,-.43), Vector2(.50,-.11), Vector2(.43,.29), Vector2(.12,.49),
-        Vector2(-.24,.45), Vector2(-.54,.24)])
+    var profile := PackedVector2Array([Vector2(-.56, -.09), Vector2(-.49, -.31), Vector2(-.39, -.43),
+        Vector2(-.22, -.51), Vector2(.02, -.53), Vector2(.21, -.50), Vector2(.42, -.41),
+        Vector2(.52, -.22), Vector2(.57, -.07), Vector2(.52, .18), Vector2(.40, .27),
+        Vector2(.30, .39), Vector2(.11, .46), Vector2(-.10, .43), Vector2(-.32, .39), Vector2(-.51, .26)])
     var levels: Array[PackedVector3Array] = []
-    var whorls := [[-.19, 1.13, .02], [.19, 1.03, -.05], [.36, .97, -.02],
-        [.42, 1.04, -.065], [.67, .94, .065], [.73, .87, .055], [.90, .72, .13]]
+    var whorls := [[-.26, 1.13, -.12], [.08, 1.09, -.10], [.27, 1.0, -.04],
+        [.36, .89, -.015], [.42, .94, -.035], [.61, .92, .024], [.68, .80, .045],
+        [.73, .83, .047], [.855, .74, .085], [.925, .60, .11]]
+    var lash := local.randf_range(-.16, .16)
+    var lean := local.randf_range(-.07, .12)
+    var offsets := PackedFloat32Array()
+    for _corner in profile:
+        offsets.append(local.randf_range(-.19, .19))
     for band in whorls:
         var ring := PackedVector3Array()
-        for corner in profile:
-            var x: float = corner.x * band[1] + band[2] + local.randf_range(-.073, .073)
-            var z: float = corner.y * band[1] + local.randf_range(-.065, .065)
-            var y: float = band[0] + x * .085 + z * .072 + local.randf_range(-.027, .027)
+        for i in profile.size():
+            var corner := profile[i]
+            var scale := float(band[1]) + float(offsets[i]) * .38
+            var x: float = corner.x * scale + band[2] + local.randf_range(-.026, .026)
+            var z: float = corner.y * scale + corner.x * lash * float(band[0]) + local.randf_range(-.018, .018)
+            var y: float = band[0] + x * (.108 + lean) + z * .081 + local.randf_range(-.018, .018)
             ring.append(Vector3(x, y, z) * size)
         levels.append(ring)
     var surface := SurfaceTool.new()
     surface.begin(Mesh.PRIMITIVE_TRIANGLES)
-    surface.set_smooth_group(-1)
     for layer in range(levels.size() - 1):
+        surface.set_smooth_group(layer)
+        var weathered := Color(.50, .4, .55)
+        if layer in [2, 6, 8]:
+            weathered = Color(.79, .57, .50)
+        elif layer in [3, 5]:
+            weathered = Color(.26, .26, .65)
         for i in range(profile.size()):
             var next := (i + 1) % profile.size()
             for point in [levels[layer][i], levels[layer][next], levels[layer + 1][next],
                 levels[layer][i], levels[layer + 1][next], levels[layer + 1][i]]:
+                surface.set_color(weathered)
                 surface.add_vertex(point)
     var cap := levels[-1]
-    var crest := Vector3(.05 * size.x, size.y, -.08 * size.z)
+    var crest := Vector3(.09 * size.x, .955 * size.y, -.084 * size.z)
+    surface.set_smooth_group(levels.size())
     for i in range(profile.size()):
         for point in [cap[i], cap[(i + 1) % profile.size()], crest]:
+            surface.set_color(Color(.59, .88, .40))
             surface.add_vertex(point)
     surface.generate_normals()
     return surface.commit()
@@ -1050,28 +1135,32 @@ func _trees() -> void:
     var locations := [
         [Vector2(-9.8, 8.4), 4.8, 0], [Vector2(-12.8, 3.2), 5.5, 0],
         [Vector2(-11.0, -2.5), 5.7, 1], [Vector2(-5.4, 4.7), 4.2, 1],
-        [Vector2(-16.5, -3.4), 6.8, 0], [Vector2(-14.7, -13.7), 5.9, 1],
-        [Vector2(-6.2, -16), 4.9, 0], [Vector2(1.8, -15.9), 5.2, 2],
+        [Vector2(-16.5, -3.4), 6.8, 0], [Vector2(-14.7, -13.7), 5.9, 1, .35],
+        [Vector2(-6.2, -16), 4.9, 0], [Vector2(1.9, -16.25), 4.74, 2, .38],
         [Vector2(9.9, 12.8), 4.1, 2], [Vector2(13.0, 10.6), 4.0, 0],
-        [Vector2(15.2, 7.7), 6.5, 0], [Vector2(18.0, -1.35), 4.8, 2],
-        [Vector2(16.85, -14.5), 6.2, 1], [Vector2(11.5, -16.0), 5.4, 0],
+        [Vector2(15.2, 7.7), 6.5, 0], [Vector2(18.0, -1.35), 4.8, 2, .61],
+        [Vector2(18.56, -15.13), 5.48, 0, .32], [Vector2(11.5, -16.0), 5.4, 0, .21],
         [Vector2(21.5, -12), 6.8, 0], [Vector2(20.0, .6), 6.6, 0],
     ]
     for entry in locations:
         var p: Vector2 = entry[0]
-        _tree(Vector3(p.x, _height(p), p.y), entry[1], entry[2])
+        var exposed := float(entry[3]) if entry.size() > 3 else .0
+        _tree(Vector3(p.x, _height(p), p.y), entry[1], entry[2], exposed)
     for i in range(19):
         var p := Vector2(rng.randf_range(-34.0, 34.0), rng.randf_range(-29.0, -19.5))
         if p.x > -9.5 and p.x < 5.3:
             continue
-        var y := _mountain(p) if p.y < -23.0 else _height(p)
-        _tree(Vector3(p.x, y, p.y), rng.randf_range(2.4, 4.6), 0 if i % 4 != 0 else 2)
+        if p.x > 5.3 and p.x < 18.5:
+            p.x = lerpf(p.x, 18.5, .43)
+            p.y -= 1.6
+        _tree(Vector3(p.x, _height(p), p.y), rng.randf_range(2.4, 4.6), 0, .81)
 
 
-func _tree(at: Vector3, height: float, species: int) -> void:
+func _tree(at: Vector3, height: float, species: int, exposed := .0) -> void:
     var wind := Vector3(cos(at.x * .18 + .8), 0, sin(at.x * .18 + .8))
+    wind = wind.lerp(Vector3(.85, 0, -.53), exposed * .84).normalized()
     var across := Vector3(-wind.z, 0, wind.x)
-    var windlean: float = [.16, .21, .08][species]
+    var windlean: float = float([.16, .21, .08][species]) + exposed * .13
     var branch_base := at + Vector3.UP * height * .46 - wind * height * .045
     var elbow := at + Vector3.UP * height * .69 + across * height * .052
     var top := at + Vector3.UP * height * .92 + wind * height * windlean
@@ -1104,16 +1193,20 @@ func _tree(at: Vector3, height: float, species: int) -> void:
         var rise := rng.randf_range(-.046, .042)
         var cut := rng.randf_range(.06, .58)
         var size := height * rng.randf_range(.38, .50)
-        var direction := (wind * design.x + across * design.z)
+        var direction := (wind * (design.x + exposed * .084) + across * design.z)
         var tip := at + Vector3.UP * height * (design.y + rise) + direction * height * reach
         var root := branch_base.lerp(elbow, cut if i < 4 else .80)
         var fork := root.lerp(tip, .53) - Vector3.UP * height * (.032 if species == 1 else .015)
         var bearing := atan2(direction.x, direction.z)
+        if exposed > .63 and i in [1, 5]:
+            continue
         _taper(root, fork, height * (.016 if i < 4 else .011), height * .009, timber)
         _taper(fork, tip, height * .009, height * .003, timber)
         var shape := _mesh(mesh, leaves, tip + Vector3.UP * size * .09)
         shape.scale = silhouette * size * (1.12 if i == 2 else .88 if i == 5 else 1.0)
+        shape.scale *= Vector3(1.0 + exposed * .16, 1.0 - exposed * .19, 1.0 - exposed * .25)
         shape.rotation_degrees = Vector3(12.0 if i % 2 == 0 else -8.0, rad_to_deg(bearing), (-1.0 if i % 2 == 0 else 1.0) * (15.0 if species == 1 else 7.0))
+        shape.set_instance_shader_parameter("exposure", exposed)
         if close:
             var outward := direction.normalized()
             var split := tip + ((outward + across * (.36 if i % 2 == 0 else -.42)).normalized() + Vector3.DOWN * (.41 if species == 1 else .26)) * size * .51
@@ -1121,12 +1214,14 @@ func _tree(at: Vector3, height: float, species: int) -> void:
             var satellite := _mesh(mesh, leaves, split)
             satellite.scale = silhouette * size * Vector3(.53, .58, .60)
             satellite.rotation = shape.rotation + Vector3(.19, .41, -.10)
+            satellite.set_instance_shader_parameter("exposure", exposed)
             _canopy_sprays(foliage, leaf_rng, tip, outward, shape.scale, species, 22 if i % 2 == 0 else 17)
             _canopy_sprays(foliage, leaf_rng, split, outward, satellite.scale, species, 9)
     if close:
         foliage.generate_normals()
         var fringes := _mesh(foliage.commit(), leaves, Vector3.ZERO)
         fringes.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+        fringes.set_instance_shader_parameter("exposure", exposed)
     if _road_dist(Vector2(at.x, at.z)) > 1.55 and at.y < .95:
         _collision(at + Vector3(.10, .78, 0), Vector3(height * .120, 1.7, height * .120))
 
@@ -1184,6 +1279,7 @@ func _understory() -> void:
                 plant.rotation.y = angle
                 plant.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
     _grass_batches()
+    _breeze_meadow()
 
 
 func _garden_flowers() -> void:
@@ -1261,6 +1357,52 @@ func _grass_batches() -> void:
     tuft.material_override = material
     tuft.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
     add_child(tuft)
+
+
+func _breeze_meadow() -> void:
+    var field := SurfaceTool.new()
+    field.begin(Mesh.PRIMITIVE_TRIANGLES)
+    var local := RandomNumberGenerator.new()
+    local.seed = 36015
+    var wind := Vector2(.85, -.53)
+    var cross := Vector2(-wind.y, wind.x)
+    var patches := [
+        [Vector2(-5.3, 11.8), Vector2(4.1, 2.9), 330, .52],
+        [Vector2(4.4, 10.8), Vector2(2.84, 3.31), 200, .38],
+        [Vector2(3.9, -13.95), Vector2(4.1, 1.72), 135, .33],
+        [Vector2(9.4, -15.12), Vector2(5.3, 3.08), 210, .49],
+        [Vector2(-11.3, -.90), Vector2(2.22, 3.84), 115, .38],
+    ]
+    for patch in patches:
+        for i in range(patch[2]):
+            var lateral := Vector2.from_angle(local.randf() * TAU) * sqrt(local.randf())
+            var p: Vector2 = patch[0] + wind * (lateral.x * patch[1].x) + cross * (lateral.y * patch[1].y)
+            if _road_dist(p) < 1.95 or _path_distance(p, ORCHARD_BRANCH) < 1.30 or _pond_math(p) < 1.12:
+                continue
+            if local.randf() < lateral.length() * .54 or hills.get_noise_2dv(p * 5.6) < -.19:
+                continue
+            var blade_height: float = patch[3] * local.randf_range(.47, 1.12)
+            var axis_angle := wind.angle() + local.randf_range(-.86, .84)
+            var lean := Vector2.from_angle(axis_angle)
+            var base := Vector3(p.x, _height(p) - .018, p.y)
+            var side := Vector3(-lean.y, 0, lean.x) * local.randf_range(.011, .024)
+            var middle := base + Vector3(lean.x * .21, .53, lean.y * .21) * blade_height
+            var tip := base + Vector3(lean.x * .66, .94, lean.y * .66) * blade_height
+            var root_tint := Color("4d653e").lerp(Color("668244"), local.randf())
+            var sun_tint := Color("8a9c4f").lerp(Color("b4b665"), local.randf() * .73)
+            var points := [base - side, base + side, middle + side * .62,
+                base - side, middle + side * .62, middle - side * .62,
+                middle - side * .62, middle + side * .62, tip]
+            var rise := [.0, .0, .53, .0, .53, .53, .53, .53, 1.]
+            for v in points.size():
+                field.set_color(root_tint.lerp(sun_tint, rise[v]))
+                field.set_uv(Vector2(0, rise[v]))
+                field.add_vertex(points[v])
+    field.generate_normals()
+    var material := ShaderMaterial.new()
+    material.shader = MEADOW_GRASS
+    var grasses := _mesh(field.commit(), material, Vector3.ZERO)
+    grasses.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
 func _stone(tint: Color, scale: float, relief: float) -> ShaderMaterial:
