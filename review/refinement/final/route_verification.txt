@@ -1,0 +1,4 @@
+ROUTE | basin | 5/5 | 30.40 m | PASS
+ROUTE | tide | 4/4 | 24.72 m | PASS
+ROUTE | sunvine | 6/6 | 32.13 m | PASS
+ROUTE | grove | 5/5 | 29.74 m | PASS

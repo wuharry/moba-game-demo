@@ -1,0 +1,10 @@
+/.godot/
+*.log
+__pycache__/
+/grove_measure*
+
+# Godot extracts these texture copies from the imported GLB files.
+/models/fog_runner_*.png
+/models/fog_runner_*.png.import
+/models/garden_hero_Painted_Stone_Atlas.*
+/models/ridge_hero_Painted_Stone_Atlas.*
