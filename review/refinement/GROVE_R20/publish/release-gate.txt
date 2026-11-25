@@ -1,0 +1,2 @@
+Release blocked:
+- Godot source/assets differ from the reviewed candidate.

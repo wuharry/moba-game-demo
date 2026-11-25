@@ -37,32 +37,34 @@ void fragment() {
 	weights /= max(weights.x + weights.y + weights.z, .001);
 	vec3 paint = weights.x * paint_at(world_p.zy) + weights.y * paint_at(world_p.xz)
 		+ weights.z * paint_at(world_p.xy);
-	float stains = field(world_p.xz*.64 + world_p.y*.71);
-	float chips = field(local_p.xz*3.55 + vec2(local_p.y*3.77, -local_p.y*2.71));
+	// Broad pigment planes carry the illustration; fine noise must not
+	// become sandy speckle on every stone and distant mountain alike.
+	float stains = field(world_p.xz*.36 + world_p.y*.31);
+	float chips = field(local_p.xz*.93 + vec2(local_p.y*.81, -local_p.y*.67));
 	float level = local_p.y + local_p.x*.15 - local_p.z*.12;
 	float vein = (level + .19*stains + .043*chips) / bedding;
 	float seam_mask = (1.0 - smoothstep(.025,.11,abs(fract(vein + .5)-.5)))
 		* (1.0-smoothstep(.55,.93,direction.y)) * (.42 + .46*stains);
 	float canopy_spots = smoothstep(.40,.70,stains*.74+chips*.26) * weathering;
 	float moss_mask = canopy_spots * (.29 + .71*smoothstep(.03,.88,direction.y));
-	vec3 bedrock = mix(stone.rgb,seam.rgb,seam_mask);
+	vec3 bedrock = mix(stone.rgb,seam.rgb,seam_mask*.52);
 	vec3 surface = mix(bedrock,lichen.rgb,moss_mask);
 	if (ridge_weathering > .0) {
-		float runnel = field(vec2(local_p.x*.94 - local_p.y*.58, local_p.z*.78+local_p.y*.13));
+		float runnel = field(vec2(local_p.x*.38 - local_p.y*.21, local_p.z*.31+local_p.y*.09));
 		float broad = field(vec2(local_p.x*.25+local_p.z*.33, local_p.y*.23));
 		float strata_level = (local_p.y + local_p.x*.32 - local_p.z*.14 + broad*.41) / bedding;
 		float bedding_color = smoothstep(.22,.86,field(vec2(floor(strata_level),local_p.z*.07)));
 		float oxide = smoothstep(.34,.81,broad*.53 + stains*.26 + runnel*.21);
-		vec3 face = mix(stone.rgb*vec3(.73,.86,.86),stone.rgb*vec3(1.08,.97,.83),oxide);
+		vec3 face = mix(stone.rgb*vec3(.85,.95,1.02),stone.rgb*vec3(1.035,1.0,.93),oxide);
 		face = mix(face, seam.rgb, (1.0-smoothstep(.027,.095,abs(fract(strata_level+.5)-.5)))
-			*.40*(1.0-smoothstep(.55,.95,direction.y))*(.50+.5*runnel));
+			*.17*(1.0-smoothstep(.55,.95,direction.y))*(.50+.5*runnel));
 		float leaf_bank = smoothstep(.38,.77,broad*.57 + stains*.20 + runnel*.32);
 		leaf_bank *= (.31+.69*smoothstep(.17,.83,direction.y)) * (.95-.31*smoothstep(1.9,8.8,local_p.y));
-		face = mix(face, lichen.rgb, leaf_bank*.86);
-		face *= mix(.89,1.14,bedding_color)*(.81+.28*runnel);
+		face = mix(face, lichen.rgb, leaf_bank*.55);
+		face *= mix(.95,1.055,bedding_color)*(.95+.085*runnel);
 		surface = mix(surface,face,ridge_weathering);
 	}
-	ALBEDO = surface * mix(vec3(.73),paint, .61) * (.85 + .32*chips) * COLOR.rgb;
-	ROUGHNESS = .85 + chips*.11 - moss_mask*.08;
+	ALBEDO = surface * mix(vec3(.75),paint, .36) * (.92 + .14*chips) * COLOR.rgb;
+	ROUGHNESS = .88 + chips*.065 - moss_mask*.035;
 	SPECULAR = .17;
 }

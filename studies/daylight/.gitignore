@@ -1,0 +1,6 @@
+.godot/
+*.log
+*.err
+*.tmp
+__pycache__/
+/calibration_daylight/review/**/*.import

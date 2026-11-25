@@ -2,7 +2,7 @@ extends Node3D
 
 const STONE_MAP := preload("res://textures/painted_stone.png")
 const FOLIAGE_MAP := preload("res://textures/painted_plants.png")
-const STONE := preload("res://painted_stone.gdshader")
+const STONE := preload("res://grove_r20_stone.gdshader")
 const FOLIAGE := preload("res://painted_plants.gdshader")
 const TERRAIN := preload("res://refine_grove_terrain.gdshader")
 const POOL := preload("res://refine_grove_pool.gdshader")
@@ -50,7 +50,7 @@ func _ready() -> void:
 	rng.seed = 298860
 	noise.seed = 5101
 	noise.frequency = 0.077
-	warm_stone = _stone(Color("bcbca2"), 4.6, 0.0)
+	warm_stone = _stone(Color("c6c7b4"), 4.6, 0.0)
 	cold_stone = _stone(Color("b8c2ad"), 6.4, 1.0)
 	foundation_stone = _strata_material(Color("a6a791"), Color("5c6852"), Color("738063"), .22, .63)
 	bedrock_stone = _strata_material(Color("adae98"), Color("696559"), Color("7b8c62"), .61, .48)
@@ -62,14 +62,16 @@ func _ready() -> void:
 	nectar.emission_enabled = true
 	nectar.emission = Color("c5edba")
 	nectar.emission_energy_multiplier = 0.37
-	for hex in ["946b43", "956342", "8e7547", "ad7e48", "7c8953", "547653", "486b5b", "608762"]:
+	for hex in ["bd873d", "b96f35", "bd9649", "d7a250", "92a962", "518b6b", "3e776d", "6c9469"]:
 		var foliage := ShaderMaterial.new()
 		foliage.shader = CANOPY
+		foliage.set_shader_parameter("foliage_atlas", load("res://textures/genshin_foliage_cards.png"))
 		foliage.set_shader_parameter("tint", Color(hex))
 		canopy_materials.append(foliage)
 		canopy_palette.append(Color(hex).srgb_to_linear())
 	leaf_layer = ShaderMaterial.new()
 	leaf_layer.shader = CANOPY
+	leaf_layer.set_shader_parameter("foliage_atlas", load("res://textures/genshin_foliage_cards.png"))
 	leaf_layer.set_shader_parameter("using_vertex", 1.0)
 	var cover_palettes := [Color("a9b58a"), Color("b3ab84"), Color("91a892")]
 	var cells := [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1)]
@@ -98,46 +100,80 @@ func _ready() -> void:
 	_build_sedge_cove()
 	_build_slope_gardens()
 	_build_garden_retaining_banks()
+	preload("res://grove_r20_understory.gd").build(self)
 	rng.state = scenery_seed
 
 
 func _build_light() -> void:
+	# R20: keep R19 sun direction and both review cameras for direct comparison.
 	var env := Environment.new()
 	var sky := Sky.new()
 	var paint := ShaderMaterial.new()
 	paint.shader = GROVE_SKY
 	sky.sky_material = paint
+	sky.process_mode = Sky.PROCESS_MODE_QUALITY
+	sky.radiance_size = Sky.RADIANCE_SIZE_256
 	env.sky = sky
 	env.background_mode = Environment.BG_SKY
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
-	env.tonemap_exposure = .94
-	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	env.ambient_light_color = Color("b9cdd8")
-	env.ambient_light_energy = .71
+	env.tonemap_exposure = 1.0
+	env.tonemap_white = 1.55
+	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
+	env.ambient_light_color = Color("b4d0dc")
+	env.ambient_light_sky_contribution = .42
+	env.ambient_light_energy = .58
+	env.reflected_light_source = Environment.REFLECTION_SOURCE_SKY
 	env.adjustment_enabled = true
-	env.adjustment_contrast = 1.10
-	env.adjustment_saturation = 1.00
-	env.ssao_enabled = true
-	env.ssao_radius = 1.6
-	env.ssao_intensity = 1.42
-	env.ssr_enabled = true
+	env.adjustment_contrast = 1.02
+	env.adjustment_saturation = 1.02
+	# A near-identity RGB grading volume; never flatten the actual lighting.
+	var slices: Array[Image] = []
+	for z in range(16):
+		var slice_image := Image.create(16, 16, false, Image.FORMAT_RGB8)
+		for y in range(16):
+			for x in range(16):
+				var c := Color(float(x) / 15.0, float(y) / 15.0, float(z) / 15.0)
+				var value := c.r * .2126 + c.g * .7152 + c.b * .0722
+				var shadow := (1.0 - smoothstep(.05, .56, value)) * value
+				c.g = clampf(c.g + shadow * .035, 0.0, 1.0)
+				c.b = clampf(c.b + shadow * .065, 0.0, 1.0)
+				slice_image.set_pixel(x, y, c)
+		slices.append(slice_image)
+	var lut := ImageTexture3D.new()
+	if lut.create(Image.FORMAT_RGB8, 16, 16, 16, false, slices) == OK:
+		env.adjustment_color_correction = lut
+	env.glow_enabled = true
+	env.glow_normalized = true
+	env.glow_intensity = .13
+	env.glow_bloom = .0
+	env.glow_hdr_threshold = 1.18
+	var forward_plus := RenderingServer.get_current_rendering_method() == "forward_plus"
+	env.ssao_enabled = forward_plus
+	env.ssao_radius = 1.10
+	env.ssao_intensity = .95
+	env.ssr_enabled = forward_plus
+	env.ssr_max_steps = 48
 	env.fog_enabled = true
 	env.fog_mode = Environment.FOG_MODE_DEPTH
-	env.fog_depth_begin = 28.0
-	env.fog_depth_end = 96.0
-	env.fog_density = 0.74
-	env.fog_light_color = Color("9fbabf")
-	env.fog_sky_affect = 0.18
+	env.fog_depth_begin = 38.0
+	env.fog_depth_end = 145.0
+	env.fog_density = .55
+	env.fog_light_color = Color("bdd9df")
+	env.fog_sun_scatter = .12
+	env.fog_aerial_perspective = .12
+	env.fog_sky_affect = .03
 	var world := WorldEnvironment.new()
 	world.environment = env
 	add_child(world)
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-37, -57, 0)
-	sun.light_color = Color("ffe3b9")
-	sun.light_energy = 1.50
-	sun.light_angular_distance = 1.36
+	sun.light_color = Color("fff0d7")
+	sun.light_energy = 1.32
+	sun.light_angular_distance = 1.1
 	sun.shadow_enabled = true
-	sun.directional_shadow_max_distance = 57.0
+	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
+	sun.directional_shadow_blend_splits = true
+	sun.directional_shadow_max_distance = 70.0
 	add_child(sun)
 
 
@@ -868,14 +904,15 @@ func _build_stonework() -> void:
 
 
 func _build_ridges() -> void:
-	var pale := _strata_material(Color("a8a791"),Color("65746a"),Color("68805e"),1.15,.83)
-	var muted := _strata_material(Color("8d9c95"),Color("536e6e"),Color("617b66"),.87,.84)
+	var pale := _strata_material(Color("a4aa9e"),Color("687b7b"),Color("6b815c"),2.05,.63)
+	var muted := _strata_material(Color("919f9b"),Color("617c80"),Color("627c68"),1.73,.68)
 	pale.set_shader_parameter("ridge_weathering", .93)
 	muted.set_shader_parameter("ridge_weathering", .89)
-	var distance_stone := _strata_material(Color("98aca8"),Color("7a9497"),Color("758f83"),2.17,.69)
-	distance_stone.set_shader_parameter("ridge_weathering", .46)
-	# A rounded shoulder descends behind the left trail; the east wall
-	# breaks diagonally toward the feeder channel and its stepped sill.
+	var distance_stone := _strata_material(Color("9ebac5"),Color("87a8b8"),Color("91b3b0"),4.17,.22)
+	distance_stone.set_shader_parameter("ridge_weathering", .22)
+	# Broad sloped shoulders descend behind the trail. The same original
+	# footprints keep the path and water untouched; depth comes from plane
+	# direction, with quieter blue-grey paint reserved for the distant tier.
 	var hilltops := [
 		[Vector3(-33.8, 1.4,-28.9),Vector3(15.4,14.2,8.6),-.49,pale],
 		[Vector3(-24.2, 1.2,-28.2),Vector3(13.7,10.8,8.1),-.39,muted],
@@ -1050,19 +1087,20 @@ func _tree(origin: Vector3, height: float, palette: int, habit: int, bearing: fl
 			_bough(wood_mesh, [shoot_start, shoot_start.lerp(shoot_tip, .51) + Vector3.UP*.12, shoot_tip],
 				[height*.011, height*.006, .007], 6)
 			var pigment := canopy_palette[palette] * (.92 + .037 * float(i + lateral))
-			_leaf_spray(leaves, shoot_start.lerp(shoot_tip, .67), sway, height*(.245 if lateral == 0 else .183),
-				height*(.048 + (i % 3) * .018), pigment, 102)
+			_leaf_spray(leaves, shoot_start.lerp(shoot_tip, .52), sway, height*(.276 if lateral == 0 else .207),
+				height*(.042 + (i % 3) * .013), pigment, 102)
 	_leave_crown_top(leaves, crown, along, height, canopy_palette[palette])
 	wood_mesh.index()
 	wood_mesh.generate_normals()
 	_place(wood_mesh.commit(), wood, Vector3.ZERO)
-	leaves.generate_normals()
+	# Crown normals are authored per vertex; recomputing would expose the card planes.
+	leaves.index()
 	_place(leaves.commit(), leaf_layer, Vector3.ZERO)
 
 
 func _leave_crown_top(builder: SurfaceTool, crown: Vector3, axis: Vector3, height: float, pigment: Color) -> void:
-	_leaf_spray(builder, crown, axis, height*.25, height*.10, pigment*1.10, 148)
-	_leaf_spray(builder, crown + (axis * .16 - Vector3.UP * .11) * height, axis, height*.20, height*.068, pigment, 94)
+	_leaf_spray(builder, crown, axis, height*.28, height*.075, pigment*1.04, 148)
+	_leaf_spray(builder, crown + (axis * .12 - Vector3.UP * .09) * height, axis, height*.225, height*.05, pigment, 94)
 
 
 func _bough(builder: SurfaceTool, spine: Array, girths: Array, sides: int) -> void:
@@ -1087,34 +1125,66 @@ func _bough(builder: SurfaceTool, spine: Array, girths: Array, sides: int) -> vo
 
 
 func _leaf_spray(builder: SurfaceTool, at: Vector3, along: Vector3, radius: float, depth: float, pigment: Color, amount: int) -> void:
-	var cross := along.cross(Vector3.UP)
-	for i in range(amount):
-		var angle := rng.randf_range(0.0, TAU)
-		var spread := sqrt(rng.randf())
-		var x := cos(angle) * spread
-		var y := sin(angle) * spread
-		var leaf := at + (along*x*1.18 + cross*y*.76) * radius
-		var setting := rng.randf()
-		leaf.y += (sqrt(1.0 - spread * spread) * .81 + (setting - .5) * 1.31 + x*.23) * depth
-		var vector := along.rotated(Vector3.UP, angle * .41 + rng.randf_range(-1.2, 1.2))
-		vector.y = rng.randf_range(-.33, .34) + x*.16
-		vector = vector.normalized()
-		var width := vector.cross(Vector3.UP).normalized()
-		width.y = rng.randf_range(-.31, .36)
-		var extent := rng.randf_range(.131, .258) * radius
-		var side := extent * rng.randf_range(.43, .65)
-		var left_edge := leaf + width * side - vector * extent * .12
-		var right_edge := leaf - width * side
-		var front := leaf + vector * extent
-		var rear := leaf - vector * extent * .66
-		var ridge := leaf + Vector3.UP * extent*.16
-		var shade := (.87 + .13 * x + .15 * setting) * rng.randf_range(.92, 1.11)
-		builder.set_color(pigment * shade)
-		_triangle(builder, rear, left_edge, ridge)
-		_triangle(builder, ridge, left_edge, front)
-		builder.set_color(pigment * shade * .91)
-		_triangle(builder, rear, ridge, right_edge)
-		_triangle(builder, ridge, front, right_edge)
+	# Original branch positions remain unchanged. Volume is added inside each
+	# branch's own footprint, with broad atlas leaves and air between boughs.
+	var cross := along.cross(Vector3.UP).normalized()
+	var cards := clampi(int(round(float(amount) * .38)), 32, 50)
+	var crown_depth := maxf(depth, radius * .28)
+	var warm := pigment.r > pigment.g * 1.17
+	var quadrant := Vector2(0.0, 1.0) if warm else Vector2.ZERO
+	var golden_angle := PI * (3.0 - sqrt(5.0))
+	for i in range(cards):
+		var frac := (float(i) + .5) / float(cards)
+		var layer := i % 3
+		var shell := [.30, .55, .78][layer] as float
+		var theta := float(i) * golden_angle + rng.randf_range(-.15,.15)
+		var vertical := 1.0 - 2.0 * frac
+		var radial := sqrt(maxf(0.0, 1.0 - vertical * vertical))
+		var direction := along * (cos(theta) * radial) + cross * (sin(theta) * radial) + Vector3.UP * vertical
+		var offset := (along * (cos(theta) * radial * radius * 1.01)
+			+ cross * (sin(theta) * radial * radius * .69)
+			+ Vector3.UP * vertical * crown_depth) * shell
+		var center := at + offset
+		var facing := (direction + Vector3.UP * .38).normalized()
+		var reference := Vector3.UP if absf(facing.y) < .92 else along
+		var right := reference.cross(facing).normalized()
+		var up := facing.cross(right).normalized()
+		var roll := rng.randf_range(-PI, PI)
+		var rx := right * cos(roll) + up * sin(roll)
+		var ry := -right * sin(roll) + up * cos(roll)
+		var size_value := radius * rng.randf_range(.66,.86)
+		if layer == 2:
+			size_value *= .90
+		var half_size := size_value * .5
+		var middle := center + facing * size_value * .07
+		var corners := PackedVector3Array([
+			center - rx * half_size - ry * half_size,
+			center + rx * half_size - ry * half_size,
+			center + rx * half_size + ry * half_size,
+			center - rx * half_size + ry * half_size,
+		])
+		var uvs := PackedVector2Array([Vector2(.02,.98),Vector2(.98,.98),Vector2(.98,.02),Vector2(.02,.02)])
+		var variation := rng.randf_range(.94,1.05)
+		for edge in range(4):
+			var next_edge := (edge + 1) % 4
+			var positions := PackedVector3Array([corners[edge],corners[next_edge],middle])
+			for flatten_index in range(3):
+				positions[flatten_index].y = at.y + (positions[flatten_index].y - at.y) * .76
+			var local_uvs := PackedVector2Array([uvs[edge],uvs[next_edge],Vector2(.5,.5)])
+			for vertex_index in range(3):
+				var local := positions[vertex_index] - at
+				# Use the bough ellipsoid rather than each card face for lighting.
+				var crown_normal := (along * local.dot(along) / (radius * radius)
+					+ cross * local.dot(cross) / pow(radius * .80,2)
+					+ Vector3.UP * (local.y + crown_depth * .65) / pow(crown_depth * 1.55,2)).normalized()
+				var height_tone := clampf(local.y / (crown_depth * 2.0) + .5, 0.0, 1.0)
+				var value := lerpf(.82,1.10,height_tone) * variation
+				var shade := pigment * value
+				builder.set_color(Color(shade.r,shade.g,shade.b,lerpf(.60,.98,shell)))
+				builder.set_uv((quadrant + local_uvs[vertex_index]) * .5)
+				builder.set_uv2(Vector2(1.0,height_tone))
+				builder.set_normal(crown_normal)
+				builder.add_vertex(positions[vertex_index])
 
 
 func _build_trail_trim() -> void:
@@ -1208,8 +1278,8 @@ func _rock_mass(extent: Vector3, salt: float, distant: bool) -> ArrayMesh:
 	var rings: Array[PackedVector3Array] = []
 	var profiles := [
 		Vector2(-.36, 1.04), Vector2(-.04, 1.03), Vector2(.14, .96), Vector2(.25, .88),
-		Vector2(.31, .81), Vector2(.35, .86), Vector2(.40, .78), Vector2(.49, .69),
-		Vector2(.55, .67), Vector2(.59, .69), Vector2(.65, .62), Vector2(.73, .58),
+		Vector2(.31, .81), Vector2(.35, .82), Vector2(.40, .78), Vector2(.49, .69),
+		Vector2(.55, .67), Vector2(.59, .655), Vector2(.65, .62), Vector2(.73, .58),
 		Vector2(.77, .49), Vector2(.83, .43), Vector2(.90, .36), Vector2(.95, .25),
 		Vector2(1.0, .10), Vector2(1.025, .026),
 	]
@@ -1219,11 +1289,14 @@ func _rock_mass(extent: Vector3, salt: float, distant: bool) -> ArrayMesh:
 		for i in range(segments):
 			var angle := TAU * float(i) / float(segments)
 			var vector := Vector3(cos(angle), 0.0, sin(angle))
+			# R20-B restores continuous folded faces after the low-ring trial
+			# produced polygon domes and full-width bands. Small vertex wear
+			# is reduced while original broad shoulders and smooth normals remain.
 			# Long folded faces shed into narrow gullies. At the toe they
 			# spread back into the adjoining grass and buried rubble.
-			var folds := .105*sin(angle*3.0 + salt*.79) + .070*sin(angle*6.0-salt*.62)
-			var gully := .068 * pow(.5+.5*cos(angle*8.0 + salt*.49 + profile.x*.94), 3.1)
-			var wear := noise.get_noise_3dv(vector*14.0 + Vector3(salt, profile.x*11.0, salt*.13))*.085
+			var folds := .125*sin(angle*3.0 + salt*.79) + .082*sin(angle*6.0-salt*.62)
+			var gully := .082 * pow(.5+.5*cos(angle*8.0 + salt*.49 + profile.x*.94), 3.1)
+			var wear := noise.get_noise_3dv(vector*14.0 + Vector3(salt, profile.x*11.0, salt*.13))*.038
 			var landing := .28 + .72*smoothstep(-.1,.55,profile.x)
 			var crest := 1.0 + .15*sin(angle*2.0+salt) + .063*sin(angle*5.0-salt*.68)
 			var erosion := (folds - gully + wear) * landing * (.68 if distant else 1.0)

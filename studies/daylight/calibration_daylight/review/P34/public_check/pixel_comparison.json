@@ -1,0 +1,65 @@
+[
+  {
+    "file": "A_fixed_day.png",
+    "same_pixels": true,
+    "changed_bounds": null,
+    "public_sha256": "51b8f933ea25014cec6cfb0407cda9585d269d6c57881d85691e8e6409d00b07",
+    "D_sha256": "51b8f933ea25014cec6cfb0407cda9585d269d6c57881d85691e8e6409d00b07"
+  },
+  {
+    "file": "A_moba_afternoon.png",
+    "same_pixels": true,
+    "changed_bounds": null,
+    "public_sha256": "8656bdb2ed0530e63113de4a9d85941c9414cfea1a511a34c48ac2bbc0810155",
+    "D_sha256": "8656bdb2ed0530e63113de4a9d85941c9414cfea1a511a34c48ac2bbc0810155"
+  },
+  {
+    "file": "A_moba_day.png",
+    "same_pixels": true,
+    "changed_bounds": null,
+    "public_sha256": "78cf07e08ece8c46398b7427de73fb9c8b23cd49226c740778e12c946e93efd0",
+    "D_sha256": "78cf07e08ece8c46398b7427de73fb9c8b23cd49226c740778e12c946e93efd0"
+  },
+  {
+    "file": "A_moba_dusk.png",
+    "same_pixels": true,
+    "changed_bounds": null,
+    "public_sha256": "8edbc7548369d195b642e3e0ee3aef9de03961df71e5fbc44b283b53e6df5072",
+    "D_sha256": "8edbc7548369d195b642e3e0ee3aef9de03961df71e5fbc44b283b53e6df5072"
+  },
+  {
+    "file": "B_fixed_day.png",
+    "same_pixels": true,
+    "changed_bounds": null,
+    "public_sha256": "ed19ff1c613e1a13541c43a44d6ad60ebcf2925e72cb2d7fe53057100c9ced5a",
+    "D_sha256": "ed19ff1c613e1a13541c43a44d6ad60ebcf2925e72cb2d7fe53057100c9ced5a"
+  },
+  {
+    "file": "B_moba_afternoon.png",
+    "same_pixels": true,
+    "changed_bounds": null,
+    "public_sha256": "0fed97991d47fd44611b9c81a10fc6c6b89f458788d4360ca065cef0628be3be",
+    "D_sha256": "0fed97991d47fd44611b9c81a10fc6c6b89f458788d4360ca065cef0628be3be"
+  },
+  {
+    "file": "B_moba_day.png",
+    "same_pixels": true,
+    "changed_bounds": null,
+    "public_sha256": "86cf561cd0f8ba7a5bc107e329ec9bf01ccaf7750d631f5b98f8a81f1a2005a2",
+    "D_sha256": "86cf561cd0f8ba7a5bc107e329ec9bf01ccaf7750d631f5b98f8a81f1a2005a2"
+  },
+  {
+    "file": "B_moba_dusk.png",
+    "same_pixels": true,
+    "changed_bounds": null,
+    "public_sha256": "6ac38be45095df7cd9559c5507045560d5c420812cac9cc8a815e07ff47e1ea1",
+    "D_sha256": "6ac38be45095df7cd9559c5507045560d5c420812cac9cc8a815e07ff47e1ea1"
+  },
+  {
+    "file": "B_wall_day.png",
+    "same_pixels": true,
+    "changed_bounds": null,
+    "public_sha256": "b659f8195fc1470f4efeecff248c77be9a42d6bbfde8af12fc3f2ae3c1070c25",
+    "D_sha256": "b659f8195fc1470f4efeecff248c77be9a42d6bbfde8af12fc3f2ae3c1070c25"
+  }
+]

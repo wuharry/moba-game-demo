@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4080 Laptop GPU
+
+P34_NEAR_WOODLAND 87
+DAYLIGHT P34-D | Windows | NVIDIA GeForce RTX 4080 Laptop GPU | gl_compatibility
+STUDY_CAPTURE A_fixed_day | (1280, 720) | 0
+STUDY_CAPTURE B_fixed_day | (1280, 720) | 0
+STUDY_CAPTURE B_wall_day | (1280, 720) | 0
+STUDY_CAPTURE A_moba_day | (1280, 720) | 0
+P34_LOCKED A day | [X: (0.953583, 0.0, -0.301131), Y: (-0.239017, 0.608269, -0.756888), Z: (0.183169, 0.793731, 0.580034), O: (16.89012, 27.79903, 20.6)] | size 24.0
+STUDY_CAPTURE B_moba_day | (1280, 720) | 0
+P34_LOCKED B day | [X: (0.953583, 0.0, -0.301131), Y: (-0.239017, 0.608269, -0.756888), Z: (0.183169, 0.793731, 0.580034), O: (16.89012, 27.79903, 20.6)] | size 24.0
+STUDY_CAPTURE A_moba_afternoon | (1280, 720) | 0
+P34_LOCKED A afternoon | [X: (0.953583, 0.0, -0.301131), Y: (-0.239017, 0.608269, -0.756888), Z: (0.183169, 0.793731, 0.580034), O: (16.89012, 27.79903, 20.6)] | size 24.0
+STUDY_CAPTURE B_moba_afternoon | (1280, 720) | 0
+P34_LOCKED B afternoon | [X: (0.953583, 0.0, -0.301131), Y: (-0.239017, 0.608269, -0.756888), Z: (0.183169, 0.793731, 0.580034), O: (16.89012, 27.79903, 20.6)] | size 24.0
+STUDY_CAPTURE A_moba_dusk | (1280, 720) | 0
+P34_LOCKED A dusk | [X: (0.953583, 0.0, -0.301131), Y: (-0.239017, 0.608269, -0.756888), Z: (0.183169, 0.793731, 0.580034), O: (16.89012, 27.79903, 20.6)] | size 24.0
+STUDY_CAPTURE B_moba_dusk | (1280, 720) | 0
+P34_LOCKED B dusk | [X: (0.953583, 0.0, -0.301131), Y: (-0.239017, 0.608269, -0.756888), Z: (0.183169, 0.793731, 0.580034), O: (16.89012, 27.79903, 20.6)] | size 24.0
+P34_CAPTURE_COMPLETE

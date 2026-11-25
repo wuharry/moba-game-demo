@@ -1,0 +1,109 @@
+{
+  "version": "P34-D",
+  "source_archive_id": "libfile_fde3_f-ec49d001a4e0819190c4a0516163d08c_4ffde4c2a6608191a7a5b930dbd15373",
+  "source_archive_sha256": "97649ac6a353ae93838bf5eb5a6aed7107b98b44f54751e4b67fa5917797dc8d",
+  "runtime": "Godot 4.7.2 stable, OpenGL Compatibility, NVIDIA RTX 4080 Laptop",
+  "stills": [
+    {
+      "path": "captures/A_fixed_day.png",
+      "sha256": "51b8f933ea25014cec6cfb0407cda9585d269d6c57881d85691e8e6409d00b07",
+      "bytes": 1389408
+    },
+    {
+      "path": "captures/A_moba_afternoon.png",
+      "sha256": "8656bdb2ed0530e63113de4a9d85941c9414cfea1a511a34c48ac2bbc0810155",
+      "bytes": 1403431
+    },
+    {
+      "path": "captures/A_moba_day.png",
+      "sha256": "78cf07e08ece8c46398b7427de73fb9c8b23cd49226c740778e12c946e93efd0",
+      "bytes": 1440610
+    },
+    {
+      "path": "captures/A_moba_dusk.png",
+      "sha256": "8edbc7548369d195b642e3e0ee3aef9de03961df71e5fbc44b283b53e6df5072",
+      "bytes": 1151547
+    },
+    {
+      "path": "captures/B_fixed_day.png",
+      "sha256": "ed19ff1c613e1a13541c43a44d6ad60ebcf2925e72cb2d7fe53057100c9ced5a",
+      "bytes": 1387399
+    },
+    {
+      "path": "captures/B_moba_afternoon.png",
+      "sha256": "0fed97991d47fd44611b9c81a10fc6c6b89f458788d4360ca065cef0628be3be",
+      "bytes": 1396088
+    },
+    {
+      "path": "captures/B_moba_day.png",
+      "sha256": "86cf561cd0f8ba7a5bc107e329ec9bf01ccaf7750d631f5b98f8a81f1a2005a2",
+      "bytes": 1433500
+    },
+    {
+      "path": "captures/B_moba_dusk.png",
+      "sha256": "6ac38be45095df7cd9559c5507045560d5c420812cac9cc8a815e07ff47e1ea1",
+      "bytes": 1144503
+    },
+    {
+      "path": "captures/B_wall_day.png",
+      "sha256": "b659f8195fc1470f4efeecff248c77be9a42d6bbfde8af12fc3f2ae3c1070c25",
+      "bytes": 1193972
+    },
+    {
+      "path": "extra_angles/High_Oblique.png",
+      "sha256": "72481a9a45db96d65dd55860bce970b672bfed91d1fc0cc073df7875652a40ed",
+      "bytes": 1295273
+    },
+    {
+      "path": "extra_angles/Plateau_Back.png",
+      "sha256": "0af7e4f62198d9a75a11d7eac8426fc13be565005bf7dffa778efbb6169bcc46",
+      "bytes": 1150051
+    },
+    {
+      "path": "extra_angles/Valley_Low.png",
+      "sha256": "dd1c17976d85fd0cc7e2296f9b6347c8329e0360695649257ef1010dd5bdda53",
+      "bytes": 748817
+    },
+    {
+      "path": "extra_angles/West_Overview.png",
+      "sha256": "e84ed9c07ec6294a1efcaf413b2d352bdf8648fd2722529679be8f249ff3d143",
+      "bytes": 1268272
+    }
+  ],
+  "motion": [
+    {
+      "raw_frames_path": "C:\\Users\\whw88\\Documents\\Codex\\2026-11-23\\new-chat\\daylight-p34\\safe-motion-d\\motion_frames",
+      "frame_count": 72,
+      "resolution": [
+        960,
+        540
+      ],
+      "sample_fps": 18,
+      "first_sha256": "a79c0dc4d42862abd3866d1a8c12d811778857426b744ac0b6e35fe503835d2c",
+      "last_sha256": "0254f41781c7518ac2decb23f38f86d165c46a050acd9c728c7b8a4582067ce4"
+    },
+    {
+      "raw_frames_path": "C:\\Users\\whw88\\Documents\\Codex\\2026-11-23\\new-chat\\daylight-p34\\original-motion-d\\motion_frames",
+      "frame_count": 72,
+      "resolution": [
+        960,
+        540
+      ],
+      "sample_fps": 18,
+      "first_sha256": "a79c0dc4d42862abd3866d1a8c12d811778857426b744ac0b6e35fe503835d2c",
+      "last_sha256": "0254f41781c7518ac2decb23f38f86d165c46a050acd9c728c7b8a4582067ce4"
+    }
+  ],
+  "changed_runtime_files": {
+    "calibration_daylight/foliage.gd": "ec89ea71bfcd0a4745dc9f11e497221a1265502b57aa5da9569cdb3dc9f6f5bd",
+    "calibration_daylight/background.gd": "0535a454da1884e5e0b439cee40c5e277779f612d94b9c8e70e9e35e966ea3a1",
+    "calibration_daylight/grass.gdshader": "a2eedec0344c4294c100ff10a10b8755b3da5c9fda80bfb3d3ae6435c8c08e30",
+    "calibration_daylight/daylight.gd": "f0f26923f647d9f24cbb46635fcb00e4fbd81d33247f62c3b1904d10855aa116"
+  },
+  "invariants": {
+    "terrain.gd": {
+      "sha256": "b4262eda0b14a908f93f5c71c3656f39b83bb689fdb9225fed1f9135f1c693c2",
+      "same_as_P33": true
+    }
+  }
+}

@@ -1,3 +1,9 @@
+# 最新場景迭代：Grove R20-D / Daylight P34-D
+
+[實機前後對照、開啟方式與驗證結果](SCENE_PROGRESS.md)。本次為工作進度提交，尚未通過90%視覺發布門檻。
+
+---
+
 # 四景環境美術驗收
 
 用 Godot 4.7.2 匯入專案根目錄的 `project.godot`，等待 GLB 與貼圖匯入完成，按 F5 進入四景比較。實機驗證使用 Forward+、Vulkan、RTX 4080 Laptop GPU 和 1120 × 630。建置專案已附模型及貼圖。

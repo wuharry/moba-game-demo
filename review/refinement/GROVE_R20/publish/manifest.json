@@ -1,0 +1,26 @@
+[
+  {
+    "path": "review/refinement/GROVE_R20/publish/grove_ground.png",
+    "sha256": "75353467c7a68f5941014845bc18d30c37db7456d7a53e1fb01fd398056e4652"
+  },
+  {
+    "path": "review/refinement/GROVE_R20/publish/grove_overhead.png",
+    "sha256": "4796663290479e8202d7b084b81d92c07422ed0c7d88d7d0f8f6edf9c901a52d"
+  },
+  {
+    "path": "review/refinement/GROVE_R20/publish/release-gate.txt",
+    "sha256": "43f98b267980c8d7f6784bf3a9fc3545a87da611f651b620b506e26583493dc8"
+  },
+  {
+    "path": "review/refinement/GROVE_R20/publish/render-stderr.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "review/refinement/GROVE_R20/publish/render.txt",
+    "sha256": "c3b194d9d95f05f566cd40d4067ff060d524ae0556c18f9a19412210e799531d"
+  },
+  {
+    "path": "review/refinement/GROVE_R20/publish/routes.txt",
+    "sha256": "7f3fd5da6153e2754bb0efdad541a9f3d276403afce5207cb506287a8ee44eef"
+  }
+]
