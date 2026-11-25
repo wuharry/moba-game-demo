@@ -1,5 +1,5 @@
 {
-  "source_sha256": "0b7ece370ce171d8c862267240f229b9476ec73de940f8a0756c5370662691be",
+  "source_sha256": "fc44579b75c68c593c6d815bd9169e748504cce156150a3178b5a0699b0088b0",
   "capture_dir": "review/refinement/final",
   "scenes": {
     "basin": {
@@ -57,30 +57,30 @@
       }
     },
     "sunvine": {
-      "version": "SV15",
+      "version": "SV19",
       "ground": {
-        "score": 92,
+        "score": 96,
         "grades": {
           "terrain": 5,
-          "materials": 4,
+          "materials": 5,
           "assets": 4,
           "dressing": 5,
           "light_water": 5,
           "readability": 5
         },
-        "sha256": "956410a8cd68d01c926625f8eea252044c9156a181f71d8a402a366990a4160a"
+        "sha256": "2f8caacb0e2c0929059a3d88401e61431cabd8fd67c7019dfcc930f4810fa5ec"
       },
       "overhead": {
-        "score": 92,
+        "score": 96,
         "grades": {
           "terrain": 5,
-          "materials": 4,
+          "materials": 5,
           "assets": 4,
           "dressing": 5,
           "light_water": 5,
           "readability": 5
         },
-        "sha256": "e8b6ce12abba6451c79c88085b4c329eab36875d654777accedac2a42734bc33"
+        "sha256": "c039a2eedb1bb1c538493ce7011e4f031040b63ee05ba7874ab75048f591c649"
       }
     },
     "grove": {
@@ -111,5 +111,5 @@
       }
     }
   },
-  "route_sha256": "df8745fc120fb920e2a0013750b49de01a910078364559c165e15b50cfc2ad61"
+  "route_sha256": "b282aa46328f5f6089e04a388091dba284e7ebe1f72ea356b3eb0e853ea3456f"
 }
