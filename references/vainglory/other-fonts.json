@@ -1,0 +1,574 @@
+[
+  {
+    "path": "50/50ED1AE0241F73ABC1727CACED68AE12",
+    "name": "",
+    "size": 64,
+    "type": 0,
+    "entries": 194,
+    "ref": "94CB5665A9763AAEA5B9CA3AD242064B",
+    "metrics": [
+      69.0,
+      -20.0,
+      95.0
+    ]
+  },
+  {
+    "path": "35/35A26A71E4E99B808D4BCE8AAB581AD9",
+    "name": "",
+    "size": 20,
+    "type": 1,
+    "entries": 0,
+    "ref": "8C7489E376A5740B23F28469A4494636",
+    "metrics": [
+      22.0,
+      -6.0,
+      30.0
+    ]
+  },
+  {
+    "path": "0E/0E7AE25ADBA5FA899D6A354E7377E1EB",
+    "name": "",
+    "size": 30,
+    "type": 0,
+    "entries": 1599,
+    "ref": "D66FC35372874284CF8586D36CD55B4B",
+    "metrics": [
+      32.0,
+      -10.0,
+      45.0
+    ]
+  },
+  {
+    "path": "34/3483D966CEFDA6932A172C848F8E115C",
+    "name": "",
+    "size": 30,
+    "type": 0,
+    "entries": 456,
+    "ref": "060C71DEEE18199DA4FEE1536F78AEB8",
+    "metrics": [
+      26.0,
+      -5.0,
+      30.0
+    ]
+  },
+  {
+    "path": "5A/5A90B7B4878DAF6A5AD717768D4A2454",
+    "name": "",
+    "size": 64,
+    "type": 0,
+    "entries": 138,
+    "ref": "399350F65912B94D8B96F3CE391857B2",
+    "metrics": [
+      69.0,
+      -20.0,
+      95.0
+    ]
+  },
+  {
+    "path": "AC/AC53BFF69A4516E2B6511D945EB5FBDC",
+    "name": "",
+    "size": 64,
+    "type": 0,
+    "entries": 176,
+    "ref": "3B664314889CF61276AE5C4A2C53F6CC",
+    "metrics": [
+      56.0,
+      -9.0,
+      64.0
+    ]
+  },
+  {
+    "path": "DF/DF75A3996F3F9953943A084A2BD03F73",
+    "name": "",
+    "size": 40,
+    "type": 0,
+    "entries": 183,
+    "ref": "626E5C913F09AE1C78F4D66EB6437797",
+    "metrics": [
+      43.0,
+      -13.0,
+      59.0
+    ]
+  },
+  {
+    "path": "E4/E4B241F7B252D29EC0F0BB6F9CD5C44E",
+    "name": "",
+    "size": 30,
+    "type": 0,
+    "entries": 321,
+    "ref": "40A9FA7D919F536FE41548F508BD3583",
+    "metrics": [
+      32.0,
+      -10.0,
+      45.0
+    ]
+  },
+  {
+    "path": "ED/EDECF586CF68C248F96E2E22EC667CBE",
+    "name": "",
+    "size": 64,
+    "type": 0,
+    "entries": 180,
+    "ref": "A28864CF30A38DCD54D8E582168A5552",
+    "metrics": [
+      56.0,
+      -9.0,
+      64.0
+    ]
+  },
+  {
+    "path": "18/18484F4C83AA133B06939A0FB7456A13",
+    "name": "",
+    "size": 24,
+    "type": 1,
+    "entries": 0,
+    "ref": "A32C23C25AFD206067E2C6C7B71A2912",
+    "metrics": [
+      22.0,
+      -6.0,
+      28.0
+    ]
+  },
+  {
+    "path": "7C/7C5EA08D889645D433FD1CADA207DFB4",
+    "name": "",
+    "size": 64,
+    "type": 0,
+    "entries": 141,
+    "ref": "9140D031B5BB91E254B001CE8F69E4B2",
+    "metrics": [
+      69.0,
+      -20.0,
+      95.0
+    ]
+  },
+  {
+    "path": "42/42D811715FB2BCB0E36388252C6F9BDB",
+    "name": "Fonts/Brandon-Bold-30-Stroked.font",
+    "size": 30,
+    "type": 0,
+    "entries": 170,
+    "ref": "6E7B763E7DCF2DA072F42C8156475E88",
+    "metrics": [
+      22.0,
+      -8.0,
+      36.0
+    ]
+  },
+  {
+    "path": "87/87AD5AA0A84460C299537AA8FDEFF0CA",
+    "name": "",
+    "size": 30,
+    "type": 1,
+    "entries": 0,
+    "ref": "77A4FAB27B291C61E335C60C37E1D57C",
+    "metrics": [
+      28.0,
+      -7.0,
+      35.0
+    ]
+  },
+  {
+    "path": "8F/8F71AC67F511FE100BECAE1CD2C0FC90",
+    "name": "",
+    "size": 24,
+    "type": 1,
+    "entries": 0,
+    "ref": "8C7489E376A5740B23F28469A4494636",
+    "metrics": [
+      26.0,
+      -8.0,
+      36.0
+    ]
+  },
+  {
+    "path": "10/1078AC25F318546420E03AC259F28AC2",
+    "name": "Fonts/Avenir-Medium-24.font",
+    "size": 24,
+    "type": 1,
+    "entries": 0,
+    "ref": "2FF196EBF45D94DB718021FB1ADAAFF3",
+    "metrics": [
+      24.0,
+      -9.0,
+      33.0
+    ]
+  },
+  {
+    "path": "4D/4D23DD15805FADA8680BD227AE2D1617",
+    "name": "Fonts/Futura-Medium-30-Stroked.font",
+    "size": 36,
+    "type": 0,
+    "entries": 132,
+    "ref": "CB93459675056E0BEB044AC2B479C80B",
+    "metrics": [
+      26.0,
+      -10.0,
+      43.0
+    ]
+  },
+  {
+    "path": "81/816F5BFB242C4DE6EC6CB6C714147CD7",
+    "name": "",
+    "size": 30,
+    "type": 1,
+    "entries": 0,
+    "ref": "2C3E06326CF3CD2E9485C89BB9DCC122",
+    "metrics": [
+      32.0,
+      -10.0,
+      45.0
+    ]
+  },
+  {
+    "path": "2A/2AC14DAFCC70253CAF052B234F4F5036",
+    "name": "",
+    "size": 24,
+    "type": 1,
+    "entries": 0,
+    "ref": "0D9EABC833E2EF3AB23BF310F529DF56",
+    "metrics": [
+      21.0,
+      -4.0,
+      24.0
+    ]
+  },
+  {
+    "path": "2F/2FE149711B76DF8EA41E900EFE62781F",
+    "name": "",
+    "size": 20,
+    "type": 1,
+    "entries": 0,
+    "ref": "0D9EABC833E2EF3AB23BF310F529DF56",
+    "metrics": [
+      18.0,
+      -3.0,
+      20.0
+    ]
+  },
+  {
+    "path": "43/4335B010588A42CEBECBF7DB9719AB21",
+    "name": "",
+    "size": 30,
+    "type": 1,
+    "entries": 0,
+    "ref": "A32C23C25AFD206067E2C6C7B71A2912",
+    "metrics": [
+      28.0,
+      -7.0,
+      35.0
+    ]
+  },
+  {
+    "path": "5C/5C3144F46E206B0A6C856C71C55AC890",
+    "name": "",
+    "size": 24,
+    "type": 1,
+    "entries": 0,
+    "ref": "8C7489E376A5740B23F28469A4494636",
+    "metrics": [
+      26.0,
+      -8.0,
+      36.0
+    ]
+  },
+  {
+    "path": "62/624919BE2EF6537901200DF6075D57E0",
+    "name": "",
+    "size": 24,
+    "type": 1,
+    "entries": 0,
+    "ref": "0D9EABC833E2EF3AB23BF310F529DF56",
+    "metrics": [
+      21.0,
+      -4.0,
+      24.0
+    ]
+  },
+  {
+    "path": "53/53DEB9A31B225055BA3F480660DCF83E",
+    "name": "",
+    "size": 30,
+    "type": 0,
+    "entries": 167,
+    "ref": "2693EA6671BB796FD267C801884B43DC",
+    "metrics": [
+      32.0,
+      -10.0,
+      45.0
+    ]
+  },
+  {
+    "path": "3F/3FD3009DAA2B7E28EDF1260D6C03D43B",
+    "name": "",
+    "size": 30,
+    "type": 0,
+    "entries": 174,
+    "ref": "342255C3005E4025D809E547F67FCDFE",
+    "metrics": [
+      32.0,
+      -10.0,
+      45.0
+    ]
+  },
+  {
+    "path": "30/307E9F72464735F193EB08BA0C0F5C9F",
+    "name": "",
+    "size": 24,
+    "type": 1,
+    "entries": 0,
+    "ref": "8C7489E376A5740B23F28469A4494636",
+    "metrics": [
+      26.0,
+      -8.0,
+      36.0
+    ]
+  },
+  {
+    "path": "5B/5B4684847DF8B93C42D3E0256126C411",
+    "name": "",
+    "size": 20,
+    "type": 1,
+    "entries": 0,
+    "ref": "8C7489E376A5740B23F28469A4494636",
+    "metrics": [
+      22.0,
+      -6.0,
+      30.0
+    ]
+  },
+  {
+    "path": "37/37C19C867D98303EDE39F8E78AAAA1EA",
+    "name": "Fonts/Brandon-Bold-400.font",
+    "size": 340,
+    "type": 1,
+    "entries": 0,
+    "ref": "6BCBD5A1A42188794A912A9E87004499",
+    "metrics": [
+      363.0,
+      -110.0,
+      473.0
+    ]
+  },
+  {
+    "path": "06/06FF27BFF42BEB754F46E252D655B0DD",
+    "name": "",
+    "size": 30,
+    "type": 1,
+    "entries": 0,
+    "ref": "0D9EABC833E2EF3AB23BF310F529DF56",
+    "metrics": [
+      26.0,
+      -5.0,
+      30.0
+    ]
+  },
+  {
+    "path": "39/39B63CDAAE9BF16B883DC341500DEF66",
+    "name": "",
+    "size": 40,
+    "type": 0,
+    "entries": 167,
+    "ref": "B9F820B96A48C2FD10B824B2FDBAE88C",
+    "metrics": [
+      43.0,
+      -13.0,
+      59.0
+    ]
+  },
+  {
+    "path": "B8/B8D2E7EAEFFFBD8D18B7F2C9B7CAB666",
+    "name": "",
+    "size": 40,
+    "type": 0,
+    "entries": 454,
+    "ref": "59C2D6DC75BD2B6F2F707ED080897123",
+    "metrics": [
+      35.0,
+      -6.0,
+      40.0
+    ]
+  },
+  {
+    "path": "AA/AAF4F6F064ECF2450E5C6A7FEF47F595",
+    "name": "",
+    "size": 20,
+    "type": 1,
+    "entries": 0,
+    "ref": "0D9EABC833E2EF3AB23BF310F529DF56",
+    "metrics": [
+      18.0,
+      -3.0,
+      20.0
+    ]
+  },
+  {
+    "path": "AF/AF4802227CE6A972D6814F197A5B8952",
+    "name": "",
+    "size": 30,
+    "type": 1,
+    "entries": 0,
+    "ref": "2C3E06326CF3CD2E9485C89BB9DCC122",
+    "metrics": [
+      32.0,
+      -10.0,
+      45.0
+    ]
+  },
+  {
+    "path": "A8/A87EF39986D557AB34F726D37BF9DAA5",
+    "name": "",
+    "size": 40,
+    "type": 0,
+    "entries": 320,
+    "ref": "5170AB4BBF851BD3CEFDD5A033139514",
+    "metrics": [
+      43.0,
+      -13.0,
+      59.0
+    ]
+  },
+  {
+    "path": "B0/B08DCDF779648838E4A62E5CB746D87A",
+    "name": "",
+    "size": 30,
+    "type": 1,
+    "entries": 0,
+    "ref": "2C3E06326CF3CD2E9485C89BB9DCC122",
+    "metrics": [
+      32.0,
+      -10.0,
+      45.0
+    ]
+  },
+  {
+    "path": "FF/FF580061EC96E81D146F29F012E0AA3C",
+    "name": "",
+    "size": 30,
+    "type": 1,
+    "entries": 0,
+    "ref": "0D9EABC833E2EF3AB23BF310F529DF56",
+    "metrics": [
+      26.0,
+      -5.0,
+      30.0
+    ]
+  },
+  {
+    "path": "F6/F62DE1D76AF18FCDF7A49428B80BC724",
+    "name": "Fonts/Futura-Medium-64-Stroked.font",
+    "size": 68,
+    "type": 0,
+    "entries": 122,
+    "ref": "7ACD53123529BB6256CB0D9E5D67B2DB",
+    "metrics": [
+      49.0,
+      -19.0,
+      82.0
+    ]
+  },
+  {
+    "path": "F8/F89072F859A5C0874F3284E0411F5857",
+    "name": "",
+    "size": 30,
+    "type": 0,
+    "entries": 238,
+    "ref": "4874F6537E21247B021E4D42C56EC573",
+    "metrics": [
+      32.0,
+      -10.0,
+      45.0
+    ]
+  },
+  {
+    "path": "2C/2C0AB68C3A69984344A5780034F40E54",
+    "name": "Fonts/Futura-Medium-40-Stroked.font",
+    "size": 48,
+    "type": 0,
+    "entries": 132,
+    "ref": "0E5700BD5977ABE9FD58E7EEEF4499F5",
+    "metrics": [
+      35.0,
+      -13.0,
+      58.0
+    ]
+  },
+  {
+    "path": "1B/1B8D393AA1B133D4EBB32BA9050E0179",
+    "name": "Fonts/Avenir-Heavy-30.font",
+    "size": 30,
+    "type": 1,
+    "entries": 0,
+    "ref": "7A193E01D4127E67EF62CFD96FE74B30",
+    "metrics": [
+      30.0,
+      -11.0,
+      41.0
+    ]
+  },
+  {
+    "path": "70/7000B0E13F1D200739CBCA79E3E6722A",
+    "name": "",
+    "size": 30,
+    "type": 1,
+    "entries": 0,
+    "ref": "8C7489E376A5740B23F28469A4494636",
+    "metrics": [
+      32.0,
+      -10.0,
+      45.0
+    ]
+  },
+  {
+    "path": "23/233044C8488140D81906FC48476100D5",
+    "name": "Fonts/Avenir-Medium-30.font",
+    "size": 30,
+    "type": 1,
+    "entries": 0,
+    "ref": "2FF196EBF45D94DB718021FB1ADAAFF3",
+    "metrics": [
+      30.0,
+      -11.0,
+      41.0
+    ]
+  },
+  {
+    "path": "8C/8C1DC5CA62657DA0361C0E3BE85E3715",
+    "name": "",
+    "size": 30,
+    "type": 0,
+    "entries": 506,
+    "ref": "E09D3964589D6FC0CE6A5AA4CD53A417",
+    "metrics": [
+      26.0,
+      -5.0,
+      30.0
+    ]
+  },
+  {
+    "path": "7F/7F3AAF0E98B45F6B39A9FD55C27FB1E3",
+    "name": "",
+    "size": 40,
+    "type": 0,
+    "entries": 503,
+    "ref": "558C15EA5855E44C8E2F4BA3751C2C4F",
+    "metrics": [
+      35.0,
+      -6.0,
+      40.0
+    ]
+  },
+  {
+    "path": "7A/7AD687AF4295DE5A90BA51DE1931ABD0",
+    "name": "",
+    "size": 30,
+    "type": 0,
+    "entries": 183,
+    "ref": "A86849F67B09B8795D70BD023A2C30C6",
+    "metrics": [
+      32.0,
+      -10.0,
+      45.0
+    ]
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "file": "startup-patched-00.png",
+    "capture_start_seconds": 0.235,
+    "capture_end_seconds": 0.877,
+    "mean_brightness_0_255": 51.57
+  },
+  {
+    "file": "startup-patched-01.png",
+    "capture_start_seconds": 1.0,
+    "capture_end_seconds": 1.385,
+    "mean_brightness_0_255": 16.93
+  },
+  {
+    "file": "startup-patched-02.png",
+    "capture_start_seconds": 2.0,
+    "capture_end_seconds": 2.381,
+    "mean_brightness_0_255": 16.93
+  },
+  {
+    "file": "startup-patched-03.png",
+    "capture_start_seconds": 4.0,
+    "capture_end_seconds": 4.398,
+    "mean_brightness_0_255": 0.34
+  },
+  {
+    "file": "startup-patched-04.png",
+    "capture_start_seconds": 8.001,
+    "capture_end_seconds": 9.088,
+    "mean_brightness_0_255": 73.29
+  },
+  {
+    "file": "startup-patched-05.png",
+    "capture_start_seconds": 12.0,
+    "capture_end_seconds": 13.128,
+    "mean_brightness_0_255": 73.29
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "checked_at_utc": "2026-11-20T15:07:23.713749+00:00",
+  "package": "com.gameloft.android.ANMP.GloftHOHO",
+  "apk_sha256": "de28e813c99ff7c2b4aab712934d14472d536df323f54b8cc2f36fd44f2c591a",
+  "installed_apk_matches": "PASS",
+  "apk_crc": "PASS",
+  "native_recorded_patches_only": "PASS",
+  "native_spans_nonoverlap": "PASS",
+  "native_span_count": 85,
+  "private_resources": "PASS",
+  "verified_files": 84,
+  "tables_sha256": "4fd5d02094e6d093db37b1fbb9c5667997f184c190911c81a92fbbe5b872b2c8",
+  "script_sha256": "9c872bee07faaf2f164454e84e114fc0b5c32e30ea276de1e450ad9659bdf3c9",
+  "resource_manifest": "trial/ai-resource-hashes.json",
+  "internet_permission": "ABSENT",
+  "device": "SM-F9660",
+  "android_release": "16",
+  "scope": "Integrity checks only; see gameplay-verification.json for device tests."
+}

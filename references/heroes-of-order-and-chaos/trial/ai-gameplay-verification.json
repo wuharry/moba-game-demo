@@ -1,0 +1,462 @@
+{
+  "checked_at_utc": "2026-11-20T15:18:43.535739+00:00",
+  "package": "com.gameloft.android.ANMP.GloftHOHO",
+  "ai_version": 3,
+  "script_sha256": "9c872bee07faaf2f164454e84e114fc0b5c32e30ea276de1e450ad9659bdf3c9",
+  "apk_sha256": "de28e813c99ff7c2b4aab712934d14472d536df323f54b8cc2f36fd44f2c591a",
+  "device": "SM-F9660 / Android16 / ARM64",
+  "viewport": [
+    2520,
+    1080
+  ],
+  "scope": "Short representative offline NPC tests on the final v3 archive; not full-game or every-hero acceptance.",
+  "scenario_checks": {
+    "result": "PASS",
+    "runtime": "Lua 5.1",
+    "count": 22,
+    "evidence": "trial/ai-scenario-verification.json"
+  },
+  "integrity_checks": {
+    "result": "PASS",
+    "private_resource_count": 84,
+    "native_patch_spans": 85,
+    "internet_permission": "ABSENT",
+    "evidence": "trial/installed-verification.json"
+  },
+  "maps": [
+    {
+      "map": "Underground 5v5",
+      "result": "PASS",
+      "scope": "Load, NPC movement/combat, accepted casts, retreat requests and teamwork priorities in both factions; return to main menu visually observed.",
+      "snapshot_game_seconds": 97,
+      "teams": {
+        "0": {
+          "alive_bots_in_snapshot": 3,
+          "observed_counters": {
+            "casts": 42,
+            "fallback": 1,
+            "retreats": 11,
+            "tower": 6,
+            "assist": 13,
+            "errors": 0
+          }
+        },
+        "1": {
+          "alive_bots_in_snapshot": 5,
+          "observed_counters": {
+            "casts": 24,
+            "fallback": 6,
+            "retreats": 20,
+            "tower": 9,
+            "assist": 48,
+            "errors": 0
+          }
+        }
+      },
+      "bots_in_latest_snapshot": [
+        {
+          "hero": 38797317,
+          "entry": 87,
+          "faction": 0,
+          "decisions": 230,
+          "casts": 7,
+          "attempts": 177,
+          "fallback": 1,
+          "retreats": 3,
+          "tower": 2,
+          "errors": 0,
+          "assist": 6
+        },
+        {
+          "hero": 38797319,
+          "entry": 291,
+          "faction": 1,
+          "decisions": 192,
+          "casts": 2,
+          "attempts": 3,
+          "fallback": 0,
+          "retreats": 4,
+          "tower": 4,
+          "errors": 0,
+          "assist": 7
+        },
+        {
+          "hero": 38797321,
+          "entry": 344,
+          "faction": 1,
+          "decisions": 217,
+          "casts": 5,
+          "attempts": 91,
+          "fallback": 2,
+          "retreats": 7,
+          "tower": 3,
+          "errors": 0,
+          "assist": 6
+        },
+        {
+          "hero": 38797314,
+          "entry": 89,
+          "faction": 0,
+          "decisions": 199,
+          "casts": 32,
+          "attempts": 32,
+          "fallback": 0,
+          "retreats": 4,
+          "tower": 4,
+          "errors": 0,
+          "assist": 2
+        },
+        {
+          "hero": 38797316,
+          "entry": 94,
+          "faction": 0,
+          "decisions": 185,
+          "casts": 3,
+          "attempts": 11,
+          "fallback": 0,
+          "retreats": 4,
+          "tower": 0,
+          "errors": 0,
+          "assist": 5
+        },
+        {
+          "hero": 38797318,
+          "entry": 92,
+          "faction": 1,
+          "decisions": 216,
+          "casts": 6,
+          "attempts": 63,
+          "fallback": 3,
+          "retreats": 4,
+          "tower": 2,
+          "errors": 0,
+          "assist": 17
+        },
+        {
+          "hero": 38797320,
+          "entry": 91,
+          "faction": 1,
+          "decisions": 197,
+          "casts": 9,
+          "attempts": 31,
+          "fallback": 1,
+          "retreats": 2,
+          "tower": 0,
+          "errors": 0,
+          "assist": 2
+        },
+        {
+          "hero": 38797322,
+          "entry": 93,
+          "faction": 1,
+          "decisions": 191,
+          "casts": 2,
+          "attempts": 14,
+          "fallback": 0,
+          "retreats": 3,
+          "tower": 0,
+          "errors": 0,
+          "assist": 16
+        }
+      ],
+      "evidence": [
+        "analysis/ai-v3-underground-metrics.txt",
+        "analysis/ai-v3-underground-logcat.txt",
+        "ai-v3-underground-active.png",
+        "ai-v3-underground-teamfight.png",
+        "ai-v3-underground-returned-main.png"
+      ]
+    },
+    {
+      "map": "3v3",
+      "result": "PASS",
+      "scope": "Load, NPC movement/combat, accepted casts, retreat requests and teamwork priorities in both factions; return to main menu visually observed.",
+      "snapshot_game_seconds": 60,
+      "teams": {
+        "0": {
+          "alive_bots_in_snapshot": 2,
+          "observed_counters": {
+            "casts": 1,
+            "fallback": 0,
+            "retreats": 2,
+            "tower": 0,
+            "assist": 10,
+            "errors": 0
+          }
+        },
+        "1": {
+          "alive_bots_in_snapshot": 3,
+          "observed_counters": {
+            "casts": 6,
+            "fallback": 2,
+            "retreats": 1,
+            "tower": 0,
+            "assist": 44,
+            "errors": 0
+          }
+        }
+      },
+      "bots_in_latest_snapshot": [
+        {
+          "hero": 38797315,
+          "entry": 104,
+          "faction": 0,
+          "decisions": 149,
+          "casts": 0,
+          "attempts": 0,
+          "fallback": 0,
+          "retreats": 1,
+          "tower": 0,
+          "errors": 0,
+          "assist": 2
+        },
+        {
+          "hero": 38797318,
+          "entry": 92,
+          "faction": 1,
+          "decisions": 165,
+          "casts": 1,
+          "attempts": 12,
+          "fallback": 0,
+          "retreats": 0,
+          "tower": 0,
+          "errors": 0,
+          "assist": 15
+        },
+        {
+          "hero": 38797319,
+          "entry": 110,
+          "faction": 1,
+          "decisions": 144,
+          "casts": 3,
+          "attempts": 29,
+          "fallback": 2,
+          "retreats": 1,
+          "tower": 0,
+          "errors": 0,
+          "assist": 15
+        },
+        {
+          "hero": 38797320,
+          "entry": 93,
+          "faction": 1,
+          "decisions": 165,
+          "casts": 2,
+          "attempts": 20,
+          "fallback": 0,
+          "retreats": 0,
+          "tower": 0,
+          "errors": 0,
+          "assist": 14
+        },
+        {
+          "hero": 38797314,
+          "entry": 41,
+          "faction": 0,
+          "decisions": 150,
+          "casts": 1,
+          "attempts": 6,
+          "fallback": 0,
+          "retreats": 1,
+          "tower": 0,
+          "errors": 0,
+          "assist": 8
+        }
+      ],
+      "evidence": [
+        "analysis/ai-v3-three-metrics.txt",
+        "analysis/ai-v3-three-logcat.txt",
+        "ai-v3-three-active.png",
+        "ai-v3-three-combat.png",
+        "ai-v3-three-returned-main.png"
+      ]
+    },
+    {
+      "map": "Rift 5v5",
+      "result": "PASS",
+      "scope": "Load, NPC movement/combat, accepted casts, retreat requests and teamwork priorities in both factions; return to main menu visually observed.",
+      "snapshot_game_seconds": 62,
+      "teams": {
+        "0": {
+          "alive_bots_in_snapshot": 4,
+          "observed_counters": {
+            "casts": 8,
+            "fallback": 0,
+            "retreats": 5,
+            "tower": 0,
+            "assist": 15,
+            "errors": 0
+          }
+        },
+        "1": {
+          "alive_bots_in_snapshot": 5,
+          "observed_counters": {
+            "casts": 9,
+            "fallback": 2,
+            "retreats": 3,
+            "tower": 1,
+            "assist": 29,
+            "errors": 0
+          }
+        }
+      },
+      "bots_in_latest_snapshot": [
+        {
+          "hero": 38797315,
+          "entry": 337,
+          "faction": 0,
+          "decisions": 152,
+          "casts": 4,
+          "attempts": 23,
+          "fallback": 0,
+          "retreats": 2,
+          "tower": 0,
+          "errors": 0,
+          "assist": 0
+        },
+        {
+          "hero": 38797317,
+          "entry": 301,
+          "faction": 0,
+          "decisions": 158,
+          "casts": 1,
+          "attempts": 6,
+          "fallback": 0,
+          "retreats": 1,
+          "tower": 0,
+          "errors": 0,
+          "assist": 5
+        },
+        {
+          "hero": 38797319,
+          "entry": 4,
+          "faction": 1,
+          "decisions": 165,
+          "casts": 4,
+          "attempts": 40,
+          "fallback": 0,
+          "retreats": 1,
+          "tower": 0,
+          "errors": 0,
+          "assist": 3
+        },
+        {
+          "hero": 38797321,
+          "entry": 87,
+          "faction": 1,
+          "decisions": 169,
+          "casts": 0,
+          "attempts": 31,
+          "fallback": 0,
+          "retreats": 0,
+          "tower": 0,
+          "errors": 0,
+          "assist": 11
+        },
+        {
+          "hero": 38797314,
+          "entry": 92,
+          "faction": 0,
+          "decisions": 165,
+          "casts": 2,
+          "attempts": 35,
+          "fallback": 0,
+          "retreats": 1,
+          "tower": 0,
+          "errors": 0,
+          "assist": 10
+        },
+        {
+          "hero": 38797316,
+          "entry": 346,
+          "faction": 0,
+          "decisions": 149,
+          "casts": 1,
+          "attempts": 8,
+          "fallback": 0,
+          "retreats": 1,
+          "tower": 0,
+          "errors": 0,
+          "assist": 0
+        },
+        {
+          "hero": 38797318,
+          "entry": 107,
+          "faction": 1,
+          "decisions": 169,
+          "casts": 2,
+          "attempts": 10,
+          "fallback": 1,
+          "retreats": 0,
+          "tower": 0,
+          "errors": 0,
+          "assist": 11
+        },
+        {
+          "hero": 38797320,
+          "entry": 295,
+          "faction": 1,
+          "decisions": 165,
+          "casts": 2,
+          "attempts": 12,
+          "fallback": 1,
+          "retreats": 1,
+          "tower": 0,
+          "errors": 0,
+          "assist": 0
+        },
+        {
+          "hero": 38797322,
+          "entry": 336,
+          "faction": 1,
+          "decisions": 166,
+          "casts": 1,
+          "attempts": 12,
+          "fallback": 0,
+          "retreats": 1,
+          "tower": 1,
+          "errors": 0,
+          "assist": 4
+        }
+      ],
+      "evidence": [
+        "analysis/ai-v3-rift-metrics.txt",
+        "analysis/ai-v3-rift-logcat.txt",
+        "ai-v3-rift-active.png",
+        "ai-v3-rift-combat.png",
+        "ai-v3-rift-returned-main.png",
+        "ai-v3-rift-player-move.png"
+      ]
+    }
+  ],
+  "final_crash_buffer": {
+    "result": "PASS",
+    "bytes": 0,
+    "evidence": "analysis/ai-v3-crash-buffer.txt"
+  },
+  "final_ui": "Main menu, visually observed",
+  "metrics_interpretation": [
+    "Counters come from alive bots in the latest snapshot and can omit a dead bot.",
+    "Casts are accepted native dispatches, not confirmed hits.",
+    "Assist counts are teamwork-based priority selections, not completed assists.",
+    "Retreat counters are accepted requests to the existing retreat machinery, not guaranteed survival.",
+    "The human player mostly stayed at base while the camera observed NPCs; Rift movement was separately observed."
+  ],
+  "not_run": [
+    "Tutorial gameplay: explicitly excluded by user.",
+    "All hero/skin combinations and all individual ability effects.",
+    "Full victory/long-match soak.",
+    "Win-rate, damage or frame-time comparisons against original AI."
+  ],
+  "vainglory_reference": {
+    "scope": "Teamwork design inspiration; no extracted or ported bot implementation.",
+    "source": "https://en.vainglorygame.com/vainglorylive/summer-update-1-20-notes-enter-the-bots/",
+    "local_analysis": "analysis/vainglory-ai-reference.json"
+  },
+  "known_iteration_failure": {
+    "version": 2,
+    "result": "FAIL",
+    "issue": "Strict score>55 starved some valid hero spells; corrected in v3, both-faction real-scorer tests pass.",
+    "evidence": "analysis/ai-low-score-regression.txt"
+  }
+}

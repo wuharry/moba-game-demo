@@ -1,0 +1,246 @@
+{
+  "package": "com.superevilmegacorp.game",
+  "version_code": 147219,
+  "patch_revision": "20261119.3",
+  "language_setting": "English",
+  "files": [
+    {
+      "path": "7E/7ED4F1146624D2D991A07272993B26C4",
+      "kind": "Traditional Chinese strings with completed hero translations in English slot",
+      "original_sha256": "6ce2b10b35f972874f874acf4eff07e62a989bf573683ea8eb2cb446c7adfd6e",
+      "patched_sha256": "696572db1301eb6d58efcfe6f49cece7ae82a46bda58c8ca864eb64c3f9b7013"
+    },
+    {
+      "path": "0D/0D5EBFE57164EE19FF162FAE33A65263",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "945fcf80658e20b69253997f65dd081f8b19bceb2c684b742aefc0daf0df96d4",
+      "patched_sha256": "606cb05466811f856eaa1316c5c3d603cab99fa944f8e016a578e8aa9d4d028b"
+    },
+    {
+      "path": "0C/0C580BF883C67A15A16977F2B4F83359",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "7284496d42512e7bb04df70d3ee5fe857a70ff13a2a57ef3ce20f5124d0863cc",
+      "patched_sha256": "2d90bf53bea66480b092003ef8c7e40d6485b47e7454493d5b519804df80bb54"
+    },
+    {
+      "path": "32/327754E2DC083428742B61A45D8FDC6B",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "7284496d42512e7bb04df70d3ee5fe857a70ff13a2a57ef3ce20f5124d0863cc",
+      "patched_sha256": "2d90bf53bea66480b092003ef8c7e40d6485b47e7454493d5b519804df80bb54"
+    },
+    {
+      "path": "05/0543D003DE86A7C05E6FA594EECE6DE6",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "6d0c6fcb79a7f2505f26279ac848cbd6a2a762ad932346fc7aff3768109a3e3f",
+      "patched_sha256": "f303d41810fba3eaa6a41292fd96c5d3379cfdb469a492696478f10ca7f86791"
+    },
+    {
+      "path": "02/02EEEB7BD464630BE71F734A8EE69A6D",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "4eeca88aeea0710de2ca1081562ec84bc3a12f10d0417f8c4ca8346e6c751d32",
+      "patched_sha256": "af2dd98aabc4688e7efbc633fe55d1087d19d0d6b407e8b1bc0a4c6d96afc563"
+    },
+    {
+      "path": "D0/D06BA8F4B8E165693C41C143722EAF3F",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "6290c14caa6f1cf445d2f3e1016d2f8cb0f968653124ee5995233bd244c1ce77",
+      "patched_sha256": "6328c8338be223a51cde6e85cea5f567fcd219affeb49f833cfffdaf90583ba3"
+    },
+    {
+      "path": "BD/BDCE62DEC283946B938BB5F8D041C6C0",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "dbe9b099b950a793c0200e2ac45224dc256219b9afc69c482b8e79707e741192",
+      "patched_sha256": "7116723ee6e1310f6bc6e256a4e69d44f2474c04278fdb6048eb33fdf75c92db"
+    },
+    {
+      "path": "AE/AE872079FB1BCE6BCD8BF2BC96ABDAB4",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "945fcf80658e20b69253997f65dd081f8b19bceb2c684b742aefc0daf0df96d4",
+      "patched_sha256": "606cb05466811f856eaa1316c5c3d603cab99fa944f8e016a578e8aa9d4d028b"
+    },
+    {
+      "path": "C0/C06F6E20F9FDA00AAF18387BB4EB32E1",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "e0bf24f502a3ea3c80bf857ee681a24fc5c76cfb7b57bb618cebb32324de407c",
+      "patched_sha256": "ec0256d521f5f67bd57ff739377be1db07526dca775ee0647dc18fd92e26a7f8"
+    },
+    {
+      "path": "F2/F218BBC9D308E2DE4D75A2064FC82284",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "b6090ab06233394e21604ce229bb92337c54dc255623c8a14c789d127b9fd3cf",
+      "patched_sha256": "ff5d3ce2ad3a60f3d475248fbb9324498ce578f29988adfaba4318a23dc4598f"
+    },
+    {
+      "path": "CA/CACD18E0B6BDFE8261791861BA2A722D",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "d73b49c1bcb00a7bee5439db164060f8f3634dad966f0462193e22a1bd6eb898",
+      "patched_sha256": "aaa28ca8a68e7e2ce947ecf4475e0059d8d9ff4a7d604c946d3ecacd6cef7980"
+    },
+    {
+      "path": "FB/FB5D7BE4B2924820CA80087DD883691D",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "98e515803a7fddf6f5de6a47e509ac14610466e344732cdb355f6a88173e4c19",
+      "patched_sha256": "b6de50e2b9da45942018ff2c8bb6076dde5f6c9f417cbeead78ef3b8b2b2451d"
+    },
+    {
+      "path": "EC/EC151379A31EDDB13014DD49C2AD2EAD",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "ed1cc2dfb61a4790f346c1e3e426a1a91daf3e2cc73a9936df24ffbdd0cfad23",
+      "patched_sha256": "ef5c2e55724e290810926ff639f18d10825045a354a47141997a8dae0147dd0e"
+    },
+    {
+      "path": "11/11D653083A4EE18F05603046F7E439AE",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "2c43c0b665ad2a3300c88ac1ea67adfefcda9ed3a4381d8d7288e8e6a1069092",
+      "patched_sha256": "82b907f8084d10b98a33619065b6f13b92376a78a99b48f4d7abbd2dfe574b6d"
+    },
+    {
+      "path": "7C/7CD23B358CB39C2DDDABB4C476CC061B",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "b6090ab06233394e21604ce229bb92337c54dc255623c8a14c789d127b9fd3cf",
+      "patched_sha256": "ff5d3ce2ad3a60f3d475248fbb9324498ce578f29988adfaba4318a23dc4598f"
+    },
+    {
+      "path": "7C/7C4534CE5B5461BAC8A05F0B3FCE9173",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "3d35f590fd025cd53fa931e5d639465ebb42fad8438bd57f4b981744e90d4d66",
+      "patched_sha256": "60c9c782a34dd526078ee18d2d813b60d73f9fdb95af544be23dd9d79d34bc2e"
+    },
+    {
+      "path": "26/26A5464DFA5D85C5B2A06EFCDEFB1492",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "945fcf80658e20b69253997f65dd081f8b19bceb2c684b742aefc0daf0df96d4",
+      "patched_sha256": "606cb05466811f856eaa1316c5c3d603cab99fa944f8e016a578e8aa9d4d028b"
+    },
+    {
+      "path": "75/752D59FE4D0E48B7C75096870C68DE6E",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "f6d14831bed6f0d4019e6bdcc8623740ba1e9cafdcbc3574f188a4de9b925b3f",
+      "patched_sha256": "f09a8a6d9355491b02da46ef3102a6f401a3968f8cbcfdea369bb28c0556ce83"
+    },
+    {
+      "path": "72/72F92EBDB5FBC6A30975F972C37104B7",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "faa5d126479a37dd769b6c7cfb79437b3b35e6d8de9ad7d29a60652ea0f84c6b",
+      "patched_sha256": "7c4af0ddc26df36fa7a1ec9174a41ccee40c39d4b9226a69ca1f8083a11e8ca9"
+    },
+    {
+      "path": "2F/2FE8ACCED72F613106415F88D7284429",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "4651dce1cdfd7a333fade46c5b40c193b8a7e2dcfc7cdf05843792aaecf2d5f0",
+      "patched_sha256": "29396ff2b082c0b249acc6793d1825fa8d149490a09f23517070a661534fdd5a"
+    },
+    {
+      "path": "37/379D3CEEA4AE64CB1B969BD5A28E6198",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "7284496d42512e7bb04df70d3ee5fe857a70ff13a2a57ef3ce20f5124d0863cc",
+      "patched_sha256": "2d90bf53bea66480b092003ef8c7e40d6485b47e7454493d5b519804df80bb54"
+    },
+    {
+      "path": "39/39D45948B5C66291BF6C895619D2FD8E",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "61cc13730c8bca0cffa46ade747f94f28ae500cda3c145646ee06a22df15de6d",
+      "patched_sha256": "25cab84015e318329cf63e2a9966c37dc0c74714a317cc09024725eceebcaf19"
+    },
+    {
+      "path": "BF/BFA328F36C72B9CC17F09DEC64B9C4E3",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "6d0c6fcb79a7f2505f26279ac848cbd6a2a762ad932346fc7aff3768109a3e3f",
+      "patched_sha256": "f303d41810fba3eaa6a41292fd96c5d3379cfdb469a492696478f10ca7f86791"
+    },
+    {
+      "path": "B8/B8E72644E36607A654BC7FFF6564FFDB",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "161cfbb4d1539fdea32e879e0fd709a958d0d88bb384201702f01d35689703df",
+      "patched_sha256": "ab209370ae7fbdcfd53ae72d31856c82a21d3e03faf8b6e47ae16d7229b27fd6"
+    },
+    {
+      "path": "C4/C4138E626745B3C5E7EA219D154A4DFF",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "e2c8262458776f5fad3356bc31754ddf16236191c53d9af11de60ac7a2be183d",
+      "patched_sha256": "6c00baf8540dad71cd6da446dc2af00d674c78310ef2fa3b2a1ffa37a9478cba"
+    },
+    {
+      "path": "EA/EA4BF9998883FACABC5EB98D86AF2EC8",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "64d8d2b6de2283a2d4457827ee26e816c882fa772405d11dabd78a6a4f0b470e",
+      "patched_sha256": "fa9ad98431f9e12dd252f706a8d4e8c6a95315200186cff2cbce879857af715e"
+    },
+    {
+      "path": "CC/CCC84A592C75BB7BC9561598AC1A624E",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "6d0c6fcb79a7f2505f26279ac848cbd6a2a762ad932346fc7aff3768109a3e3f",
+      "patched_sha256": "f303d41810fba3eaa6a41292fd96c5d3379cfdb469a492696478f10ca7f86791"
+    },
+    {
+      "path": "FF/FF4B1C0321DB1BA411FDB7E25E1B58CF",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "e3debc27576d8d147691c659acac6e7e8ac18262e4daa66aca1d56f110796f4c",
+      "patched_sha256": "0ac3f31afcb6fe497fcb4f9b75e9eeebc5a004abdc460350cd6a5567fd13294d"
+    },
+    {
+      "path": "E0/E0D5BEFC3043A57A51811D06BAE1B376",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "977a72dfeaeda317801dc397f27828919a5d017bdff3ed03288c83537b14ef90",
+      "patched_sha256": "5d29bdccccf9fe8935a8b34d1832728923e39067c900e4367eb9dd2249538c5b"
+    },
+    {
+      "path": "12/12DBDFAE7F6D550C3D831FECE69AB3C9",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "b6090ab06233394e21604ce229bb92337c54dc255623c8a14c789d127b9fd3cf",
+      "patched_sha256": "ff5d3ce2ad3a60f3d475248fbb9324498ce578f29988adfaba4318a23dc4598f"
+    },
+    {
+      "path": "71/7143EB0A3D29C1DEDE1BA41AED73A768",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "38b81b362c0d6e8060dd9bcb60b13220a7998f997b938d22e99a8dd04bd308bf",
+      "patched_sha256": "886ca8f7efd9c5c82a50dbee38e41536837598ab382a91c5bef47aaf3f4d16e8"
+    },
+    {
+      "path": "1C/1C971C6D5A70F4E54BF68C18A3D748DA",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "40370011f9e88e339e2ba61c5cac599364468c011895694791b7ff0a725c0276",
+      "patched_sha256": "dfb3a3f4b6e41bceeff15f616b7f14fbf48d0fff359598e84824541c975a4f71"
+    },
+    {
+      "path": "78/784C9000BC5CE8A1C5A16ED8B840551F",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "4b38998cf385921a0e31c2c3c33a531a3eeec9ce9c32380b5bb3042b2c2f424f",
+      "patched_sha256": "ddde8aa473ea85bf6a0727a019b05189a26f36a64542378a3cb207212472554d"
+    },
+    {
+      "path": "8B/8B78826184B79D6A2ECBEC88F02C3250",
+      "kind": "Traditional Chinese fallback and fullwidth punctuation",
+      "original_sha256": "34f875ba8a0cdcf63956db92250d6e92c68159afc31a98a11f91d38560c18f5d",
+      "patched_sha256": "f69cbcb60e02717d2bd31dd3d7ef7e90ee4365ac0a4078bc59a42fb4f4450b49"
+    },
+    {
+      "path": "10/1078AC25F318546420E03AC259F28AC2",
+      "kind": "CJK fallback for Avenir-Medium-24",
+      "original_sha256": "b8c7e8f605062083e1a2cadd3833b2aa6c0e3a0e94c72bcf310bbf283653897b",
+      "patched_sha256": "8550dce6313fc60610f3132f02625b5a1c09417812aad3c94422f099a68e1e55"
+    },
+    {
+      "path": "23/233044C8488140D81906FC48476100D5",
+      "kind": "CJK fallback for Avenir-Medium-30",
+      "original_sha256": "e782095745ee084e8f383aac6cc2e83022f27424ada85c293c2e8096b62bba07",
+      "patched_sha256": "ab1d4fd7adee24159d075ff65ece6e0b70d37022634725fe1ee30b061f8d355c"
+    },
+    {
+      "path": "1B/1B8D393AA1B133D4EBB32BA9050E0179",
+      "kind": "CJK fallback for Avenir-Heavy-30",
+      "original_sha256": "2dbf11867d52588c9a606a1cdb5b034a004f1f167ef2d49f487ad6dcff20ee92",
+      "patched_sha256": "8b94ad529f727708b9aaeb33ba691917eb3a9a5fb44755c155b791e8ef95c37a"
+    },
+    {
+      "path": "37/37C19C867D98303EDE39F8E78AAAA1EA",
+      "kind": "CJK fallback for Brandon-Bold-400",
+      "original_sha256": "5c720ecaab0da4971dbf9b3ab4b37cf66bbc6fbc887f9e4035cad3ee0466896c",
+      "patched_sha256": "2b012e2199134a90d1f941fabb356b106c0ff951a0201267513de25ac21736f9"
+    }
+  ],
+  "translation_entries": 7329,
+  "completed_translations": 312,
+  "intentionally_empty_internal_templates": 4,
+  "font_resources": 38
+}

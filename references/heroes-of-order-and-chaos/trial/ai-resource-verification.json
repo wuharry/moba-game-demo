@@ -1,0 +1,18 @@
+{
+  "source_sha256": "e34839b8097f9e517e34517d79ef6587d390dc315d302a7a37f51272b1568710",
+  "output_sha256": "9c872bee07faaf2f164454e84e114fc0b5c32e30ea276de1e450ad9659bdf3c9",
+  "original_entries": 50,
+  "unchanged_entries": 48,
+  "modified_entries": [
+    "script/AI/Action/Action_AIHero_Common.lua",
+    "script/AI/Player/Temp_AIPlayers.lua"
+  ],
+  "added_entries": [
+    "script/AI/Action/Offline_Hero_Decisions.lua"
+  ],
+  "apk_changed": false,
+  "tables_changed": false,
+  "crc_check": "PASS",
+  "custom_archive_markers": "PASS",
+  "scope": "Both AI factions; tutorial uses legacy update."
+}

@@ -1,0 +1,270 @@
+{
+  "source": "C:\\Users\\whw88\\Downloads\\Vainglory-zhTW-EnglishVoice-20261119\\main.147219.original.obb",
+  "config_files_scanned": 942,
+  "matches": [
+    {
+      "path": "6F/6F7163EE678872EEEC9DDA63A1595997",
+      "bytes": 14160,
+      "strings": [
+        "~vBOt"
+      ]
+    },
+    {
+      "path": "3D/3D51A69175970B9A8089A4DB27599AAB",
+      "bytes": 576,
+      "strings": [
+        "e*BotLaneVainNode_Right*",
+        "e*BotLaneVainNode_Right*"
+      ]
+    },
+    {
+      "path": "3D/3D6407BBF343A47AB2E36F113184CC94",
+      "bytes": 944,
+      "strings": [
+        "_Xi*GameMode_Aral_AllBots*",
+        "_Xi*GameMode_Aral_AllBots*"
+      ]
+    },
+    {
+      "path": "93/93BE087CF7F45B0D206AA1D947D71A40",
+      "bytes": 1200,
+      "strings": [
+        "_Xi*GameMode_Aral_PrivateBots*",
+        "_Xi*GameMode_Aral_PrivateBots*"
+      ]
+    },
+    {
+      "path": "5A/5A0940EBF187125FE6B950BE9E1D268D",
+      "bytes": 960,
+      "strings": [
+        "_Xi*GameMode_Aral_SoloBots*",
+        "_Xi*GameMode_Aral_SoloBots*"
+      ]
+    },
+    {
+      "path": "5F/5FBF90A48AAEC56FF0CAC82583E8137B",
+      "bytes": 1376,
+      "strings": [
+        "e*HF_CenterBottom*",
+        "e*HF_CenterBottom*"
+      ]
+    },
+    {
+      "path": "33/3365E3DFCD2ABE31BC1649EAF63B1014",
+      "bytes": 944,
+      "strings": [
+        "_Xi*GameMode_Blitz_HiddenBots*",
+        "_Xi*GameMode_Blitz_HiddenBots*"
+      ]
+    },
+    {
+      "path": "9D/9DAA7C66F154DF876E21DB14D3E928DF",
+      "bytes": 103760,
+      "strings": [
+        "7bOt("
+      ]
+    },
+    {
+      "path": "B5/B5EFBE9BAD2E6855850C58B674130FFD",
+      "bytes": 1200,
+      "strings": [
+        "_Xi*GameMode_5v5_PrivateBots*",
+        "_Xi*GameMode_5v5_PrivateBots*"
+      ]
+    },
+    {
+      "path": "AC/AC6382D84B9906565037B10A6F6DDF8F",
+      "bytes": 928,
+      "strings": [
+        "_Xi*GameMode_Aral_CoopBots*",
+        "_Xi*GameMode_Aral_CoopBots*"
+      ]
+    },
+    {
+      "path": "BE/BE843F9FFD2952E511F551AA74761724",
+      "bytes": 44624,
+      "strings": [
+        "RBot}"
+      ]
+    },
+    {
+      "path": "BE/BEE02079E73FDA12D19F741841EE7FF4",
+      "bytes": 576,
+      "strings": [
+        "e*BotLaneVainNode_Left*",
+        "e*BotLaneVainNode_Left*"
+      ]
+    },
+    {
+      "path": "E2/E21B9384697A4FD2863A4E424259E684",
+      "bytes": 352,
+      "strings": [
+        "*KindredBotTuningData*",
+        "*KindredBotTuningData*"
+      ]
+    },
+    {
+      "path": "C0/C0D4DF28B4681235608189333BB6D506",
+      "bytes": 87344,
+      "strings": [
+        "TlbOT7~"
+      ]
+    },
+    {
+      "path": "F5/F5F2B8345A3213B5477A43939FA7C677",
+      "bytes": 928,
+      "strings": [
+        "_Xi*GameMode_5v5_SoloBots*",
+        "_Xi*GameMode_5v5_SoloBots*"
+      ]
+    },
+    {
+      "path": "CA/CA1570D81B413903CC38168D6062A763",
+      "bytes": 1120,
+      "strings": [
+        "_Xi*GameMode_Blitz_PrivateBots*",
+        "_Xi*GameMode_Blitz_PrivateBots*"
+      ]
+    },
+    {
+      "path": "45/45260F19BCA860932FDCC68F42B5C050",
+      "bytes": 912,
+      "strings": [
+        "_Xi*GameMode_HF_SoloBots*",
+        "_Xi*GameMode_HF_SoloBots*"
+      ]
+    },
+    {
+      "path": "74/7442DDB7011218CB5D6F782ACF5EE432",
+      "bytes": 1152,
+      "strings": [
+        "_Xi*GameMode_HF_PrivateBots*",
+        "_Xi*GameMode_HF_PrivateBots*"
+      ]
+    },
+    {
+      "path": "8A/8A723595D50CAA861C832CC939155AC5",
+      "bytes": 944,
+      "strings": [
+        "_Xi*GameMode_HF_HiddenBots*",
+        "_Xi*GameMode_HF_HiddenBots*"
+      ]
+    },
+    {
+      "path": "4C/4C795AE876ABA611F5A3D99327034B05",
+      "bytes": 1200,
+      "strings": [
+        "e*BossCamp_BotLeft*",
+        "e*BossCamp_BotLeft*"
+      ]
+    },
+    {
+      "path": "75/7574990C730EB8E7D761CB0055C70C1D",
+      "bytes": 960,
+      "strings": [
+        "_Xi*GameMode_Aral_HiddenBots*",
+        "_Xi*GameMode_Aral_HiddenBots*"
+      ]
+    },
+    {
+      "path": "6D/6D5C25845B6EA332B962158E43ACFCE1",
+      "bytes": 928,
+      "strings": [
+        "_Xi*GameMode_Blitz_SoloBots*",
+        "_Xi*GameMode_Blitz_SoloBots*"
+      ]
+    },
+    {
+      "path": "B1/B1305B0120CC13ECF47F22904D00F63C",
+      "bytes": 273360,
+      "strings": [
+        "q>bot"
+      ]
+    },
+    {
+      "path": "B6/B6372AA449294D043E4F233A1E3C867C",
+      "bytes": 928,
+      "strings": [
+        "_Xi*GameMode_5v5_CoopBots*",
+        "_Xi*GameMode_5v5_CoopBots*"
+      ]
+    },
+    {
+      "path": "CD/CD09D70492D0E6056D336C2E1A7A98CC",
+      "bytes": 960,
+      "strings": [
+        "_Xi*GameMode_5v5_HiddenBots*",
+        "_Xi*GameMode_5v5_HiddenBots*"
+      ]
+    },
+    {
+      "path": "E7/E776760F7CEB8A6D4D65EC96BD299A12",
+      "bytes": 928,
+      "strings": [
+        "_Xi*GameMode_HF_AllBots*",
+        "_Xi*GameMode_HF_AllBots*"
+      ]
+    },
+    {
+      "path": "83/8394EAE0D720DF9CF96C2501C42E2B28",
+      "bytes": 928,
+      "strings": [
+        "_Xi*GameMode_Blitz_CoopBots*",
+        "_Xi*GameMode_Blitz_CoopBots*"
+      ]
+    },
+    {
+      "path": "7F/7F06CB30A5A5A0E5F91E5E7614877438",
+      "bytes": 912,
+      "strings": [
+        "_Xi*GameMode_HF_CoopBots*",
+        "_Xi*GameMode_HF_CoopBots*"
+      ]
+    },
+    {
+      "path": "8E/8E72767676BA8CE0FA24188E75DC6A50",
+      "bytes": 928,
+      "strings": [
+        "_Xi*GameMode_5v5_AllBots*",
+        "_Xi*GameMode_5v5_AllBots*"
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "path": "0D/0D78056A22C9B83F183CF3DE873155A1",
+      "header": "43464630b004000002000000060700000000000040000000600200000000000000000000000000000000000000000000",
+      "strings": [
+        "INSTp",
+        ".:qS^T[",
+        "PTCHp",
+        "SYMB0",
+        "*Talent_Kensei_TalentB*",
+        "u#r%S(B",
+        "PePTCHp",
+        "SYMB0",
+        "*Talent_Kensei_TalentB*"
+      ]
+    },
+    {
+      "path": "95/9549C64ED0CC89997044550EB2659C0A",
+      "header": "434646307004000002000000060700000000000040000000400200000000000000000000000000000000000000000000",
+      "strings": [
+        "CFF0p",
+        "INSTP",
+        "&vI1]w;_",
+        "xq'3kKswM?",
+        "~TSCf",
+        "PTCH`",
+        "SYMB@",
+        "*Talent_Samuel_UnwakingNightmare*",
+        " q8g_",
+        "m[V@p,",
+        "I,G4@",
+        "PTCH`",
+        "SYMB@",
+        "*Talent_Samuel_UnwakingNightmare*"
+      ]
+    }
+  ]
+}

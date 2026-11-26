@@ -1,0 +1,10 @@
+OFFLINE_AI_V3 time=62
+hero=38797315 entry=337 faction=0 decisions=152 casts=4 attempts=23 fallback=0 retreats=2 tower=0 errors=0 assist=0
+hero=38797317 entry=301 faction=0 decisions=158 casts=1 attempts=6 fallback=0 retreats=1 tower=0 errors=0 assist=5
+hero=38797319 entry=4 faction=1 decisions=165 casts=4 attempts=40 fallback=0 retreats=1 tower=0 errors=0 assist=3
+hero=38797321 entry=87 faction=1 decisions=169 casts=0 attempts=31 fallback=0 retreats=0 tower=0 errors=0 assist=11
+hero=38797314 entry=92 faction=0 decisions=165 casts=2 attempts=35 fallback=0 retreats=1 tower=0 errors=0 assist=10
+hero=38797316 entry=346 faction=0 decisions=149 casts=1 attempts=8 fallback=0 retreats=1 tower=0 errors=0 assist=0
+hero=38797318 entry=107 faction=1 decisions=169 casts=2 attempts=10 fallback=1 retreats=0 tower=0 errors=0 assist=11
+hero=38797320 entry=295 faction=1 decisions=165 casts=2 attempts=12 fallback=1 retreats=1 tower=0 errors=0 assist=0
+hero=38797322 entry=336 faction=1 decisions=166 casts=1 attempts=12 fallback=0 retreats=1 tower=1 errors=0 assist=4

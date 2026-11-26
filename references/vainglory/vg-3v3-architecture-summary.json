@@ -1,0 +1,790 @@
+{
+  "game": "Vainglory Community Edition 4.13.4 (147219)",
+  "engine": "Super Evil Megacorp E.V.I.L. Engine (libGameKindred.so)",
+  "focus_scope": "3v3 Halcyon Fold + Scene Rendering + Resource Allocation + Main Menu & Battle HUD",
+  "obb_analysis": {
+    "obb_entries": 48443,
+    "compressed_mib": 1322.84,
+    "uncompressed_mib": 2229.67,
+    "categories": {
+      "EVIL Mipmapped GPU Texture (ETC/PVR/ASTC)": {
+        "files": 1658,
+        "compressed_mib": 437.06,
+        "uncompressed_mib": 1031.92
+      },
+      "RSC0 (Compiled Mesh/Shader/Anim/FX)": {
+        "files": 1151,
+        "compressed_mib": 191.92,
+        "uncompressed_mib": 376.03
+      },
+      "MP3 Audio (Voice/Music/SFX)": {
+        "files": 16237,
+        "compressed_mib": 339.14,
+        "uncompressed_mib": 354.68
+      },
+      "Other Compiled Binary / Large Texture": {
+        "files": 1611,
+        "compressed_mib": 173.88,
+        "uncompressed_mib": 194.99
+      },
+      "Binary Data Block (u0=1)": {
+        "files": 6307,
+        "compressed_mib": 60.78,
+        "uncompressed_mib": 90.62
+      },
+      "TTF/OTF Font Face": {
+        "files": 17,
+        "compressed_mib": 29.33,
+        "uncompressed_mib": 51.56
+      },
+      "Audio (OggS)": {
+        "files": 200,
+        "compressed_mib": 45.92,
+        "uncompressed_mib": 46.47
+      },
+      "RSC0:GLSL_Shader": {
+        "files": 16985,
+        "compressed_mib": 10.53,
+        "uncompressed_mib": 31.25
+      },
+      "Audio (RIFF)": {
+        "files": 24,
+        "compressed_mib": 14.12,
+        "uncompressed_mib": 17.54
+      },
+      "CFF0 (Scene/Level/Prefab/UI Graph)": {
+        "files": 942,
+        "compressed_mib": 13.86,
+        "uncompressed_mib": 16.04
+      },
+      "ASCII / Base64 Strings / Lightprobe Grid": {
+        "files": 20,
+        "compressed_mib": 3.93,
+        "uncompressed_mib": 13.73
+      },
+      "Binary Data Block (u0=0)": {
+        "files": 3257,
+        "compressed_mib": 2.37,
+        "uncompressed_mib": 4.83
+      },
+      "Kindred Font Descriptor (.font)": {
+        "files": 34,
+        "compressed_mib": 0.01,
+        "uncompressed_mib": 0.02
+      }
+    },
+    "halcyon_fold_3v3_lightprobe_grid": {
+      "obb_path": "4C/4C4CC7477231BA630E24828C7A1B8093",
+      "bounds_xz_meters": {
+        "min_x": -100.0,
+        "min_z": -25.0,
+        "max_x": 100.0,
+        "max_z": 55.0
+      },
+      "span_meters": {
+        "width_x": 200.0,
+        "depth_z": 80.0
+      },
+      "grid_cells": {
+        "nx": 100,
+        "nz": 40,
+        "cell_size_m": 2.0
+      },
+      "probe_count": 4000,
+      "floats_per_probe": 19
+    },
+    "halcyon_fold_3v3_cff0_nodes": [
+      {
+        "obb_path": "AC/ACE46221510D6CEA18EBB9D8217153E9",
+        "bytes": 171072,
+        "symbols": [
+          "*HalcyonFoldVisuals*",
+          "*v_J*",
+          "*K*"
+        ]
+      },
+      {
+        "obb_path": "13/1305D784B6D9C58478A52E8C69866413",
+        "bytes": 42624,
+        "symbols": [
+          "*Level_KrakenRaidBoss*"
+        ]
+      },
+      {
+        "obb_path": "DD/DDC774FD5795DCE8ADBCFB7681446733",
+        "bytes": 30384,
+        "symbols": [
+          "*HalcyonFoldLevel_Base*"
+        ]
+      },
+      {
+        "obb_path": "DD/DD934436687DD61C65876C698481A1AD",
+        "bytes": 20480,
+        "symbols": [
+          "*Kraken_RaidBoss*"
+        ]
+      },
+      {
+        "obb_path": "1D/1D445E1A9C41B6C0219159F85DD681CE",
+        "bytes": 14320,
+        "symbols": [
+          "*HF_ElderTreant*"
+        ]
+      },
+      {
+        "obb_path": "C4/C48445BA2AC85044815F3B6074AA3B80",
+        "bytes": 14304,
+        "symbols": [
+          "*VainTurret*"
+        ]
+      },
+      {
+        "obb_path": "08/0832E77EF235E7F2D96552E4D29E0480",
+        "bytes": 14288,
+        "symbols": [
+          "*OuterTurret*"
+        ]
+      },
+      {
+        "obb_path": "49/49C06DCA45B7A62D1658D7060775CDF9",
+        "bytes": 14256,
+        "symbols": [
+          "*HF_Treant*"
+        ]
+      },
+      {
+        "obb_path": "7C/7C2D840FFBE6AA671A9C179ABCFE0CFB",
+        "bytes": 14208,
+        "symbols": [
+          "*HF_OuterTurret*"
+        ]
+      },
+      {
+        "obb_path": "CD/CDB3BE886CC9BE66A42AB415AF5AA5BA",
+        "bytes": 14208,
+        "symbols": [
+          "*HF_MiddleTurret*"
+        ]
+      },
+      {
+        "obb_path": "28/28DED4548C8EA2BAC2B8AC4940DCF251",
+        "bytes": 14176,
+        "symbols": [
+          "*HF_VainTurret*"
+        ]
+      },
+      {
+        "obb_path": "CB/CB7C147FED4D9F175CCEB788914F4A61",
+        "bytes": 14176,
+        "symbols": [
+          "*HF_BaseTurret*"
+        ]
+      },
+      {
+        "obb_path": "67/67842D3D80119D3252FB695513F2A299",
+        "bytes": 12672,
+        "symbols": [
+          "*Kraken_Captured*"
+        ]
+      },
+      {
+        "obb_path": "95/95C3C182530326BD98A1D38E4289E28C",
+        "bytes": 12560,
+        "symbols": [
+          "*HF_Kraken_Captured*"
+        ]
+      },
+      {
+        "obb_path": "18/180A23CA5923696AC0F6FF0A118F39E1",
+        "bytes": 11168,
+        "symbols": [
+          "*Kraken_Jungle*"
+        ]
+      },
+      {
+        "obb_path": "F3/F30335D5EF888FC30E4944D370B9EC51",
+        "bytes": 10848,
+        "symbols": [
+          "*HF_Kraken_Jungle*"
+        ]
+      },
+      {
+        "obb_path": "F2/F231339EAD57AC835A89FA627A66ADAD",
+        "bytes": 10672,
+        "symbols": [
+          "*JungleMinion_CrystalMiner*"
+        ]
+      },
+      {
+        "obb_path": "5E/5EC683C4C7E2442DC2884382FB31F70A",
+        "bytes": 10464,
+        "symbols": [
+          "*HF_CrystalMiner*"
+        ]
+      },
+      {
+        "obb_path": "ED/ED6FE11FE99253ECCEA40B5AEA730839",
+        "bytes": 10144,
+        "symbols": [
+          "*JungleMinion_GoldMiner*"
+        ]
+      },
+      {
+        "obb_path": "6F/6F2963E4A635C92A389523AA51F30969",
+        "bytes": 9968,
+        "symbols": [
+          "*HF_GoldMiner*"
+        ]
+      },
+      {
+        "obb_path": "8D/8D300EEC712D921FE908FC39FD554FAB",
+        "bytes": 9328,
+        "symbols": [
+          "*HF_Minion_Melee*"
+        ]
+      },
+      {
+        "obb_path": "74/74C3647809896C485179091260963244",
+        "bytes": 8384,
+        "symbols": [
+          "*HF_Minion_Range*"
+        ]
+      },
+      {
+        "obb_path": "1E/1E7A3B02E8305164AAA32F953749D112",
+        "bytes": 8272,
+        "symbols": [
+          "*HF_Minion_Captain*"
+        ]
+      },
+      {
+        "obb_path": "AD/ADC34CE1748BA32E0A631949404BB60D",
+        "bytes": 8048,
+        "symbols": [
+          "*HF_Minion_Siege*"
+        ]
+      },
+      {
+        "obb_path": "9A/9A66B107F6CF9BAB912D7DAD1436CBCF",
+        "bytes": 8048,
+        "symbols": [
+          "*HF_SmallBear*"
+        ]
+      },
+      {
+        "obb_path": "1B/1B0FA18811EC4D6F6027BF06081F9A5F",
+        "bytes": 8032,
+        "symbols": [
+          "*HF_BigBear*"
+        ]
+      },
+      {
+        "obb_path": "A5/A5886BD532566DD976356C148022E194",
+        "bytes": 3440,
+        "symbols": [
+          "*GenericCamp_Kraken_Neutral*"
+        ]
+      },
+      {
+        "obb_path": "C9/C9FC8084917279F3F12ADE3234466A48",
+        "bytes": 3440,
+        "symbols": [
+          "*GenericCamp_Kraken_Hostile*"
+        ]
+      },
+      {
+        "obb_path": "37/37433AA4AAE551689220581AECB4E352",
+        "bytes": 2928,
+        "symbols": [
+          "*Kraken_RaidBoss_UltimateRain_Warning*"
+        ]
+      },
+      {
+        "obb_path": "EA/EA8EAED7E52FCCDB1CF10D7179995C3E",
+        "bytes": 2672,
+        "symbols": [
+          "*MinimapIconActor_GoldMiner*"
+        ]
+      }
+    ],
+    "shader_feature_counts": {
+      "_Bones[": 1108,
+      "FogOfWar": 513,
+      "World.Time": 499,
+      "Shadowing.mMap": 36
+    },
+    "shader_samples": {
+      "_Bones[": {
+        "obb_path": "61/6126D20B6A541818D08C19C939386DDE",
+        "bytes": 2115,
+        "bindings": [
+          "D77BA6737B13997E2820D8BB4FF81641",
+          "sampler28",
+          "xxxxxxprecision",
+          "precision",
+          "uniform",
+          "attribute",
+          "Vertex",
+          "attribute",
+          "MultiTexCoord5",
+          "attribute",
+          "MultiTexCoord4",
+          "attribute"
+        ],
+        "declarations": [
+          "uniform mat4 _Bones[36];",
+          "attribute vec4 _Vertex;",
+          "attribute vec4 _MultiTexCoord5;",
+          "attribute vec4 _MultiTexCoord4;",
+          "attribute vec3 _Normal;",
+          "attribute vec4 _MultiTexCoord0;",
+          "uniform highp mat4 _ModelViewProjectionMatrix;",
+          "uniform highp mat3 _NormalMatrix;",
+          "uniform highp mat4 _ModelViewMatrix;",
+          "varying highp vec3 var0;",
+          "varying vec4 var1;",
+          "varying highp vec4 var2;",
+          "uniform sampler2D sampler28;",
+          "varying vec4 var1;"
+        ]
+      },
+      "FogOfWar": {
+        "obb_path": "61/61880B14BB10C615F1F69B8E89794309",
+        "bytes": 5392,
+        "bindings": [
+          "D9C5AE828019AF18690EC39F543ED0D4",
+          "World.Time",
+          "FogOfWar.TranslateAndScale",
+          "FogOfWar.Texture",
+          "sampler103",
+          "sampler192",
+          "xxxxxunif17",
+          "xxxxxxxxxunif184",
+          "xxxxxxxxprecision",
+          "precision",
+          "attribute",
+          "Vertex"
+        ],
+        "declarations": [
+          "attribute vec4 _Vertex;",
+          "attribute vec3 _Normal;",
+          "attribute vec4 _MultiTexCoord3;",
+          "attribute vec4 _Color;",
+          "attribute vec4 _MultiTexCoord0;",
+          "uniform float unif17;",
+          "uniform highp mat4 _ModelViewProjectionMatrix;",
+          "uniform highp mat3 _NormalMatrix;",
+          "uniform highp mat4 _ModelViewMatrix;",
+          "uniform highp mat4 _Object2WorldMatrix;",
+          "uniform vec4 unif184;",
+          "varying highp vec3 var0;",
+          "varying vec4 var1;",
+          "varying vec4 var2;"
+        ]
+      },
+      "World.Time": {
+        "obb_path": "61/61880B14BB10C615F1F69B8E89794309",
+        "bytes": 5392,
+        "bindings": [
+          "D9C5AE828019AF18690EC39F543ED0D4",
+          "World.Time",
+          "FogOfWar.TranslateAndScale",
+          "FogOfWar.Texture",
+          "sampler103",
+          "sampler192",
+          "xxxxxunif17",
+          "xxxxxxxxxunif184",
+          "xxxxxxxxprecision",
+          "precision",
+          "attribute",
+          "Vertex"
+        ],
+        "declarations": [
+          "attribute vec4 _Vertex;",
+          "attribute vec3 _Normal;",
+          "attribute vec4 _MultiTexCoord3;",
+          "attribute vec4 _Color;",
+          "attribute vec4 _MultiTexCoord0;",
+          "uniform float unif17;",
+          "uniform highp mat4 _ModelViewProjectionMatrix;",
+          "uniform highp mat3 _NormalMatrix;",
+          "uniform highp mat4 _ModelViewMatrix;",
+          "uniform highp mat4 _Object2WorldMatrix;",
+          "uniform vec4 unif184;",
+          "varying highp vec3 var0;",
+          "varying vec4 var1;",
+          "varying vec4 var2;"
+        ]
+      },
+      "Shadowing.mMap": {
+        "obb_path": "59/59D3E3A763BB4278F8F786B549DE2C40",
+        "bytes": 16417,
+        "bindings": [
+          "A57C73D234E51BE3628FBBF36DF27",
+          "EF15F0600B229C2BCD1FA6EAC58B0C",
+          "F57C32B8A0FE0F01FB09CC501088",
+          "d25374F2EA3505C34CB564BCD6F454A93",
+          "World.Time",
+          "FogOfWar.TranslateAndScale",
+          "Shadowing.mViewProjRow0",
+          "Shadowing.mViewProjRow1",
+          "Shadowing.mViewProjRow2",
+          "Shadowing.mViewProjRow3",
+          "Shadowing.mParams",
+          "FogOfWar.Texture"
+        ],
+        "declarations": [
+          "attribute vec4 _Vertex;",
+          "attribute vec3 _Normal;",
+          "attribute vec4 _MultiTexCoord0;",
+          "uniform highp mat4 _ModelViewProjectionMatrix;",
+          "uniform highp mat3 _NormalMatrix;",
+          "uniform highp mat4 _ModelViewMatrix;",
+          "uniform highp mat4 _Object2WorldMatrix;",
+          "uniform vec4 unif258;",
+          "uniform vec4 unif273;",
+          "uniform vec4 unif275;",
+          "uniform vec4 unif277;",
+          "uniform vec4 unif279;",
+          "varying highp vec3 var0;",
+          "varying vec4 var1;"
+        ]
+      }
+    },
+    "ui_cff0_nodes": [
+      {
+        "obb_path": "97/97CCECF0FF82EC916197A8F4ED41B108",
+        "bytes": 6640,
+        "symbols": [
+          "*KindredMenuRewardsChest*"
+        ]
+      },
+      {
+        "obb_path": "CA/CA1CF540296C488A905C69C4238E33B0",
+        "bytes": 6256,
+        "symbols": [
+          "*KindredMenuGuildBannerMesh*"
+        ]
+      },
+      {
+        "obb_path": "27/2792D1518CEFA2057244B0A4B4A90E15",
+        "bytes": 6048,
+        "symbols": [
+          "*KindredMenuMarketCardBox*"
+        ]
+      },
+      {
+        "obb_path": "9E/9E9262CDF3D4791F5414A294D8C67BB4",
+        "bytes": 5440,
+        "symbols": [
+          "*KindredMenuRewardsChestMysteryT3*"
+        ]
+      },
+      {
+        "obb_path": "29/29A3539168EBF4B4E13C4040FEED6DA0",
+        "bytes": 5440,
+        "symbols": [
+          "*KindredMenuRewardsChestMysteryT1*"
+        ]
+      },
+      {
+        "obb_path": "86/863463928F844D67E47B5B7512F5F08E",
+        "bytes": 5440,
+        "symbols": [
+          "*KindredMenuRewardsChestOpulent*"
+        ]
+      },
+      {
+        "obb_path": "37/375C026022451ADCBBD022721E7C6B8D",
+        "bytes": 5440,
+        "symbols": [
+          "*KindredMenuRewardsChestDiamond*"
+        ]
+      },
+      {
+        "obb_path": "D5/D5DD7C0420935BC5DFA47B5AF9FAA106",
+        "bytes": 5440,
+        "symbols": [
+          "*KindredMenuRewardsChestBattered*"
+        ]
+      },
+      {
+        "obb_path": "B7/B742C9EEA1A036D07FA3F9F2C8E26550",
+        "bytes": 5440,
+        "symbols": [
+          "*KindredMenuRewardsChestMysteryT2*"
+        ]
+      },
+      {
+        "obb_path": "D6/D621EAB42B5C25E21E9F740708E2745F",
+        "bytes": 5408,
+        "symbols": [
+          "*KindredMenuRewardsChestFall*"
+        ]
+      },
+      {
+        "obb_path": "44/449B00201D6F9A5E64CF0CEADCCB3A5C",
+        "bytes": 5408,
+        "symbols": [
+          "*KindredMenuRewardsChestVain*"
+        ]
+      },
+      {
+        "obb_path": "9F/9F8DDC07E85A3F64D7D61F72A945AE75",
+        "bytes": 5408,
+        "symbols": [
+          "*KindredMenuRewardsChestSpoils*"
+        ]
+      },
+      {
+        "obb_path": "9A/9A70BABBAB25AD3895FB34900D9FD21E",
+        "bytes": 5408,
+        "symbols": [
+          "*KindredMenuRewardsChestLootT1*"
+        ]
+      },
+      {
+        "obb_path": "DB/DB09A3781202D02D301814E7B0CBE2AE",
+        "bytes": 5408,
+        "symbols": [
+          "*KindredMenuRewardsChestLootT2*"
+        ]
+      },
+      {
+        "obb_path": "C5/C5F3EA5ECC807CCA60D2B7A33E99F432",
+        "bytes": 5408,
+        "symbols": [
+          "*KindredMenuRewardsChestLootT3*"
+        ]
+      },
+      {
+        "obb_path": "73/734A1C160E24BE21A54FE92D95512D0C",
+        "bytes": 3760,
+        "symbols": [
+          "*KindredMenuAscensionDialMesh*"
+        ]
+      },
+      {
+        "obb_path": "86/86B2487AE01D97B243787A3CBD28B21E",
+        "bytes": 3264,
+        "symbols": [
+          "*MinimapIconActor_SpawnCamp*"
+        ]
+      },
+      {
+        "obb_path": "0F/0FC6F4D42CFC1772EC9799B516E3687A",
+        "bytes": 3264,
+        "symbols": [
+          "*MinimapIconActor_BuffCamp*"
+        ]
+      },
+      {
+        "obb_path": "20/201E7A236E7BDA4CC85DF39BEC10AE5E",
+        "bytes": 2944,
+        "symbols": [
+          "*HUDQuickMessageSet*"
+        ]
+      },
+      {
+        "obb_path": "EA/EA8EAED7E52FCCDB1CF10D7179995C3E",
+        "bytes": 2672,
+        "symbols": [
+          "*MinimapIconActor_GoldMiner*"
+        ]
+      },
+      {
+        "obb_path": "C3/C3BB6C7DF4390758EA8B29E333C36B4A",
+        "bytes": 2656,
+        "symbols": [
+          "*MinimapIconActor_Kraken*"
+        ]
+      },
+      {
+        "obb_path": "7D/7D34C00056F85D896E1AA6F634D70AB6",
+        "bytes": 2288,
+        "symbols": [
+          "*KindredMenuMarketEffects*"
+        ]
+      },
+      {
+        "obb_path": "21/21A82BD895E00D0F3126864A91F963CE",
+        "bytes": 2288,
+        "symbols": [
+          "*KindredHUDEffects*"
+        ]
+      },
+      {
+        "obb_path": "C0/C0370552D4701C183F3C113DFFFA5EF6",
+        "bytes": 1648,
+        "symbols": [
+          "*KindredMenuMarketMesh*"
+        ]
+      },
+      {
+        "obb_path": "5A/5A5CC30541627508D2A85D922E81DCC3",
+        "bytes": 1408,
+        "symbols": [
+          "*KindredMenuPartyHatRedMesh*"
+        ]
+      }
+    ]
+  },
+  "engine_binary_analysis": {
+    "so_size_mib": 42.97,
+    "total_ascii_strings": 43214,
+    "halcyon_fold_3v3_symbols": [
+      "*GameMode_HF_Casual*",
+      "*GameMode_HF_Private*",
+      "*GameMode_HF_PrivateDraft*",
+      "*GameMode_HF_Ranked*",
+      "*HF_GoldMiner*",
+      "*JungleMinion_CrystalMiner*",
+      "*JungleMinion_GoldMiner*",
+      "*Sidebar_Ardan_Tutorial2_VainCrystal*",
+      "*Sidebar_Tutorial05_ExplainJungleShop*",
+      "?Ability__KrakenCaptured__DefaultAttack",
+      "AAbility__VainCrystal__Home_Die",
+      "Ability__CrystalMiner__AltAttack",
+      "Ability__CrystalMiner__DefaultAttack",
+      "Ability__CrystalMiner__Die",
+      "Ability__KrakenCaptured__AltAttack",
+      "Ability__KrakenCaptured__CritAttack",
+      "Ability__KrakenCaptured__Die",
+      "Ability__KrakenCaptured__Spawn",
+      "Ability__KrakenCaptured__Victory",
+      "Ability__KrakenJungle__AltAttack",
+      "Ability__KrakenJungle__CritAttack",
+      "Ability__KrakenJungle__DefaultAttack",
+      "Ability__KrakenJungle__Spawn",
+      "Ability__VainCrystal__A",
+      "Ability__VainCrystal__Away_Die",
+      "Ability__VainCrystal__B",
+      "Ability__VainCrystal__HitReact",
+      "Away_VainCrystal_IdleGlow",
+      "Buff_Debug_MightyKraken",
+      "Buff_Debug_VisualChaosKraken",
+      "Buff_Debug_VisualChaosVainCrystal",
+      "Buff_Debug_WussyKraken",
+      "Buff_GameModes_Standard3v3_ScoutCamAdjust",
+      "Buff_JungleMinion_CrystalMiner_CrystalAmp",
+      "Buff_JungleMinion_CrystalMiner_Defense",
+      "Buff_JungleMinion_CrystalMiner_Empowerment",
+      "Buff_Kraken_Jungle_InvulnerableDuringSpawn",
+      "Buff_Kraken_LifeTime_Pfx",
+      "Buff_Kraken_RumbleEnrage",
+      "Buff_Kraken_StatChanges"
+    ],
+    "scene_rendering_symbols": [
+      "CameraOrientation",
+      "CameraOrientation*",
+      "CameraOrientation**",
+      "CameraSettings",
+      "CameraSettings*",
+      "CameraSettings**",
+      "CloudShadows.Params",
+      "CloudShadows.Scale",
+      "CloudShadows.Texture",
+      "CloudShadows.Velocity",
+      "FogOfWar.Texture",
+      "FogOfWar.TranslateAndScale",
+      "FogOfWarSettings",
+      "FogOfWarSettings*",
+      "FogOfWarSettings**",
+      "MenuMeshShaderParam",
+      "MenuMeshShaderParam*",
+      "MenuMeshShaderParam**",
+      "Shadow task - ShadowGeneratorDirPCF",
+      "Shadow task - ShadowGeneratorSpotPCF",
+      "Shadowing.mMap",
+      "Shadowing.mParams",
+      "Shadowing.mViewProjRow0",
+      "Shadowing.mViewProjRow1",
+      "Shadowing.mViewProjRow2",
+      "Shadowing.mViewProjRow3"
+    ],
+    "main_menu_symbols": [
+      "*KindredMainMenuEffects*",
+      "*KindredMenuAnimatedSplashMesh*",
+      "*KindredMenuAscensionDialMesh*",
+      "*KindredMenuChestEffects*",
+      "*KindredMenuGuildBannerMesh*",
+      "*KindredMenuGuildBuffMesh*",
+      "*KindredMenuMarketCardBox*",
+      "*KindredMenuMarketEffects*",
+      "*KindredMenuProgressBarEffects*",
+      "*KindredMenuRewardsChest*",
+      "*KindredMenuRewardsChestBattered*",
+      "*KindredMenuRewardsChestDiamond*",
+      "*KindredMenuRewardsChestFall*",
+      "*KindredMenuRewardsChestMysteryT1*",
+      "*KindredMenuRewardsChestMysteryT2*",
+      "*KindredMenuRewardsChestMysteryT3*",
+      "*KindredMenuRewardsChestOpulent*",
+      "*KindredMenuRewardsChestSpoils*",
+      "*KindredMenuRewardsChestVain*",
+      ">*KindredMenuRewardsChestAnimations*",
+      "DraftLobby_Dodge_Victimed",
+      "DraftLobby_Hero_Ban",
+      "DraftLobby_Hero_Pick",
+      "DraftLobby_Muted",
+      "DraftLobby_Role_Bumped",
+      "DraftLobby_Skipped_Ban",
+      "DraftLobby_Started",
+      "DraftLobby_Swap_Accepted",
+      "DraftLobby_Swap_Rejected",
+      "MAIN_MENU_ACADEMY",
+      "MAIN_MENU_BAG",
+      "MAIN_MENU_HEROES",
+      "MAIN_MENU_HOME",
+      "MAIN_MENU_LOGIN_OR_REGISTER",
+      "MAIN_MENU_MARKET",
+      "MAIN_MENU_MATCHING",
+      "MAIN_MENU_MATCHING_BOX_SUBTITLE",
+      "MAIN_MENU_MATCHING_BOX_SUBTITLE_SHORTWAIT",
+      "MAIN_MENU_MATCHING_BOX_SUBTITLE_UNKNOWN",
+      "MAIN_MENU_MATCHING_CASUAL"
+    ],
+    "battle_hud_symbols": [
+      "$tIhud_scoreboard_cross_swords",
+      "*KindredHUDEffects*",
+      "?hud_plaque_hero_hp_me",
+      "?hud_store_inventory_tray",
+      "DHUD_Store",
+      "Effect_HUD_AbilityButton_Activated",
+      "Effect_HUD_AbilityButton_CDReduce",
+      "Effect_HUD_AbilityButton_LevelUp",
+      "Effect_HUD_AbilityButton_Ready",
+      "Effect_HUD_AbilityTab_LevelUp",
+      "Effect_HUD_AbilityTab_PointReady",
+      "Effect_Ping_Attention",
+      "Effect_Ping_Danger",
+      "Effect_Ping_GoTo",
+      "Effect_Ping_OMW",
+      "Effect_Ping_Questionmark",
+      "Effect_Ping_Rally",
+      "Effect_Ping_Tutorial",
+      "HUDJoystickChoice_Joystick",
+      "HUDJoystickChoice_Tap",
+      "HUD_ABILITY_UPGRADED",
+      "HUD_AbilityTray",
+      "HUD_Ability_Help_Close_Button",
+      "HUD_PLAQUE_CAPTURING",
+      "HUD_SCOREBOARD_ALLIES_AFK_EXPLAIN",
+      "HUD_SCOREBOARD_FIXED_ORDER_BUTTON",
+      "HUD_SCOREBOARD_GAMEOVER_FINISH",
+      "HUD_SCOREBOARD_GAMEOVER_RATING_EXPLANATION",
+      "HUD_SCOREBOARD_GAMEOVER_REPLAY",
+      "HUD_SCOREBOARD_GAMEPLAY_TOGGLE_BUTTON",
+      "HUD_SCOREBOARD_SHARE_BUTTON",
+      "HUD_SCOREBOARD_SHARE_SCREENSHOT_OPTIONAL_TEXT",
+      "HUD_SCOREBOARD_SOCIAL_TOGLE_BUTTON",
+      "HUD_SCOREBOARD_SORT_BY_GOLD_BUTTON",
+      "HUD_SCOREBOARD_SURVEY_EXPLANATION",
+      "HUD_SCOREBOARD_SURVEY_OTHER",
+      "HUD_SCOREBOARD_SURVEY_TEAM_BALANCE",
+      "HUD_SCOREBOARD_SURVEY_TEAM_BALANCE_SUBTITLE",
+      "HUD_SCOREBOARD_SURVEY_TECH_ISSUE",
+      "HUD_SCOREBOARD_SURVEY_TECH_ISSUE_SUBTITLE"
+    ]
+  }
+}

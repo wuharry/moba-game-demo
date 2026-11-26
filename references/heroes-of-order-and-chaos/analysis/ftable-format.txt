@@ -1,0 +1,145 @@
+
+_ZN10CZipFTable10ReadFormatEv 0x11bb598 bytes=196
+011bb598: stp      x20, x19, [sp, #-0x20]!                    
+011bb59c: stp      x29, x30, [sp, #0x10]                      
+011bb5a0: add      x29, sp, #0x10                             
+011bb5a4: mov      x19, x0                                    
+011bb5a8: mov      x20, x19                                   
+011bb5ac: ldrb     w9, [x20, #0x58]!                          
+011bb5b0: ldur     w8, [x20, #-0x38]                          
+011bb5b4: add      w8, w8, #1                                 
+011bb5b8: tbnz     w9, #0, #0x11bb5c4                         
+011bb5bc: lsr      x10, x9, #1                                
+011bb5c0: b        #0x11bb5c8                                 
+011bb5c4: ldr      x10, [x19, #0x60]                          
+011bb5c8: subs     x1, x8, x10                                
+011bb5cc: b.ls     #0x11bb5e0                                 
+011bb5d0: mov      w2, wzr                                    
+011bb5d4: mov      x0, x20                                    
+011bb5d8: bl       #0xad5e10                                  
+011bb5dc: b        #0x11bb608                                 
+011bb5e0: and      w9, w9, #1                                 
+011bb5e4: cbnz     w9, #0x11bb5fc                             
+011bb5e8: add      x9, x20, x8                                
+011bb5ec: lsl      x8, x8, #1                                 
+011bb5f0: strb     wzr, [x9, #1]                              
+011bb5f4: strb     w8, [x20]                                  
+011bb5f8: b        #0x11bb608                                 
+011bb5fc: ldr      x9, [x19, #0x68]                           
+011bb600: strb     wzr, [x9, x8]                              
+011bb604: str      x8, [x19, #0x60]                           
+011bb608: ldr      x0, [x19]                                  
+011bb60c: mov      w2, wzr                                    
+011bb610: ldr      w1, [x19, #0x28]                           
+011bb614: ldr      x8, [x0]                                   
+011bb618: ldr      x8, [x8, #0x20]                            
+011bb61c: blr      x8                                         
+011bb620: ldr      x0, [x19]                                  
+011bb624: ldrb     w9, [x19, #0x58]                           
+011bb628: ldr      x8, [x0]                                   
+011bb62c: ldr      x8, [x8, #0x18]                            
+011bb630: tbnz     w9, #0, #0x11bb63c                         
+011bb634: add      x1, x20, #1                                
+011bb638: b        #0x11bb640                                 
+011bb63c: ldr      x1, [x19, #0x68]                           
+011bb640: ldr      w9, [x19, #0x20]                           
+011bb644: add      w2, w9, #1                                 
+011bb648: blr      x8                                         
+011bb64c: ldp      x29, x30, [sp, #0x10]                      
+011bb650: mov      w0, #1                                     
+011bb654: ldp      x20, x19, [sp], #0x20                      
+011bb658: ret                                                 
+
+_ZN10CZipFTable10ReadHeaderEv 0x11bb544 bytes=84
+011bb544: stp      x20, x19, [sp, #-0x20]!                    
+011bb548: stp      x29, x30, [sp, #0x10]                      
+011bb54c: add      x29, sp, #0x10                             
+011bb550: mov      x19, x0                                    
+011bb554: mov      x1, xzr                                    
+011bb558: mov      w2, wzr                                    
+011bb55c: ldr      x0, [x19]                                  
+011bb560: ldr      x8, [x0]                                   
+011bb564: ldr      x8, [x8, #0x20]                            
+011bb568: blr      x8                                         
+011bb56c: ldr      x0, [x19], #0x10                           
+011bb570: mov      w2, #0x2c                                  
+011bb574: ldr      x8, [x0]                                   
+011bb578: mov      x1, x19                                    
+011bb57c: ldr      x8, [x8, #0x18]                            
+011bb580: blr      x8                                         
+011bb584: ldp      x29, x30, [sp, #0x10]                      
+011bb588: cmp      w0, #0                                     
+011bb58c: cset     w0, gt                                     
+011bb590: ldp      x20, x19, [sp], #0x20                      
+011bb594: ret                                                 
+
+_ZN10CZipFTable9ReadIndexEv 0x11bb65c bytes=172
+011bb65c: stp      x20, x19, [sp, #-0x20]!                    
+011bb660: stp      x29, x30, [sp, #0x10]                      
+011bb664: add      x29, sp, #0x10                             
+011bb668: sub      sp, sp, #0x10                              
+011bb66c: mov      x19, x0                                    
+011bb670: ldr      x9, [x0, #0x40]!                           
+011bb674: ldur     w10, [x0, #-0x24]                          
+011bb678: str      wzr, [sp, #0xc]                            
+011bb67c: ldr      x8, [x0, #8]                               
+011bb680: sub      x11, x8, x9                                
+011bb684: asr      x11, x11, #2                               
+011bb688: subs     x1, x10, x11                               
+011bb68c: b.ls     #0x11bb69c                                 
+011bb690: add      x2, sp, #0xc                               
+011bb694: bl       #0xa71f90                                  _ZNSt6__ndk16vectorIjNS_9allocatorIjEEE8__appendEmRKj@plt
+011bb698: b        #0x11bb6c0                                 
+011bb69c: add      x9, x9, x10, lsl #2                        
+011bb6a0: ccmp     x8, x9, #4, lo                             
+011bb6a4: b.eq     #0x11bb6c0                                 
+011bb6a8: sub      x10, x8, #4                                
+011bb6ac: sub      x9, x10, x9                                
+011bb6b0: mvn      x9, x9                                     
+011bb6b4: and      x9, x9, #0xfffffffffffffffc                
+011bb6b8: add      x8, x8, x9                                 
+011bb6bc: str      x8, [x19, #0x48]                           
+011bb6c0: ldr      x0, [x19]                                  
+011bb6c4: mov      w2, wzr                                    
+011bb6c8: ldr      w1, [x19, #0x24]                           
+011bb6cc: ldr      x8, [x0]                                   
+011bb6d0: ldr      x8, [x8, #0x20]                            
+011bb6d4: blr      x8                                         
+011bb6d8: ldr      x0, [x19]                                  
+011bb6dc: ldr      w9, [x19, #0x1c]                           
+011bb6e0: ldr      x1, [x19, #0x40]                           
+011bb6e4: ldr      x8, [x0]                                   
+011bb6e8: lsl      w2, w9, #2                                 
+011bb6ec: ldr      x8, [x8, #0x18]                            
+011bb6f0: blr      x8                                         
+011bb6f4: mov      w0, #1                                     
+011bb6f8: sub      sp, x29, #0x10                             
+011bb6fc: ldp      x29, x30, [sp, #0x10]                      
+011bb700: ldp      x20, x19, [sp], #0x20                      
+011bb704: ret                                                 
+
+_ZNK10CZipFTable13LoadEntryBySNEjPc 0x11bb718 bytes=88
+011bb718: stp      x20, x19, [sp, #-0x20]!                    
+011bb71c: stp      x29, x30, [sp, #0x10]                      
+011bb720: add      x29, sp, #0x10                             
+011bb724: mov      x19, x0                                    
+011bb728: mov      x20, x2                                    
+011bb72c: mov      w2, wzr                                    
+011bb730: ldr      x0, [x19]                                  
+011bb734: ldp      w8, w9, [x19, #0x2c]                       
+011bb738: ldr      x10, [x0]                                  
+011bb73c: madd     w1, w9, w1, w8                             
+011bb740: ldr      x8, [x10, #0x20]                           
+011bb744: blr      x8                                         
+011bb748: ldr      x0, [x19]                                  
+011bb74c: mov      x1, x20                                    
+011bb750: ldr      w2, [x19, #0x30]                           
+011bb754: ldr      x8, [x0]                                   
+011bb758: ldr      x8, [x8, #0x18]                            
+011bb75c: blr      x8                                         
+011bb760: ldp      x29, x30, [sp, #0x10]                      
+011bb764: mov      w0, #1                                     
+011bb768: ldp      x20, x19, [sp], #0x20                      
+011bb76c: ret                                                 
+
+MATCHES 4

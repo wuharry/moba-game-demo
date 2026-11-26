@@ -1,0 +1,120 @@
+Heroes of Order & Chaos offline clone — 2026-11-20 device-test handover
+
+LATEST ADDENDUM: allied/enemy AI v3 is installed in the private script archive.
+Read AI-HANDOVER-20261120.txt and trial/ai-gameplay-verification.json for this
+later task. The APK/tables below are unchanged, but verification now requires:
+python verify_installed_trial.py --resource-manifest trial/ai-resource-hashes.json
+The default localized manifest below describes the original pre-AI scripts.
+
+Objective and scope
+Continue Harvey's authorized offline-only Android conversion: no login/server
+selection, Traditional Chinese, full local account resources/heroes/skins/talents,
+multiplayer disabled, functioning single-player. Do not test tutorial mode
+further. This section records the pre-AI device tests; see the addendum above.
+No changes to the original package, online account, Godot project, or Vainglory.
+
+Workspace and device
+C:/Users/whw88/Downloads/HeroesOfOrderAndChaos-Offline-20261119
+Clone package: com.gameloft.android.ANMP.GloftHOHO (HOC 離線測試).
+Java activity namespace remains HOHM. Device RFCY700C8ZZ, SM-F9660, Android 16,
+ARM64 only; screenshots 2520x1080. ADB: E:/06_Apps/Android-SDK/platform-tools/adb.exe.
+Python: C:/Python313/python.exe. No dependency installation this session.
+
+Current installed output
+trial/HOC-Offline-Prototype.apk
+SHA256 de28e813c99ff7c2b4aab712934d14472d536df323f54b8cc2f36fd44f2c591a
+Private tables.bin SHA256:
+4fd5d02094e6d093db37b1fbb9c5667997f184c190911c81a92fbbe5b872b2c8
+Private assets: /data/user/0/com.gameloft.android.ANMP.GloftHOHO/files/offline-assets
+This APK still requires the preloaded private resource set. It is not a complete
+fresh-install distribution. Only ARM64 native code is patched.
+
+Authoritative current checks
+trial/installed-verification.json: installed APK hash, APK CRC, all 85 recorded
+native patches/non-overlap, all 84 localized private asset hashes, no INTERNET
+permission. Use the explicit AI resource manifest in the latest addendum above.
+trial/gameplay-verification.json: device observations and their exact scope.
+Older resource-stage/localization-device JSON files are historical build checks.
+Build: python build_trial.py; it checks original hash/expected instructions,
+patch-span non-overlap, zipalign and APK signature. No git/push operation here.
+
+Changes completed
+1. localize_resources.py repairs 370 Arabic item strings from the same IDs in
+   original Traditional Chinese strings; fills another 109 item/spell rows from
+   Simplified Chinese using local OpenCC dictionaries. Total 479 rows, only two
+   of 136 archive entries changed; 134 preserved. See localization-review.json.
+   Do NOT replace all tw with th: th contains Thai for newer rows.
+   Do NOT run prepare_private_assets.py unchanged: it expects the original
+   tables hash. Localized manifests are separate from original resource truth.
+2. offline_talents.py/build_trial.py: real 52 max-rank talent spell IDs now enter
+   the human Player's allocated SpellStorage. Original fixed 40 inline IDs and
+   AI array/serialization remain unchanged. InitSpell and both ReLearnAllSpell
+   loops use the selected pointer/count. Capacity is 52. Real death/respawn
+   UnLearn/Learn calls retained; no observed stacking/loss on respawn.
+3. NEW offline_terrain.py: fixes original heightfield interpolation OOB. 3v3
+   cold launch also crashed on the pre-full-talent APK at GetHeight+228,
+   VA e5240c, row floor(z)=256; next row 257 does not exist. Reproduced at the
+   same PC/register indices, isolating the bug from the new talent changes.
+   Branch hook e523d4 -> c8e2c4, 124-byte helper. Rejects real coordinates beyond
+   the final vertex, samples final row/column along one axis, handles corner,
+   keeps interior interpolation and original water-info path. x22/x23 preserved.
+   Cave after LoadInscriptions; expected instruction and non-overlap checked.
+4. offline_resources.py: fills raw energy capacity UserInfo+82c as well as current
+   +828. The separate setMaxLimitation vector is not the displayed denominator.
+   Device now shows a full 999/999 bar rather than 999/0.
+5. Full talent preset is readable and immutable. Main profile talent reset is
+   now visibly disabled (btn_reset is CharacterHandle +2a0), avoiding the original
+   server-only SendResetTalents/wait. ShowFixedTalentPage at fa0e54, 56 bytes;
+   Show call db5d58 hooks it. Other talent details/page switching remain intact.
+
+Concrete device results
+- Before full battle talents, Debronee alternate skin: HP530/MP360 at level1.
+  After: HP599/MP417, starting gold1150. Respawn restored 599/417 without stacking;
+  targeted AOE cast produced effect, mana use and cooldown. Evidence talent-*.png.
+- Pre-terrain 3v3 FAIL twice: analysis/crash-3v3-20261120.txt and
+  analysis/crash-3v3-before-talents.txt. The latter is a cold pre-talent build.
+- Terrain build fe542e50... PASS 3v3 loading, movement, combat/XP to level2,
+  actual first skill (energy150->129, cooldown16s), return to main menu.
+  Evidence terrain-fixed-three-attack.png, terrain-three-returned-main.png.
+- Same process then entered underground 5v5 with Melina alternate purple skin.
+  PASS load/model, move, shop Traditional Chinese description, buy staff into
+  inventory, return main. Skill was learned but a cast was NOT confirmed.
+  Evidence terrain-underground-loaded/item-detail/item-bought/returned-main.png.
+- Final installed build PASS 5v5 Rift load, move, return main; Xia level1HP609,
+  starting gold1150. Evidence final-rift-*.png.
+- Final build PASS profile talent page, page7, guardian detail at exact maxima;
+  disabled reset taps do nothing, no waiting/crash. Evidence talents-fixed-*.png.
+- Earlier 5v5 surrender->defeat->results->main fully tested; victory NOT RUN.
+- Tutorial loaded and reached movement prompt, then Harvey explicitly removed
+  it from testing scope. No completion claim. Do not resume tutorial testing.
+- Final crash buffer empty. Harmless legacy ad-plugin/property warnings remain.
+- Original APK hash still 5d6299f60f09f5e34e9bd4fb5301a74b4b4b9c81c6ce458fe71930c2b8c1d40b.
+
+Limitations / not accepted as complete-game coverage
+Not every hero/skin or all 52 conditional talent effects were individually
+exercised. No full victory/long soak run. Main-menu online event/shop/profile
+statistics panels still spin or remain empty (profile overview can show 0 while
+the local talent editor correctly shows 181). Some skin names remain English.
+Some inventory merge/exchange routes remain server-bound. Selected tablet page
+defaults to 1 on startup, though edited inscriptions/slot selections persist.
+Multiplayer entry functions remain disabled; no online service was modified.
+Account level40/currency999999999/energy999 are local preset values, not claims
+about independently verified official account limits. The main currency counter
+animates from ~39 to its full value after returning from a game.
+
+Useful backups
+trial/HOC-Offline-BeforeBattleTalents-de1cc52b.apk
+trial/HOC-Offline-BeforeTerrain-a2f971f7.apk
+trial/HOC-Offline-Terrain-fe542e50.apk
+trial/HOC-Offline-Energy-74591c51.apk
+
+Navigation cautions
+Use ~3 seconds after menu transitions; 0.5-1.5 seconds can hit a previous page.
+Main Start(2048,850)->Practice(2234,848)->Solo(957,562).
+Maps first(520,430),middle(1280,425),last(2100,425); Start(2170,873).
+Room hero(480,200), picker Select(1967,888), Room Start(2110,960).
+Battle gear(480,214)->Options(1897,74)->Main menu(818,846)->Confirm(1310,755).
+Three backs from a talent detail return main (detail->talents->profile->main).
+Targeted skills require a drag onto ground or a valid unit. A learned icon alone
+is not evidence of a successful cast. Screenshot names are descriptive actions,
+not automatic PASS labels. Use the actual observed pixels to judge outcomes.

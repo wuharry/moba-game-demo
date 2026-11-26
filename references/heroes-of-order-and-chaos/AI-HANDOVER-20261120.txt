@@ -1,0 +1,112 @@
+Heroes of Order & Chaos offline AI v3 — 2026-11-20
+
+Current task
+Harvey explicitly requested smarter allied AND enemy computer heroes, with
+Vainglory advanced bots as a design reference. Installation and device tests are
+authorized. Do not test tutorial gameplay. Preserve offline-only multiplayer
+locks, local player resources, heroes/skins, and Traditional Chinese fixes.
+
+Implementation
+offline_ai/hero_decisions.lua is loaded by Action_AIHero_Common.lua. It keeps
+the existing hero-specific spell scorers and native range/mana/cooldown checks.
+It chooses higher-scoring skills first and tries another candidate after a
+failed cast, bounded to three attempts and one successful dispatch per decision.
+Checks occur every four action callbacks; callback duration has NOT been timed.
+Positive hero-spell scores below the normal-attack weight55 remain eligible
+every third decision against enemy heroes. This avoids starving mages such as
+entry365 whose original scorers give modest scores even for useful attacks.
+Weak summoner/recall scores and creep targets cannot use that fallback.
+Typed target validation prevents positional payloads/channel enums being used
+as object IDs. Existing channeling and retreat/recall are not interrupted.
+
+Emergency retreat: enemy tower targets the bot, HP <=22%, HP <45% while locally
+outnumbered, or HP <70% while outnumbered by at least two. Reengagement needs
+HP >=50%, no tower aggro, and sufficient nearby allied heroes. The original
+retreat paths/timers/base-defense behavior remain in use. Existing retreat
+score now retains tower/target danger instead of overwriting it; two wrong
+parameter reads are corrected to faction and HP.
+
+Local focus keeps the original five-world-unit search. It favors vulnerable
+enemy heroes, adds priority for the same enemy being attacked by a nearby ally,
+and enemies pursuing allied heroes below45% HP. It avoids unsupported tower
+targets and excessive low-HP pursuit. Native visibility/attackability queries
+remain responsible for fog filtering. ForcePriorityChange sets a temporary
+priority level; it does not cumulatively add values (native disassembly checked).
+No combat-stat, cooldown, movement-speed, or hidden-vision advantages added.
+
+Vainglory reference scope
+The previous local Vainglory workspace contains translation/font/English-voice
+patches; no prior custom bot implementation was located. Read-only inspection
+found BotSettings, BotControllerSet, KindredBotTuningData and five difficulty
+names. The tuning payload was not decoded. Do not claim its AI was extracted
+or ported, or that the games now have equal difficulty.
+Official historical source documents tactical commands/rally-point teamwork:
+https://en.vainglorygame.com/vainglorylive/summer-update-1-20-notes-enter-the-bots/
+The local focus/protection rules are our implementation inspired by teamwork.
+Ping following, global macro strategy, predictive dodging, kiting and complete
+per-hero combo logic are NOT implemented.
+Read-only reference details: analysis/vainglory-ai-reference.json.
+
+Build and deployment
+From C:/Users/whw88/Downloads/HeroesOfOrderAndChaos-Offline-20261119:
+  C:/Python313/python.exe build_ai_resources.py
+  C:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell.exe -NoProfile -File run_lua51.ps1 offline_ai/test_decisions.lua
+  C:/Python313/python.exe deploy_ai_resources.py
+  C:/Python313/python.exe verify_installed_trial.py --resource-manifest trial/ai-resource-hashes.json
+The test runner uses the already installed BlueStacks VLC Lua 5.1 DLL, without
+starting BlueStacks or installing dependencies. Twenty-two controlled Lua scenarios
+exercise actual original/new functions, both factions, native-API mocks, real
+hero spell scorers, and script compilation. These are not device gameplay proof.
+
+Final v3 script.bin SHA256:
+9c872bee07faaf2f164454e84e114fc0b5c32e30ea276de1e450ad9659bdf3c9
+Original script SHA256:
+e34839b8097f9e517e34517d79ef6587d390dc315d302a7a37f51272b1568710
+Only two of 50 original archive entries change, 48 remain byte-identical,
+and one script is added. GBMP local headers and archive CRC are checked.
+The installed APK and localized tables are unchanged. Integrity verification
+passes all85 recorded native spans and all84 private resource hashes; no
+INTERNET permission. This remains a clone requiring preloaded private assets.
+Do not deploy the original script archive accidentally through older installers.
+
+Rollback and earlier evidence
+trial/pre-ai/script.bin is the original-script rollback backup.
+trial/ai-v1-backup contains the first improved script plus manifests/tests.
+trial/ai-v2-backup contains the teamwork build before fixing low-score starvation.
+v2 script SHA256:
+a04550e7e8f61a4db4864782582bed7443227f286b24d065da9276236da98f81
+Do not restore v2 as the final version: its strict weight>55 gate blocked some
+valid attacks. Real original mage scorer1808 reproduced that regression in Lua,
+then passed after v3's slower fallback. See analysis/ai-low-score-regression.txt.
+v1 script SHA256:
+296487c308af80a6c49337ec3c739d288e908f9724f7d6680028478f6439b99c
+Earlier v1 device tests covered 3v3 and Rift5v5, not Underground5v5.
+analysis/ai-three-metrics.txt and analysis/ai-rift-metrics.txt are v1 evidence.
+Final-version device results belong in trial/ai-gameplay-verification.json;
+trial/gameplay-verification.json retains the earlier pre-AI checks.
+
+Final v3 device acceptance actually completed
+SM-F9660 Android16,2520x1080. Underground5v5,3v3,and Rift5v5 all loaded,
+both factions issued accepted skill casts/retreat requests/teamwork priorities,
+and all three returned to main menu with screenshots visually inspected.
+Latest diagnostic samples are at game seconds97,60,and62 respectively.
+All captured scorer-error counters are0; captured application logs have no
+matched Lua runtime/AI/fatal errors. Final crash buffer is empty. Human movement
+was separately observed in Rift; most time was spent observing NPCs with the
+human avatar near base. No full match result or win-rate claim.
+Final phone state: main menu. No outstanding USB authorization request.
+The final report links the exact screenshots/logs and distinguishes the earlier
+v2 failure from the final22 passing Lua scenarios. No source edits after this
+final v3 deployment and device run; only documentation/report updates.
+
+Diagnostics and interpretation
+The clone overwrites files/offline-ai-metrics.txt about every30 game seconds.
+The pregame countdown resets to zero; reporting handles that backward clock.
+The snapshot includes alive bots only. Absence can mean death, not missing AI.
+casts = native API accepted dispatches (switch skills have no return value),
+not confirmed hits. fallback = a later candidate accepted after a failed one.
+assist = teamwork-based priority selections, not completed assists or kills.
+retreats/tower = requests via the retained retreat machinery, not guarantees of
+survival. errors = scorer exceptions; controlled tests intentionally inject one.
+No win-rate or performance improvement has been measured. Short representative
+matches do not cover every hero/skin, full victories, or long-session stability.

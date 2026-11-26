@@ -1,0 +1,57 @@
+[
+  {
+    "key": "CHAR_INFO_MIHO_NAME",
+    "en": "Miho",
+    "cn": "新月剑客 美惠"
+  },
+  {
+    "key": "CHAR_INFO_WARHAWK_NAME",
+    "en": "Warhawk",
+    "cn": "火箭小子 尼尔"
+  },
+  {
+    "key": "CHAR_INFO_WARHAWK_PASSIVE_NAME",
+    "en": "MK-II Annabelle",
+    "cn": "安娜贝拉MK-II"
+  },
+  {
+    "key": "CHAR_INFO_WARHAWK_TAGLINE",
+    "en": "Smallest hero wielding the biggest missile launcher",
+    "cn": "小身材，大装备"
+  },
+  {
+    "key": "HERO_ABILITY_WARHAWK_A_NAME",
+    "en": "Rocket Ride",
+    "cn": "火箭后跃"
+  },
+  {
+    "key": "HERO_ABILITY_WARHAWK_A_SHORT_DESC",
+    "en": "Warhawk fires a rocket dealing [DAMAGE|CBASE,CR,WR] that also blasts him backwards.",
+    "cn": "尼尔发射出一枚火箭榴弹，造成[DAMAGE|CBASE,CR,WR]伤害，冲击力会将尼尔向后击退。"
+  },
+  {
+    "key": "HERO_ABILITY_WARHAWK_C_DESC",
+    "en": "Warhawk targets up to three nearby locations before firing a missile towards each area. The missile deals damage in an area on impact and leaves behind a pool of fire that continuously deals damage and slows enemies inside. \\n\\n•Targets take 33% of the impact damage after the first missile hits.",
+    "cn": "尼尔瞄准附近最多三个位置，然后对每个区域发射一枚导弹。导弹落地时会造成范围伤害，然后留下一滩火焰，对内部的敌人造成持续伤害，并使其减速。\\n•第一枚导弹命中后，目标受到33%的冲击伤害。"
+  },
+  {
+    "key": "HERO_ABILITY_WARHAWK_C_NAME",
+    "en": "Mightiest Barrage",
+    "cn": "火力全开"
+  },
+  {
+    "key": "HERO_ABILITY_WARHAWK_C_SHORT_DESC",
+    "en": "Warhawk targets up to three locations and fires a missile dealing [DAMAGE|CBASE,CR,WR] and leaving a pool of fire that slows and deals [DAMAGE_PER_SEC|CBASE,CR] per second.",
+    "cn": "尼尔瞄准最多三个位置发射导弹，造成[DAMAGE|CBASE,CR,WR]伤害。导弹在落地处留下一滩火焰，减速敌人，每秒造成[DAMAGE_PER_SEC|CBASE,CR]伤害。"
+  },
+  {
+    "key": "RECOMMENDED_BUILD_WARHAWK_MOBILECANNON",
+    "en": "Mobile Cannon",
+    "cn": "机动火炮"
+  },
+  {
+    "key": "RECOMMENDED_BUILD_WARHAWK_MOBILECANNON_ADVICE",
+    "en": "Use Rocket Ride to zoom around the battlefield.",
+    "cn": "使用火箭后跃在战场中自由地穿梭。"
+  }
+]

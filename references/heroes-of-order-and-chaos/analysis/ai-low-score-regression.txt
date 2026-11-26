@@ -1,0 +1,25 @@
+2026-11-20: v2 low-score starvation found during device review, corrected in v3.
+
+Observation: analysis/ai-v2-rift-metrics.txt at game time180 records entry365
+with339 decisions,0 casts,0 attempts and2 teamwork choices. This alone did not
+prove a bug, so the actual hero/spell data and original dispatcher were checked.
+creature_proto_hoc entry365 (hero_ancient_mage) uses1808/1809/1810/1811.
+Action_AIHero_Common_2.lua does contain these active spell scorers; they are
+not missing AI definitions. The original random dispatcher allows candidates
+with any positive score, including below the normal-attack score55.
+
+Controlled Lua5.1 regression: original real scorer1808, enemy hero700/1000HP,
+distance3, no extra enemy cluster. The original dispatcher successfully issued
+a directional cast when its random draw selected the lower-ranked spell.
+v2 never considered that candidate because it required weight>55.
+The added actual-function test failed at test_decisions.lua line231 on v2:
+expected a directional dispatch by the third decision, but received none.
+No test expectations were relaxed to hide the failure.
+
+v3 fix: every third decision, also consider positive scores for hero slots0..3
+against an enemy hero. Higher-scoring skills are still tried first; all existing
+native cast validation, target/tower safety and max-three-attempt limit remain.
+Low scores cannot trigger recall/summoner actions or casts against creeps.
+Actual scorer1808 now passes for both factions; the extra restrictions pass.
+Final scenario run:22 PASS under the existing Lua5.1 runtime.
+Do not interpret this scenario as a measured win-rate or damage improvement.

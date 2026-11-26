@@ -1,0 +1,114 @@
+{
+  "checked_at_utc": "2026-11-20T14:26:38.357847+00:00",
+  "package": "com.gameloft.android.ANMP.GloftHOHO",
+  "installed_apk_sha256": "de28e813c99ff7c2b4aab712934d14472d536df323f54b8cc2f36fd44f2c591a",
+  "device": "SM-F9660 Android16 ARM64",
+  "viewport": [
+    2520,
+    1080
+  ],
+  "scope": "Representative offline gameplay and resource checks; not exhaustive release acceptance.",
+  "cases": [
+    {
+      "name": "3v3 before terrain fix",
+      "result": "FAIL",
+      "scope": "Cold pre-full-talent build reproduces same GetHeight OOB",
+      "evidence": [
+        "analysis/crash-3v3-before-talents.txt"
+      ]
+    },
+    {
+      "name": "3v3 after terrain fix",
+      "result": "PASS",
+      "tested_build": "fe542e50ba4a7c7968a98ea3b153e4275fcdce4c813b1b4fa09dcd323a1db7df",
+      "scope": "Load, move, level2, active skill energy/cooldown, return main",
+      "evidence": [
+        "terrain-fixed-three-loaded.png",
+        "terrain-fixed-three-attack.png",
+        "terrain-three-returned-main.png"
+      ]
+    },
+    {
+      "name": "Underground 5v5",
+      "result": "PASS",
+      "tested_build": "fe542e50ba4a7c7968a98ea3b153e4275fcdce4c813b1b4fa09dcd323a1db7df",
+      "scope": "Load alternate Melina skin, movement, Traditional Chinese item description, item purchase, return main; successful active cast not confirmed",
+      "evidence": [
+        "terrain-underground-loaded.png",
+        "terrain-underground-item-detail.png",
+        "terrain-underground-item-bought.png",
+        "terrain-underground-returned-main.png"
+      ]
+    },
+    {
+      "name": "Rift 5v5 final build",
+      "result": "PASS",
+      "scope": "Load, move, full-talent starting HP/gold, return main",
+      "evidence": [
+        "final-rift-loaded.png",
+        "final-rift-moved.png",
+        "final-rift-returned-main.png"
+      ]
+    },
+    {
+      "name": "Profile talents final build",
+      "result": "PASS",
+      "scope": "Open, page7, max-rank guardian details; server-only reset visibly disabled and ignores taps",
+      "evidence": [
+        "talents-fixed-reset-disabled.png",
+        "talents-fixed-page-seven.png",
+        "talents-fixed-guardian.png"
+      ]
+    },
+    {
+      "name": "Energy capacity",
+      "result": "PASS",
+      "scope": "Full bar999/999",
+      "evidence": [
+        "energy-cap-fixed.png"
+      ]
+    },
+    {
+      "name": "Full-talent death and respawn",
+      "result": "PASS",
+      "tested_build": "a2f971f7bc240528d7201fd3ffe2e0054e2670d590f1334d33e0321ffc53a21c",
+      "scope": "Same Debronee skin HP599/MP417 restored without stacking; actual targeted spell effect, mana consumption and cooldown",
+      "evidence": [
+        "talent-first-battle-stats.png",
+        "talent-respawn-stats.png",
+        "talent-postrespawn-skill-effect.png"
+      ]
+    },
+    {
+      "name": "Tutorial completion",
+      "result": "NOT RUN",
+      "scope": "User explicitly stopped tutorial testing after load/movement prompt. Exited to main."
+    },
+    {
+      "name": "Every hero/skin and all52 talent triggers",
+      "result": "NOT RUN",
+      "scope": "Representative samples only"
+    },
+    {
+      "name": "Full victory and long soak",
+      "result": "NOT RUN",
+      "scope": "Earlier surrender/defeat results flow passed; no normal victory test"
+    },
+    {
+      "name": "Crash buffer after fixed-build tests",
+      "result": "PASS",
+      "scope": "Empty after reproductions were saved and buffer cleared",
+      "evidence": [
+        "analysis/crash-final-tests.txt"
+      ]
+    }
+  ],
+  "known_remaining": [
+    "Online main/profile panels still load or remain blank",
+    "Some skin names remain English",
+    "Some inventory merge/exchange routes remain server-bound",
+    "Fresh-install asset packaging not completed",
+    "Tablet page selection defaults to1 on startup"
+  ],
+  "final_phone_state": "Main menu; tutorial testing stopped at user request"
+}

@@ -1,0 +1,16 @@
+{
+  "revision": "20261119.3",
+  "resource_hashes_verified": 78,
+  "translation_entries": 7329,
+  "completed_entries_with_preserved_markers": 312,
+  "player_facing_missing_translations": 0,
+  "excluded_internal_templates": [
+    "STORE_ITEM_TEMPLATE_BLURB",
+    "STORE_ITEM_TEMPLATE_DESC",
+    "STORE_ITEM_TEMPLATE_NAME",
+    "STORE_ITEM_TEMPLATE_TIP"
+  ],
+  "font_resources_checked": 38,
+  "unique_cjk_characters_checked": 2192,
+  "missing_glyph_routes": []
+}

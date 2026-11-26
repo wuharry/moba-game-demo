@@ -1,0 +1,546 @@
+{
+  "game": "Heroes of Order & Chaos 3.6.5a (36523)",
+  "engine": "Gameloft Glitch Engine (libAndroid.so + gameswf Scaleform UI + Lua 5.1 AI)",
+  "focus_scope": "5v5 Sinskaald Rift (map_id=7) + Glitch Rendering + Resource Allocation + Main Menu & Battle HUD",
+  "original_package_mib": {
+    "color_corrector.conf": 0.001,
+    "d_o_w_n_l_o_a_d_e_d.txt": 0.021,
+    "game_Android.conf": 0.001,
+    "hoc.bin": 0.0,
+    "hoc.txt": 0.0,
+    "menu.bin": 0.0,
+    "res.bin": 403.712,
+    "script.bin": 0.229,
+    "tables.bin": 2.669,
+    "HeroesOfOrderAndChaos-3.6.5a-36523.apk": 37.473
+  },
+  "modular_dlc_architecture": {
+    "total_dlc_files": 85,
+    "hero_archives": 66,
+    "map_archives": [
+      "3v3_desert.bin",
+      "menu.bin",
+      "rift.bin",
+      "vault.bin"
+    ],
+    "core_archives": [
+      "model_phy.bin",
+      "res.bin",
+      "res_t.bin",
+      "script.bin",
+      "sounds.bin",
+      "tables.bin"
+    ],
+    "font_files": [
+      "ui/EduFontin.ttf",
+      "ui/Exo2.0-Bold.otf",
+      "ui/FontJP.ttf",
+      "ui/Fontin.ttf"
+    ]
+  },
+  "res_bin_summary": {
+    "total_files": 7465,
+    "uncompressed_mib": 402.44,
+    "by_folder": {
+      "ui": {
+        "files": 2188,
+        "mib": 197.66
+      },
+      "model": {
+        "files": 2454,
+        "mib": 179.31
+      },
+      "effect": {
+        "files": 2554,
+        "mib": 11.31
+      },
+      "2d_texture": {
+        "files": 22,
+        "mib": 9.32
+      },
+      "strings": {
+        "files": 18,
+        "mib": 3.64
+      },
+      "<root_shaders_conf>": {
+        "files": 194,
+        "mib": 0.66
+      },
+      "max_fx": {
+        "files": 35,
+        "mib": 0.54
+      }
+    },
+    "by_extension": {
+      ".bdae": {
+        "files": 2537,
+        "mib": 180.16
+      },
+      ".png": {
+        "files": 1973,
+        "mib": 177.63
+      },
+      ".tga": {
+        "files": 231,
+        "mib": 26.28
+      },
+      ".beff": {
+        "files": 2553,
+        "mib": 11.31
+      },
+      ".bar": {
+        "files": 15,
+        "mib": 3.41
+      },
+      ".swf": {
+        "files": 6,
+        "mib": 3.07
+      },
+      ".glsl": {
+        "files": 143,
+        "mib": 0.23
+      },
+      ".dat": {
+        "files": 1,
+        "mib": 0.14
+      },
+      ".json": {
+        "files": 1,
+        "mib": 0.11
+      },
+      ".bin": {
+        "files": 2,
+        "mib": 0.09
+      },
+      ".conf": {
+        "files": 3,
+        "mib": 0.0
+      }
+    },
+    "scene_model_themes": {
+      "lightmap": {
+        "files": 97,
+        "mib": 102.69
+      },
+      "vault": {
+        "files": 346,
+        "mib": 7.71
+      },
+      "light_new": {
+        "files": 149,
+        "mib": 6.81
+      },
+      "light": {
+        "files": 307,
+        "mib": 4.68
+      },
+      "dark": {
+        "files": 268,
+        "mib": 4.25
+      },
+      "desert_3v3": {
+        "files": 66,
+        "mib": 3.15
+      },
+      "desert": {
+        "files": 168,
+        "mib": 2.84
+      },
+      "neutral": {
+        "files": 43,
+        "mib": 2.5
+      },
+      "dark_new": {
+        "files": 125,
+        "mib": 1.95
+      },
+      "rainforest": {
+        "files": 83,
+        "mib": 1.66
+      },
+      "water": {
+        "files": 8,
+        "mib": 0.21
+      },
+      "test": {
+        "files": 6,
+        "mib": 0.17
+      },
+      "sky": {
+        "files": 14,
+        "mib": 0.08
+      },
+      "afanty": {
+        "files": 1,
+        "mib": 0.01
+      },
+      "<root>": {
+        "files": 2,
+        "mib": 0.0
+      }
+    }
+  },
+  "map_5v5_rift": {
+    "map_table_entries_5v5": [
+      {
+        "id": 7,
+        "fields": [
+          7,
+          1,
+          "rift",
+          "",
+          917504,
+          4
+        ]
+      },
+      {
+        "id": 12,
+        "fields": [
+          12,
+          1,
+          "Vault of Desecrators",
+          "",
+          983040,
+          4
+        ]
+      }
+    ],
+    "rift_zones_table": [
+      {
+        "zone_id": 18,
+        "map_id": 7,
+        "pos_xyz": [
+          189.016,
+          10.0,
+          223.396
+        ],
+        "extents_rot": [
+          20.0,
+          5.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "zone_id": 19,
+        "map_id": 7,
+        "pos_xyz": [
+          240.602,
+          10.3088,
+          43.7149
+        ],
+        "extents_rot": [
+          2.0,
+          2.0,
+          2.0,
+          0.0
+        ]
+      },
+      {
+        "zone_id": 20,
+        "map_id": 7,
+        "pos_xyz": [
+          55.0,
+          10.1172,
+          236.0
+        ],
+        "extents_rot": [
+          2.0,
+          2.0,
+          2.0,
+          0.0
+        ]
+      }
+    ],
+    "rift_baked_lightmap_chunks": {
+      "count": 24,
+      "total_mib": 26.1,
+      "samples": [
+        {
+          "path": "model/scene/lightmap/rift/glitchobject00.bdae",
+          "bytes": 68173
+        },
+        {
+          "path": "model/scene/lightmap/rift/glitchobject01.bdae",
+          "bytes": 47741
+        },
+        {
+          "path": "model/scene/lightmap/rift/glitchobject02.bdae",
+          "bytes": 47941
+        },
+        {
+          "path": "model/scene/lightmap/rift/glitchobject03.bdae",
+          "bytes": 50117
+        },
+        {
+          "path": "model/scene/lightmap/rift/glitchobject10.bdae",
+          "bytes": 72389
+        },
+        {
+          "path": "model/scene/lightmap/rift/glitchobject11.bdae",
+          "bytes": 36597
+        }
+      ]
+    },
+    "rift_minimap_textures": [
+      {
+        "path": "2d_texture/maps/rift_2X.tga",
+        "bytes": 8244
+      },
+      {
+        "path": "2d_texture/maps/rift_r_2X.tga",
+        "bytes": 8244
+      },
+      {
+        "path": "2d_texture/maps/rift_r_X4_2X.tga",
+        "bytes": 131124
+      },
+      {
+        "path": "2d_texture/maps/rift_X4_2X.tga",
+        "bytes": 131124
+      }
+    ]
+  },
+  "shader_summary": {
+    "total_glsl_shaders": 143,
+    "families": {
+      "scene_sh_lightmap": [
+        "CommonSceneFS.glsl",
+        "CommonSceneFS2.glsl",
+        "CommonSceneFS2_N6.glsl",
+        "CommonSceneFS_A7.glsl",
+        "CommonSceneFS_High.glsl",
+        "CommonSceneFS_N6.glsl",
+        "CommonSceneUVLuminFS.glsl",
+        "CommonSceneUVLuminVS.glsl",
+        "CommonSceneVS.glsl",
+        "LightmapNormalFP.glsl",
+        "LightmapNormalVP.glsl",
+        "UnlitTexturedLightmapAlphatest.glsl",
+        "UnlitTexturedLightmapAlphatestFog.glsl",
+        "UnlitTexturedLightmapFS.glsl",
+        "UnlitTexturedLightmapFSFog.glsl",
+        "UnlitTexturedLightmapVS.glsl",
+        "UnlitTexturedLightmapVSFog.glsl",
+        "UnlitTexturedLightmapWaterAlphatest.glsl",
+        "UnlitTexturedLightmapWaterFS.glsl",
+        "UnlitTexturedLightmapWaterVS.glsl"
+      ],
+      "terrain_heightfield": [
+        "TerrainFP.glsl",
+        "TerrainFP_N6.glsl",
+        "TerrainNormalFP.glsl",
+        "TerrainNormalFP_N6.glsl",
+        "TerrainNormalIrrFP.glsl",
+        "TerrainNormalIrrFP_N6.glsl",
+        "TerrainNormalVP.glsl",
+        "TerrainVP.glsl"
+      ],
+      "water_lava_fluid": [
+        "FluidSurfaceFS.glsl",
+        "FluidSurfaceVS.glsl",
+        "lavaFS.glsl",
+        "lavaVS.glsl",
+        "MagmaFluidPS.glsl",
+        "MagmaFluidVS.glsl",
+        "MagmaSkinFS.glsl",
+        "MagmaSkinFS_alpha.glsl",
+        "MagmaSkinFS_alphaadd.glsl",
+        "MagmaSkinVS.glsl",
+        "UnlitTexturedFogWaterFS.glsl",
+        "UnlitTexturedFogWaterFS_alphatest.glsl",
+        "UnlitTexturedFogWaterVS.glsl",
+        "UnlitTexturedLightmapWaterAlphatest.glsl",
+        "UnlitTexturedLightmapWaterFS.glsl",
+        "UnlitTexturedLightmapWaterVS.glsl",
+        "WaterDisturbPS.glsl",
+        "WaterDisturbVS.glsl",
+        "WaterfallFP.glsl",
+        "WaterfallVP.glsl",
+        "waterFS.glsl",
+        "waterVS.glsl"
+      ],
+      "warfog": [
+        "SaveWarfogFS.glsl",
+        "SaveWarfogVS.glsl",
+        "UnlitTexturedWarFogFS.glsl",
+        "UnlitTexturedWarFogFS_alphatest.glsl",
+        "UnlitTexturedWarFogVS.glsl",
+        "WarfogBlurFP.glsl",
+        "WarfogBlurVP.glsl"
+      ],
+      "hero_character": [
+        "CommonHeroFS.glsl",
+        "CommonHeroVS.glsl",
+        "ContourFS.glsl",
+        "ContourVS1.glsl",
+        "ContourVS2.glsl",
+        "ContourVS3.glsl",
+        "ContourVS4.glsl",
+        "MainCharacterFadeFP.glsl",
+        "MainCharacterFadeFP_Distort.glsl",
+        "MainCharacterFP.glsl",
+        "MainCharacterNormalMapFP.glsl",
+        "MainCharacterNormalMapVP.glsl",
+        "MainCharacterVP.glsl",
+        "MainCharacterVP_Distort.glsl"
+      ],
+      "ui_postprocess": [
+        "BlurFP.glsl",
+        "BlurHFP.glsl",
+        "BlurVFP.glsl",
+        "BlurVP.glsl",
+        "ColorCorrectorFS.glsl",
+        "ColorCorrectorFS2.glsl",
+        "ColorCorrectorFS2_N6.glsl",
+        "ColorCorrectorFS_N6.glsl",
+        "ColorCorrectorVS.glsl",
+        "GameSWFFS.glsl",
+        "GameSWFFS_blend.glsl",
+        "GameSWFFS_N6.glsl",
+        "GameSWFVS.glsl",
+        "RadialBlurFP.glsl",
+        "RadialBlurVP.glsl",
+        "WarfogBlurFP.glsl",
+        "WarfogBlurVP.glsl"
+      ]
+    }
+  },
+  "ui_swf_and_dialogs": {
+    "swf_bundles": [
+      {
+        "path": "ui/IGM.swf",
+        "bytes": 315290,
+        "swf_version": 8
+      },
+      {
+        "path": "ui/IGM_android.swf",
+        "bytes": 313408,
+        "swf_version": 8
+      },
+      {
+        "path": "ui/IGM_IPAD.swf",
+        "bytes": 314161,
+        "swf_version": 8
+      },
+      {
+        "path": "ui/LGM.swf",
+        "bytes": 759026,
+        "swf_version": 8
+      },
+      {
+        "path": "ui/LGM_android.swf",
+        "bytes": 758851,
+        "swf_version": 8
+      },
+      {
+        "path": "ui/LGM_IPAD.swf",
+        "bytes": 756236,
+        "swf_version": 8
+      }
+    ],
+    "top_dlg_classes": [
+      {
+        "class": "DlgLgmMainMenuFriends",
+        "methods": 125
+      },
+      {
+        "class": "DlgLgmMainMenuOption",
+        "methods": 98
+      },
+      {
+        "class": "DlgMatchSettingNew",
+        "methods": 88
+      },
+      {
+        "class": "DlgLgmMainMenuLotteryNew",
+        "methods": 87
+      },
+      {
+        "class": "DlgBase",
+        "methods": 71
+      },
+      {
+        "class": "DlgLgmMainMenu",
+        "methods": 67
+      },
+      {
+        "class": "DlgLgmMainMenuPlayNew",
+        "methods": 65
+      },
+      {
+        "class": "DlgLgmMainMenuEventNew",
+        "methods": 65
+      },
+      {
+        "class": "DlgItems",
+        "methods": 65
+      },
+      {
+        "class": "DlgNetChecker",
+        "methods": 62
+      },
+      {
+        "class": "DlgLgmMainMenuCollectionBook",
+        "methods": 62
+      },
+      {
+        "class": "DlgLgmMainMenuShop",
+        "methods": 61
+      },
+      {
+        "class": "DlgLgmMainMenuTabletMain",
+        "methods": 61
+      },
+      {
+        "class": "DlgShortcutBar",
+        "methods": 58
+      },
+      {
+        "class": "DlgHUD",
+        "methods": 56
+      },
+      {
+        "class": "DlgLgmMainMenuNews",
+        "methods": 55
+      },
+      {
+        "class": "DlgLgmMainMenuQuest",
+        "methods": 55
+      },
+      {
+        "class": "DlgInscriptionPage",
+        "methods": 53
+      },
+      {
+        "class": "DlgLgmMainMenuUserTalent",
+        "methods": 52
+      },
+      {
+        "class": "DlgLoginAccount",
+        "methods": 50
+      },
+      {
+        "class": "DlgChooseHero",
+        "methods": 49
+      },
+      {
+        "class": "DlgBattleStatistics",
+        "methods": 49
+      },
+      {
+        "class": "DlgMatchSettingTablet",
+        "methods": 49
+      },
+      {
+        "class": "DlgLgmMainMenuVIP",
+        "methods": 49
+      },
+      {
+        "class": "DlgNPCShopNew",
+        "methods": 48
+      }
+    ]
+  },
+  "apk_present": true
+}

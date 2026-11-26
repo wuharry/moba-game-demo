@@ -1,0 +1,38 @@
+[
+  {
+    "file": "startup-original-00.png",
+    "capture_start_seconds": 0.236,
+    "capture_end_seconds": 0.823,
+    "mean_brightness_0_255": 56.97
+  },
+  {
+    "file": "startup-original-01.png",
+    "capture_start_seconds": 1.0,
+    "capture_end_seconds": 1.383,
+    "mean_brightness_0_255": 16.93
+  },
+  {
+    "file": "startup-original-02.png",
+    "capture_start_seconds": 2.001,
+    "capture_end_seconds": 2.417,
+    "mean_brightness_0_255": 16.93
+  },
+  {
+    "file": "startup-original-03.png",
+    "capture_start_seconds": 4.0,
+    "capture_end_seconds": 4.385,
+    "mean_brightness_0_255": 0.35
+  },
+  {
+    "file": "startup-original-04.png",
+    "capture_start_seconds": 8.0,
+    "capture_end_seconds": 9.085,
+    "mean_brightness_0_255": 72.89
+  },
+  {
+    "file": "startup-original-05.png",
+    "capture_start_seconds": 12.0,
+    "capture_end_seconds": 13.115,
+    "mean_brightness_0_255": 72.89
+  }
+]

@@ -31,7 +31,7 @@ ASSET_SUFFIXES = {
     ".png", ".jpg", ".jpeg", ".webp", ".hdr", ".exr", ".tga", ".dds", ".ktx",
     ".wav", ".ogg", ".mp3", ".otf", ".ttf",
 }
-IGNORED_DIRS = {"authoring", "review", "tools", "export_templates", "feature_profiles", "script_templates", "text_editor_themes"}
+IGNORED_DIRS = {"authoring", "references", "review", "tools", "export_templates", "feature_profiles", "script_templates", "text_editor_themes"}
 EXTRACTED_TEXTURE_PREFIXES = ("fog_runner_", "garden_hero_Painted_Stone_Atlas.", "ridge_hero_Painted_Stone_Atlas.")
 ROUTE = re.compile(r"^ROUTE \| ([a-z][a-z0-9_]*) \| (\d+)/(\d+) \| (\d+(?:\.\d+)?) m \| PASS\s*$", re.MULTILINE)
 
